@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use stylist::style;
 use tauri_app_ui::{TaskForm, TaskList};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::spawn_local;
@@ -96,12 +97,41 @@ pub fn app() -> Html {
         })
     };
 
+    let container_styles = style!(
+        r#"
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        "#
+    )
+    .unwrap();
+
+    let title_styles = style!(
+        r#"
+        color: #1a202c;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        "#
+    )
+    .unwrap();
+
+    let error_styles = style!(
+        r#"
+        color: #dc2626;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 0.25rem;
+        background-color: #fee2e2;
+        "#
+    )
+    .unwrap();
+
     html! {
-        <div>
-            <h1>{"Yew Task List"}</h1>
+        <div class={container_styles}>
+            <h1 class={title_styles}>{"Praxis Workshop"}</h1>
             <TaskForm on_add={on_add} />
             if let Some(err) = (*error).clone() {
-                <p style="color: red;">{"Error: "}{err}</p>
+                <p class={error_styles}>{"Error: "}{err}</p>
             }
             <TaskList tasks={(*tasks).clone()} on_toggle={on_toggle.clone()} />
         </div>

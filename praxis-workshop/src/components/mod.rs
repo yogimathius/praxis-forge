@@ -1,5 +1,4 @@
-mod task_form;
-mod task_list;
+pub mod task;
 
-pub use task_form::TaskForm;
-pub use task_list::TaskList;
+pub use task::TaskForm;
+pub use task::TaskList;

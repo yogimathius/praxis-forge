@@ -1,0 +1,104 @@
+{
+  "issues": [
+    {
+      "title": "Implement Phoenix Habit Context and Schema",
+      "description": "Set up the core Habit domain with proper schema, context, and tracking relationships",
+      "tasks": [
+        "Create Habit schema with title, frequency, streak, last_completed fields",
+        "Add Goal-Habit relationship in schema",
+        "Implement Habit context with CRUD operations",
+        "Add streak calculation and validation logic"
+      ]
+    },
+    {
+      "title": "Create Habit API Controllers",
+      "description": "Implement RESTful API endpoints for habit management",
+      "tasks": [
+        "Create HabitController with CRUD actions",
+        "Add check-in endpoints",
+        "Implement streak calculation endpoints",
+        "Add proper error handling"
+      ]
+    },
+    {
+      "title": "Set up Phoenix Channels for Habits",
+      "description": "Implement real-time functionality for habit updates",
+      "tasks": [
+        "Create HabitChannel module",
+        "Add real-time streak updates",
+        "Implement check-in broadcasts",
+        "Set up streak milestone notifications"
+      ]
+    },
+    {
+      "title": "Implement Habit State Management in Yew",
+      "description": "Create state management for habits in the frontend",
+      "tasks": [
+        "Set up habit store in Yewdux",
+        "Implement habit CRUD actions",
+        "Add check-in handling",
+        "Create streak tracking state"
+      ]
+    },
+    {
+      "title": "Create Habit API Client",
+      "description": "Develop type-safe API client for habit management",
+      "tasks": [
+        "Create Habit struct and types",
+        "Implement API client methods",
+        "Add streak calculation utilities",
+        "Implement error handling"
+      ]
+    },
+    {
+      "title": "Develop Habit Component Library",
+      "description": "Create reusable habit-related components",
+      "tasks": [
+        "Create HabitList component",
+        "Implement HabitForm component",
+        "Add HabitStreak component",
+        "Create HabitCheckIn component"
+      ]
+    },
+    {
+      "title": "Implement Habit Dashboard",
+      "description": "Create main habit tracking dashboard",
+      "tasks": [
+        "Design dashboard layout",
+        "Add streak visualizations",
+        "Implement check-in calendar",
+        "Create habit statistics display"
+      ]
+    },
+    {
+      "title": "Add Habit Analytics",
+      "description": "Implement habit tracking analytics and insights",
+      "tasks": [
+        "Create streak analysis algorithms",
+        "Add completion rate visualizations",
+        "Implement trend analysis",
+        "Create habit performance reports"
+      ]
+    },
+    {
+      "title": "Implement Habit Notifications",
+      "description": "Add notification system for habit-related events",
+      "tasks": [
+        "Create daily reminders",
+        "Add streak milestone notifications",
+        "Implement missed check-in alerts",
+        "Set up achievement celebrations"
+      ]
+    },
+    {
+      "title": "Add Habit Testing Suite",
+      "description": "Implement comprehensive testing for habit features",
+      "tasks": [
+        "Write context and controller tests",
+        "Add component tests",
+        "Implement integration tests",
+        "Create streak calculation tests"
+      ]
+    }
+  ]
+}

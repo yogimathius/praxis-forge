@@ -7,7 +7,7 @@ use web_sys::console;
 use yew::prelude::*;
 use yew::{use_effect_with, use_state};
 
-use tauri_app_ui::api::{create_task, fetch_tasks, update_task, Task};
+use tauri_app_ui::services::{create_task, fetch_tasks, update_task, Task};
 
 #[wasm_bindgen]
 extern "C" {

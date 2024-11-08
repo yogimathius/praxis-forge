@@ -1,5 +1,5 @@
 use stylist::{style, yew::styled_component};
-use yew::{classes, function_component, html, Callback, Html, Properties};
+use yew::{html, Callback, Html, Properties};
 
 use crate::Task;
 

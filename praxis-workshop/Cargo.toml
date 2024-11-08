@@ -18,6 +18,7 @@ chrono = { version = "0.4", features = ["serde"] }
 log = "0.4.22"
 serde_json = "1.0.131"
 stylist = { version = "0.13", features = ["yew"] }
+yew-router = "0.18.0"
 
 [workspace]
 members = ["src-tauri"]

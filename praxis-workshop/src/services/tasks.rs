@@ -2,7 +2,7 @@ use gloo_net::http::Request;
 use serde_json::Value;
 use web_sys::console;
 
-use crate::Task;
+use crate::services::Task;
 
 const API_BASE_URL: &str = "http://localhost:4000/api";
 

@@ -3,5 +3,5 @@ pub mod routes;
 pub mod services;
 
 pub use components::*;
-pub use routes::*;
+pub use routes::{settings::Settings, Route};
 pub use services::*;

@@ -1,9 +1,9 @@
 mod home;
 mod routes;
-mod settings;
-mod tasks;
+pub mod settings;
+pub mod tasks;
 
 pub use home::Home;
-pub use routes::Route;
+pub use routes::{switch, Route};
 pub use settings::Settings;
-pub use tasks::Tasks;
+pub use tasks::list;

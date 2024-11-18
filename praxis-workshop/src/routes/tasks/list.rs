@@ -16,15 +16,6 @@ pub fn TasksList() -> Html {
     )
     .unwrap();
 
-    let title_styles = style!(
-        r#"
-        color: #1a202c;
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        "#
-    )
-    .unwrap();
-
     let error_styles = style!(
         r#"
         color: #dc2626;
@@ -38,7 +29,6 @@ pub fn TasksList() -> Html {
 
     html! {
         <div class={container_styles}>
-            <h1 class={title_styles}>{"Praxis Workshop"}</h1>
             <TaskForm on_add={tasks_hook.on_add} />
             if let Some(err) = (*tasks_hook.error).clone() {
                 <p class={error_styles}>{"Error: "}{err}</p>

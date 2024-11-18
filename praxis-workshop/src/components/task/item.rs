@@ -7,6 +7,7 @@ use crate::Task;
 pub struct TaskItemProps {
     pub task: Task,
     pub on_toggle: Callback<Task>,
+    pub on_delete: Callback<Task>,
 }
 
 #[styled_component]
@@ -15,6 +16,7 @@ pub fn TaskItem(props: &TaskItemProps) -> Html {
         r#"
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 0.5rem;
         margin-bottom: 0.5rem;
         background-color: white;
@@ -52,19 +54,35 @@ pub fn TaskItem(props: &TaskItemProps) -> Html {
     )
     .unwrap();
 
+    let delete_button_styles = style!(
+        r#"
+        margin-left: 0.75rem;
+        "#
+    )
+    .unwrap();
+
+    let handle_delete = {
+        let on_delete = props.on_delete.clone();
+        let task = props.task.clone();
+        Callback::from(move |_| on_delete.emit(task.clone()))
+    };
+
     html! {
         <div class={task_item_styles}>
-            <input
-                type="checkbox"
-                checked={props.task.completed}
-                class={checkbox_styles}
-                onchange={let task = props.task.clone();
-                         let on_toggle = props.on_toggle.clone();
-                         Callback::from(move |_| on_toggle.emit(task.clone()))}
-            />
-            <span class={if props.task.completed { completed_text_styles } else { text_styles }}>
-                {&props.task.title}
-            </span>
+            <div>
+                <input
+                    type="checkbox"
+                    checked={props.task.completed}
+                    class={checkbox_styles}
+                    onchange={let task = props.task.clone();
+                            let on_toggle = props.on_toggle.clone();
+                            Callback::from(move |_| on_toggle.emit(task.clone()))}
+                />
+                <span class={if props.task.completed { completed_text_styles } else { text_styles }}>
+                    {&props.task.title}
+                </span>
+            </div>
+            <button class={delete_button_styles} onclick={handle_delete}>{"Delete"}</button>
         </div>
     }
 }

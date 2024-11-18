@@ -99,3 +99,19 @@ pub async fn update_task(task: &Task) -> Result<Task, String> {
         None => Err("No 'data' field found in update task response".to_string()),
     }
 }
+
+pub async fn delete_task(id: &str) -> Result<(), String> {
+    let response = Request::delete(&format!("{}/tasks/{}", API_BASE_URL, id))
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    if response.ok() {
+        Ok(())
+    } else {
+        Err(format!(
+            "Failed to delete task with status: {}",
+            response.status()
+        ))
+    }
+}

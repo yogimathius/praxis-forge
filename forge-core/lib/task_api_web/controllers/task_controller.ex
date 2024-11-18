@@ -47,6 +47,12 @@ defmodule TaskApiWeb.TaskController do
     end
   end
 
+  def delete(conn, %{"id" => id}) do
+    Logger.info("Deleting task #{id}")
+    Repo.delete(Repo.get!(Task, id))
+    send_resp(conn, :no_content, "")
+  end
+
   defp task_to_map(%Task{} = task) do
     %{
       id: task.id,

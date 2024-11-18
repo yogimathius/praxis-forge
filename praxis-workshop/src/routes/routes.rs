@@ -1,4 +1,4 @@
-use super::{tasks::list, Home, Settings};
+use super::{tasks::list::TasksList, Home, Settings};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -18,7 +18,7 @@ pub enum Route {
 pub fn switch(route: Route) -> Html {
     match route {
         Route::Home => html! { <Home /> },
-        Route::Tasks => html! { <list /> },
+        Route::Tasks => html! { <TasksList /> },
         Route::Settings => html! { <Settings /> },
         Route::NotFound => html! { <h1>{"404"}</h1> },
     }

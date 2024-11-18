@@ -3,13 +3,14 @@ use web_sys::console;
 use yew::prelude::*;
 use yew::{use_effect_with, use_state};
 
-use crate::{create_task, fetch_tasks, update_task, Task};
+use crate::{create_task, delete_task, fetch_tasks, update_task, Task};
 
 pub struct UseTasks {
     pub tasks: UseStateHandle<Vec<Task>>,
     pub error: UseStateHandle<Option<String>>,
     pub on_add: Callback<String>,
     pub on_toggle: Callback<Task>,
+    pub on_delete: Callback<Task>,
 }
 
 #[hook]
@@ -88,10 +89,32 @@ pub fn use_tasks() -> UseTasks {
         })
     };
 
+    let on_delete = {
+        let tasks = tasks.clone();
+        let error = error.clone();
+        Callback::from(move |task: Task| {
+            let tasks = tasks.clone();
+            let error = error.clone();
+            spawn_local(async move {
+                match delete_task(&task.id.to_string()).await {
+                    Ok(_) => tasks.set(
+                        (*tasks)
+                            .clone()
+                            .into_iter()
+                            .filter(|t| t.id != task.id)
+                            .collect(),
+                    ),
+                    Err(err) => error.set(Some(err)),
+                }
+            });
+        })
+    };
+
     UseTasks {
         tasks,
         error,
         on_add,
         on_toggle,
+        on_delete,
     }
 }

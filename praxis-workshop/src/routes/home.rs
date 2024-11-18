@@ -3,6 +3,6 @@ use yew::prelude::*;
 #[function_component]
 pub fn Home() -> Html {
     html! {
-      <div class={classes!("")}></div>
+      <div class={classes!("")}>{"Welcome to Praxis Workshop"}</div>
     }
 }

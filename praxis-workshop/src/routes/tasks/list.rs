@@ -4,7 +4,7 @@ use yew::{function_component, html, Html};
 use crate::{routes::tasks::use_tasks::use_tasks, TaskForm, TaskList};
 
 #[function_component]
-pub fn list() -> Html {
+pub fn TasksList() -> Html {
     let tasks_hook = use_tasks();
 
     let container_styles = style!(

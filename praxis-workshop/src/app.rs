@@ -1,10 +1,23 @@
 use stylist::style;
 use tauri_app_ui::{routes::switch, Route};
+use web_sys::console;
 use yew::prelude::*;
+use yew::use_effect_with;
 use yew_router::prelude::*;
 
 #[function_component(App)]
 pub fn app() -> Html {
+    let location = use_location();
+
+    use_effect_with(location.clone(), move |location| {
+        if let Some(location) = location {
+            console::log_1(&format!("Route changed: {:?}", location.path()).into());
+        } else {
+            console::log_1(&"Location is not available".into());
+        }
+        move || ()
+    });
+
     let container_styles = style!(
         r#"
         max-width: 800px;

@@ -1,72 +1,37 @@
-# Capstone Project
+# AI-Powered Personal Life Assistant
 
-## Overview
+## Project Overview
 
-- The capstone project counts towards 30 credits of the overall 90 credits for the program.
-- Students can choose the topic, subject to Qwasar approval.
-- The project aims to boost students' portfolios and develop skills required for building a fully functioning application.
+A local-first personal life management system built with Rust/WASM and Phoenix, focusing on task management, goal tracking, and habit formation.
 
-## Project Lifecycle
+## Key Features
 
-### 1. Capstone Brief (Submission 1) ✅
+- Task Management with Goal Association
+- Goal Progress Tracking
+- Habit Formation System (Stretch)
+- Offline-First Architecture
+- Real-Time Synchronization
 
-- Submit a subject brief (max 1 page) identifying:
-  - The subject to pursue
-  - Project to complete
-  - What you plan to build
-- Must be approved by Qwasar before proceeding to detailed planning
+## Directory Structure
 
-### 2. Capstone Outline (Submission 2) ✅
+- `/requirements/` - Functional and non-functional requirements
+- `/system_design/` - Architecture and component design
+- `/database/` - Schema and data modeling
+- `/project_plan/` - Timeline and milestones
+- `/testing/` - Test plans and scenarios
+- `/deployment/` - Deployment strategy and requirements
 
-After approval of Submission 1, develop a high-level plan including:
+## Technology Stack
 
-1. Business Logic
-2. Major Milestones with Timeline
-3. Specifications/Requirements
-4. Technology Stack
+- Frontend: Rust/WASM with Yew
+- Backend: Phoenix Framework
+- Database: PostgreSQL
+- Integration: WebSocket, REST APIs
 
-### 3. Capstone Planning Document
+## Getting Started
 
-Due 20% into the project timeline, including:
+[To be completed]
 
-- Requirements
-- System Design
-- Database Design
-- Project Plan
-- Testing
-- Deployment (if applicable)
+## Development Status
 
-### 4. MVP/Proof of Concept
-
-- Due 35% into the project timeline
-- Implement a Minimum Viable Product (MVP)
-- Validate business logic and review technology choices
-
-### 5. Final Learning Artifacts
-
-- Repository of the project
-  - Accessible repository with all code
-  - Includes a README if applicable
-- Capstone Presentation
-
-## Capstone Presentation
-
-A 20-minute presentation covering:
-
-1. Project overview and what was built
-2. System design or architecture overview (with diagrams)
-3. Deployment diagram (if applicable)
-4. Development process
-5. Challenges faced
-6. Planned vs. actual build
-7. 3 academic research papers consulted (published after 2005)
-8. Potential future features or changes
-
-## Grading and Review
-
-- Graded by instructors
-- May be reviewed by Qwasar's Academic Council
-
-## Use of Generative AI
-
-- Encouraged, but students must be thoroughly familiar with their subject to answer questions beyond the written portion.
+Currently in planning phase. See `/project_plan/timeline.md` for current status.

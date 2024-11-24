@@ -114,39 +114,3 @@ Built with:
 <p align="center">
   <em>"Through practice, we forge our future."</em>
 </p>
-
-Here's the continuation from "Prerequisites" onwards:
-
-## Prerequisites
-
-Required tools and dependencies for development and deployment will be documented here.
-
-## Getting Started
-
-### Installation
-
-Installation instructions and quick start guide will be provided here.
-
-### Development Setup
-
-Detailed development environment setup instructions will be available here.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-Built with:
-
-- [Rust](https://www.rust-lang.org/)
-- [Elixir](https://elixir-lang.org/)
-- [Phoenix Framework](https://www.phoenixframework.org/)
-- [Yew](https://yew.rs/)
-- [Tauri](https://tauri.app/)
-
----
-
-<p align="center">
-  <em>"Through practice, we forge our future."</em>
-</p>

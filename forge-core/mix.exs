@@ -44,7 +44,8 @@ defmodule TaskApi.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:cors_plug, "~> 3.0"},
-      {:phoenix_live_reload, "~> 1.4", only: :dev}
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

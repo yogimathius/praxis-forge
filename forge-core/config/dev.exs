@@ -24,7 +24,15 @@ config :task_api, TaskApiWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "QPnN8LFoGrHDwBlyUAEXRI6T0tq0z9zas/f9J7AqGD/80n6Gh5aqyXQI+U+QNlJT",
-  watchers: []
+  watchers: [],
+  live_reload: [
+    patterns: [
+      ~r"lib/task_api_web/(controllers|live|components)/.*(ex|heex)$",
+      ~r"lib/task_api_web/templates/.*(eex)$",
+      ~r"lib/task_api_web/views/.*(ex)$",
+      ~r"lib/task_api_web/router.ex"
+    ]
+  ]
 
 # ## SSL Support
 #

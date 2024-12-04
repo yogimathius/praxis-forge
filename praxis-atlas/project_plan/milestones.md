@@ -17,7 +17,7 @@
 - [x] Implement task CRUD in Phoenix
 - [x] Create task list component in WASM
 - [x] Develop task forms
-- [ ] Implement form validation
+- [ ] Implement form **validation**
 - [ ] Implement Phoenix broadcast (for real-time updates)
 - [ ] Implement Yew subscriptions (for real-time updates)
       Dependencies: Foundation Setup
@@ -32,7 +32,7 @@
 - [ ] Integrate task-goal relationships
       Dependencies: Task Management Core
 
-## 4. Habit Tracking System (2-3 weeks)
+## 4. Habit Tracking System (2-3 weeks) (Stretch)
 
 ### Tasks
 
@@ -41,6 +41,7 @@
 - [ ] Develop streak tracking
 - [ ] Set up check-in system
       Dependencies: Goal System Integration
+      B
 
 ## 5. Rich Features & Integration (2-3 weeks)
 

@@ -8,6 +8,7 @@ pub struct TaskItemProps {
     pub task: Task,
     pub on_toggle: Callback<Task>,
     pub on_delete: Callback<Task>,
+    pub on_edit: Callback<Task>,
 }
 
 #[styled_component]
@@ -61,10 +62,23 @@ pub fn TaskItem(props: &TaskItemProps) -> Html {
     )
     .unwrap();
 
+    let edit_button_styles = style!(
+        r#"
+        margin-left: 0.75rem;
+        "#
+    )
+    .unwrap();
+
     let handle_delete = {
         let on_delete = props.on_delete.clone();
         let task = props.task.clone();
         Callback::from(move |_| on_delete.emit(task.clone()))
+    };
+
+    let handle_edit = {
+        let on_edit = props.on_edit.clone();
+        let task = props.task.clone();
+        Callback::from(move |_| on_edit.emit(task.clone()))
     };
 
     html! {
@@ -83,6 +97,7 @@ pub fn TaskItem(props: &TaskItemProps) -> Html {
                 </span>
             </div>
             <button class={delete_button_styles} onclick={handle_delete}>{"Delete"}</button>
+            <button class={edit_button_styles} onclick={handle_edit}>{"Edit"}</button>
         </div>
     }
 }

@@ -8,6 +8,7 @@ pub struct TaskListProps {
     pub tasks: Vec<Task>,
     pub on_toggle: Callback<Task>,
     pub on_delete: Callback<Task>,
+    pub on_edit: Callback<Task>,
 }
 
 #[styled_component]
@@ -42,8 +43,13 @@ pub fn TaskList(props: &TaskListProps) -> Html {
                     let task = task.clone();
                     Callback::from(move |_| on_delete.emit(task.clone()))
                 };
+                let on_edit = {
+                    let on_edit = props.on_edit.clone();
+                    let task = task.clone();
+                    Callback::from(move |_| on_edit.emit(task.clone()))
+                };
                 html! {
-                    <TaskItem task={task.clone()} on_toggle={on_toggle} on_delete={on_delete} />
+                    <TaskItem task={task.clone()} on_toggle={on_toggle} on_delete={on_delete} on_edit={on_edit} />
                 }
             })}
         </div>

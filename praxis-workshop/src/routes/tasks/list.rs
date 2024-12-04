@@ -36,6 +36,7 @@ pub fn TasksList() -> Html {
                 tasks={(*tasks_hook.tasks).clone()}
                 on_toggle={tasks_hook.on_toggle.clone()}
                 on_delete={tasks_hook.on_delete.clone()}
+                on_edit={tasks_hook.on_edit.clone()}
             />
         </div>
     }

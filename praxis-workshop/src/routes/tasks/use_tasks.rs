@@ -11,6 +11,7 @@ pub struct UseTasks {
     pub on_add: Callback<String>,
     pub on_toggle: Callback<Task>,
     pub on_delete: Callback<Task>,
+    pub on_edit: Callback<Task>,
 }
 
 #[hook]
@@ -110,11 +111,41 @@ pub fn use_tasks() -> UseTasks {
         })
     };
 
+    let on_edit = {
+        let tasks = tasks.clone();
+        let error = error.clone();
+        Callback::from(move |task: Task| {
+            let tasks = tasks.clone();
+            let error = error.clone();
+            spawn_local(async move {
+                match update_task(&task).await {
+                    Ok(updated_task) => {
+                        tasks.set(
+                            (*tasks)
+                                .iter()
+                                .map(|t| {
+                                    if t.id == updated_task.id {
+                                        updated_task.clone()
+                                    } else {
+                                        t.clone()
+                                    }
+                                })
+                                .collect(),
+                        );
+                        error.set(None);
+                    }
+                    Err(err) => error.set(Some(err)),
+                }
+            });
+        })
+    };
+
     UseTasks {
         tasks,
         error,
         on_add,
         on_toggle,
         on_delete,
+        on_edit,
     }
 }

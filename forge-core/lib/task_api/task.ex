@@ -5,6 +5,8 @@ defmodule TaskApi.Task do
   schema "tasks" do
     field :title, :string
     field :completed, :boolean, default: false
+    field :description, :string
+    field :status, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -12,7 +14,9 @@ defmodule TaskApi.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:title, :completed])
-    |> validate_required([:title, :completed])
+    |> cast(attrs, [:title, :description, :status])
+    |> validate_required([:title, :status])
+    |> validate_length(:title, min: 3)
+    |> validate_inclusion(:status, ["pending", "in_progress", "completed"])
   end
 end

@@ -34,6 +34,22 @@ where
                     on:input=on_input
                     prop:value=move || task_text.get()
                 />
+                <input
+                    type="text"
+                    class="list.module.css:input"
+                    placeholder="Add a description..."
+                    on:input=on_input
+                    prop:value=move || task_text.get()
+                />
+                <select
+                    class="list.module.css:input"
+                    on:input=on_input
+                    prop:value=move || task_text.get()
+                >
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
                 <button
                     type="submit"
                     class="list.module.css:button"

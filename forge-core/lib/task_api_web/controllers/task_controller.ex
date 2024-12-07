@@ -9,7 +9,7 @@ defmodule TaskApiWeb.TaskController do
     tasks = Repo.all(Task)
     Logger.info("Fetched #{length(tasks)} tasks")
     Logger.debug("Tasks: #{inspect(tasks)}")
-    json(conn, %{data: Enum.map(tasks, &task_to_map/1)})
+    json(conn, Enum.map(tasks, &task_to_map/1))
   end
 
   def create(conn, %{"task" => task_params}) do
@@ -57,7 +57,9 @@ defmodule TaskApiWeb.TaskController do
     %{
       id: task.id,
       title: task.title,
-      completed: task.completed
+      completed: task.completed,
+      description: task.description,
+      status: task.status
     }
   end
 

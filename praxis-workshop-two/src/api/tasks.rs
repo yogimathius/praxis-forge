@@ -1,3 +1,4 @@
+use leptos::leptos_dom::logging::console_log;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
@@ -5,19 +6,30 @@ use serde::{Deserialize, Serialize};
 pub struct Task {
     pub id: i32,
     pub title: String,
+    pub completed: bool,
     pub description: Option<String>,
     pub status: String,
 }
 
 pub async fn fetch_tasks() -> Result<Vec<Task>, String> {
-    Client::new()
+    let response = Client::new()
         .get("http://localhost:4000/api/tasks")
         .send()
         .await
-        .map_err(|e| e.to_string())?
-        .json::<Vec<Task>>()
+        .map_err(|e| format!("Request error: {}", e))?;
+
+    // Get the response body as text first
+    let text = response
+        .text()
         .await
-        .map_err(|e| e.to_string())
+        .map_err(|e| format!("Error reading response text: {}", e))?;
+
+    // Try to parse and print the raw text
+    console_log(&format!("Raw response: {}", text));
+
+    // Then attempt to parse it
+    serde_json::from_str(&text)
+        .map_err(|e| format!("Deserialize error: {}. Raw response: {}", e, text))
 }
 
 pub async fn create_task(task: Task) -> Result<Task, String> {

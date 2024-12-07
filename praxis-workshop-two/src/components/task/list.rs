@@ -1,7 +1,7 @@
 use leptos::*;
 
 use crate::api::tasks::Task;
-
+use crate::components::task::item::TaskItem;
 #[component]
 pub fn TasksList(tasks: Vec<Task>) -> impl IntoView {
     println!("TasksList: {:?}", tasks);
@@ -11,7 +11,7 @@ pub fn TasksList(tasks: Vec<Task>) -> impl IntoView {
             <ul>
                 {tasks
                     .iter()
-                    .map(|task| view! { <li>{task.title.clone()}</li> })
+                    .map(|task| view! { <TaskItem task=task.clone() /> })
                     .collect_view()}
             </ul>
         </div>

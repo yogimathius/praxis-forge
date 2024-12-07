@@ -1,5 +1,6 @@
 use leptos::leptos_dom::ev::SubmitEvent;
 use leptos::*;
+use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
@@ -16,6 +17,25 @@ struct GreetArgs<'a> {
 
 #[component]
 pub fn App() -> impl IntoView {
+    view! {
+        <Router>
+            <main>
+                <nav>
+                    <A href="/">"Home"</A>
+                    <A href="/about">"About"</A>
+                </nav>
+                <Routes>
+                    <Route path="/" view=HomePage/>
+                    <Route path="/about" view=AboutPage/>
+                    <Route path="/*any" view=NotFound/>
+                </Routes>
+            </main>
+        </Router>
+    }
+}
+
+#[component]
+fn HomePage() -> impl IntoView {
     let (name, set_name) = create_signal(String::new());
     let (greet_msg, set_greet_msg) = create_signal(String::new());
 
@@ -33,14 +53,13 @@ pub fn App() -> impl IntoView {
             }
 
             let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &name }).unwrap();
-            // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-            let new_msg = invoke("greet", args).await.as_string().unwrap();
+            let new_msg = { invoke("greet", args).await }.as_string().unwrap();
             set_greet_msg.set(new_msg);
         });
     };
 
     view! {
-        <main class="container">
+        <div class="container">
             <h1>"Welcome to Tauri + Leptos"</h1>
 
             <div class="row">
@@ -62,6 +81,24 @@ pub fn App() -> impl IntoView {
                 <button type="submit">"Greet"</button>
             </form>
             <p>{ move || greet_msg.get() }</p>
-        </main>
+        </div>
+    }
+}
+
+#[component]
+fn AboutPage() -> impl IntoView {
+    view! {
+        <div class="container">
+            <h1>"About Page"</h1>
+        </div>
+    }
+}
+
+#[component]
+fn NotFound() -> impl IntoView {
+    view! {
+        <div class="container">
+            <h1>"404 Not Found"</h1>
+        </div>
     }
 }

@@ -1,4 +1,5 @@
 use crate::pages::home::HomePage;
+use crate::pages::tasks::list::TasksListPage;
 use leptos::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
@@ -26,35 +27,15 @@ pub fn App() -> impl IntoView {
                 <h1 class="title">"Praxis Workshop"</h1>
                 <nav class="nav">
                     <A class="link" href="/">"Home"</A>
-                    <A class="link" href="/about">"About"</A>
                     <A class="link" href="/tasks">"Tasks"</A>
                 </nav>
                 <Routes>
                     <Route path="/" view=HomePage/>
-                    <Route path="/about" view=AboutPage/>
-                    <Route path="/tasks" view=TasksPage/>
+                    <Route path="/tasks" view=TasksListPage/>
                     <Route path="/*any" view=NotFound/>
                 </Routes>
             </main>
         </Router>
-    }
-}
-
-#[component]
-fn AboutPage() -> impl IntoView {
-    view! {
-        <div class="container">
-            <h1>"About Page"</h1>
-        </div>
-    }
-}
-
-#[component]
-fn TasksPage() -> impl IntoView {
-    view! {
-        <div class="container">
-            <h1>"Tasks Page"</h1>
-        </div>
     }
 }
 

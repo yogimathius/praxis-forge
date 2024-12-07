@@ -15,14 +15,19 @@ struct GreetArgs<'a> {
     name: &'a str,
 }
 
+#[wasm_bindgen(module = "/src/app.css")]
+extern "C" {}
+
 #[component]
 pub fn App() -> impl IntoView {
     view! {
+        <link rel="stylesheet" href="src/app.css"/>
         <Router>
-            <main>
-                <nav>
-                    <A href="/">"Home"</A>
-                    <A href="/about">"About"</A>
+            <main class="container">
+                <h1 class="title">"Praxis Workshop"</h1>
+                <nav class="nav">
+                    <A class="link" href="/">"Home"</A>
+                    <A class="link" href="/about">"About"</A>
                 </nav>
                 <Routes>
                     <Route path="/" view=HomePage/>

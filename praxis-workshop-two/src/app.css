@@ -1,0 +1,26 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f0f4f8;
+}
+
+.nav {
+  margin-bottom: 2rem;
+}
+
+.link {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #007acc;
+}
+
+.link:hover {
+  color: #005f99;
+}
+
+.title {
+  color: #333333;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}

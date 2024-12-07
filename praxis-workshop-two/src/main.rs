@@ -2,7 +2,8 @@ use leptos::*;
 mod api;
 mod app;
 mod components;
-
+mod pages;
+mod utils;
 use app::App;
 
 pub fn main() {

@@ -3,7 +3,6 @@ use leptos::*;
 use crate::api::tasks::{create_task, delete_task, fetch_tasks, update_task, Task};
 
 pub fn use_tasks() -> (
-    // Read operations
     Resource<(), Result<Vec<Task>, String>>,
     // Create operation
     Action<Task, Result<Task, String>>,
@@ -12,8 +11,11 @@ pub fn use_tasks() -> (
     // Delete operation
     Action<i32, Result<(), String>>,
 ) {
-    // Fetch tasks resource
-    let tasks = create_resource(|| (), |_| async move { fetch_tasks().await });
+    // Create a resource that fetches tasks
+    let tasks = create_resource(
+        || (), // Dependencies (empty in this case)
+        |_| async move { fetch_tasks().await },
+    );
 
     // Create task action
     let create = create_action(|task: &Task| {

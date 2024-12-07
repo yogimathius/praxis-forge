@@ -21,7 +21,6 @@ extern "C" {}
 #[component]
 pub fn App() -> impl IntoView {
     view! {
-        <link rel="stylesheet" href="src/app.css"/>
         <Router>
             <main class="container">
                 <h1 class="title">"Praxis Workshop"</h1>
@@ -64,9 +63,7 @@ fn HomePage() -> impl IntoView {
     };
 
     view! {
-        <div class="container">
-            <h1>"Welcome to Tauri + Leptos"</h1>
-
+        <>
             <div class="row">
                 <a href="https://tauri.app" target="_blank">
                     <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
@@ -86,7 +83,7 @@ fn HomePage() -> impl IntoView {
                 <button type="submit">"Greet"</button>
             </form>
             <p>{ move || greet_msg.get() }</p>
-        </div>
+        </>
     }
 }
 

@@ -1,12 +1,11 @@
-use app::App;
-use leptos::{mount_to_body, view};
-
+use leptos::*;
 mod api;
 mod app;
 mod components;
-mod pages;
-mod state;
 
-fn main() {
+use app::App;
+
+pub fn main() {
+    _ = console_error_panic_hook::set_once();
     mount_to_body(|| view! { <App/> })
 }

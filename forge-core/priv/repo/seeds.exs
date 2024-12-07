@@ -4,7 +4,29 @@ alias TaskApi.Task
 # Clear existing data
 Repo.delete_all(Task)
 
-# Insert mock data
-Repo.insert!(%Task{title: "Learn Elixir", completed: false})
-Repo.insert!(%Task{title: "Build Phoenix API", completed: false})
-Repo.insert!(%Task{title: "Integrate with Tauri", completed: false})
+# Create list of tasks
+tasks = [
+  %{
+    title: "Learn Elixir",
+    status: "in_progress",
+    completed: false
+  },
+  %{
+    title: "Build Phoenix API",
+    status: "completed",
+    completed: true
+  },
+  %{
+    title: "Master Rust",
+    status: "pending",
+    completed: false
+  }
+]
+
+# Insert all tasks
+Enum.each(tasks, fn task_data ->
+  Task.changeset(%Task{}, task_data)
+  |> Repo.insert!()
+end)
+
+IO.puts "Seeds planted! 🌱"

@@ -18,7 +18,7 @@ pub fn TasksListPage() -> impl IntoView {
     };
     view! {
         <>
-            <h1>"Tasks List"</h1>
+            <h1>"Tasks Manager"</h1>
             <TaskForm on_add=on_add />
             <TasksList />
         </>

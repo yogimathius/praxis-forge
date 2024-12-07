@@ -32,16 +32,25 @@ pub async fn create_task(task: Task) -> Result<Task, String> {
         .map_err(|e| e.to_string())
 }
 
-// Then in your state/tasks.rs, you'd use these with Leptos resources/actions:
-use leptos::*;
-
-pub fn use_tasks() -> Resource<(), Result<Vec<Task>, String>> {
-    create_resource(|| (), |_| async move { fetch_tasks().await })
+pub async fn update_task(task: Task) -> Result<Task, String> {
+    Client::new()
+        .put(&format!("http://localhost:4000/api/tasks/{}", task.id))
+        .json(&task)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .json::<Task>()
+        .await
+        .map_err(|e| e.to_string())
 }
 
-pub fn create_task_action() -> Action<Task, Result<Task, String>> {
-    create_action(|task: &Task| {
-        let task = task.clone();
-        async move { create_task(task).await }
-    })
+pub async fn delete_task(id: i32) -> Result<(), String> {
+    Client::new()
+        .delete(&format!("http://localhost:4000/api/tasks/{}", id))
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .error_for_status()
+        .map_err(|e| e.to_string())?;
+    Ok(())
 }

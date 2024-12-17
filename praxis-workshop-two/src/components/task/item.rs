@@ -17,40 +17,40 @@ pub fn TaskItem(
 
     view! {
         <div class="taskItem">
-            <div class="taskContent">
+            <div class="wrapper">
                 <input
                     type="checkbox"
                     class="checkbox"
                     prop:checked=move || task.get().completed
                     on:change=move |_| on_toggle.call(task.get())
                 />
-
-                <div class="taskInfo">
+                <div class="taskContent">
                     <p class="taskTitle">{move || task.get().title}</p>
-
                     {move || task.get().description.as_ref().map(|desc| {
                         view! {
                             <p class="description">{desc}</p>
                         }
                     })}
-
-                    <p class="status">{move || task.get().status}</p>
                 </div>
             </div>
-
-            <div class="actions">
-                <button
-                    class="button editButton"
-                    on:click=move |_| on_edit.call(task.get())
-                >
-                    "Edit"
-                </button>
-                <button
-                    class="button deleteButton"
-                    on:click=move |_| on_delete.call(task.get())
-                >
-                    "Delete"
-                </button>
+            <div class="rightContent">
+                <p class="status" data-status={move || task.get().status.clone()}>
+                    {move || task.get().status}
+                </p>
+                <div class="actions">
+                    <button
+                        class="button editButton"
+                        on:click=move |_| on_edit.call(task.get())
+                    >
+                        "Edit"
+                    </button>
+                    <button
+                        class="button deleteButton"
+                        on:click=move |_| on_delete.call(task.get())
+                    >
+                        "Delete"
+                    </button>
+                </div>
             </div>
         </div>
     }

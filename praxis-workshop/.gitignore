@@ -1,6 +1,0 @@
-/dist/
-/target/
-/Cargo.lock
-.DS_Store
-/forge-core/.DS_Store
-/praxis-atlas/.DS_Store

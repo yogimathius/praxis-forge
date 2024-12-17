@@ -6,7 +6,7 @@ use crate::components::task::form::TaskForm;
 use crate::components::task::list::TasksList;
 use crate::state::tasks::use_tasks;
 use wasm_bindgen::prelude::wasm_bindgen;
-#[wasm_bindgen(module = "/src/pages/tasks/list.module.css")]
+#[wasm_bindgen(module = "/src/pages/tasks/dashboard.module.css")]
 extern "C" {}
 
 #[component]

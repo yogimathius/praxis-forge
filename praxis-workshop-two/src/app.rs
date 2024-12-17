@@ -1,5 +1,5 @@
 use crate::pages::home::HomePage;
-use crate::pages::tasks::list::TasksListPage;
+use crate::pages::tasks::dashboard::TasksListPage;
 use leptos::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};

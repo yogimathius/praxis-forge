@@ -33,9 +33,14 @@ pub async fn fetch_tasks() -> Result<Vec<Task>, String> {
 }
 
 pub async fn create_task(task: Task) -> Result<Task, String> {
+    // Create a wrapper struct or use serde_json::Value
+    let payload = serde_json::json!({
+        "task": task
+    });
+
     Client::new()
         .post("http://localhost:4000/api/tasks")
-        .json(&task)
+        .json(&payload)
         .send()
         .await
         .map_err(|e| e.to_string())?

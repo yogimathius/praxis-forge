@@ -1,23 +1,57 @@
 use leptos::*;
+use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::api::tasks::Task;
 
+#[wasm_bindgen(module = "/src/components/task/item.module.css")]
+extern "C" {}
+
 #[component]
-pub fn TaskItem(task: Task) -> impl IntoView {
+pub fn TaskItem(
+    task: Task,
+    #[prop(into)] on_toggle: Callback<Task>,
+    #[prop(into)] on_delete: Callback<Task>,
+    #[prop(into)] on_edit: Callback<Task>,
+) -> impl IntoView {
+    let task = create_rw_signal(task);
+
     view! {
-        <div class="item.module.css:taskItem">
-            <h3 class="item.module.css:title">{task.title}</h3>
+        <div class="taskItem">
+            <div class="taskContent">
+                <input
+                    type="checkbox"
+                    class="checkbox"
+                    prop:checked=move || task.get().completed
+                    on:change=move |_| on_toggle.call(task.get())
+                />
 
-            {move || task.description.as_ref().map(|desc| {
-                view! {
-                    <p class="item.module.css:description">{desc}</p>
-                }
-            })}
+                <div class="taskInfo">
+                    <p class="taskTitle">{move || task.get().title}</p>
 
-            <p class="item.module.css:status" data-status={task.status.clone()}>{task.status}</p>
-            <p class="item.module.css:completed" data-completed={task.completed.to_string()}>
-                {"Completed: "}{if task.completed { "Yes" } else { "No" }}
-            </p>
+                    {move || task.get().description.as_ref().map(|desc| {
+                        view! {
+                            <p class="description">{desc}</p>
+                        }
+                    })}
+
+                    <p class="status">{move || task.get().status}</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button
+                    class="button editButton"
+                    on:click=move |_| on_edit.call(task.get())
+                >
+                    "Edit"
+                </button>
+                <button
+                    class="button deleteButton"
+                    on:click=move |_| on_delete.call(task.get())
+                >
+                    "Delete"
+                </button>
+            </div>
         </div>
     }
 }

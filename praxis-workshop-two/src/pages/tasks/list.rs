@@ -27,20 +27,37 @@ pub fn TasksListPage() -> impl IntoView {
     let on_edit = move |task: Task| update.dispatch(task);
 
     view! {
-        <>
-            <h1>"Tasks Manager"</h1>
+        <div class="container">
+            <h2 class="title">"Tasks Manager"</h2>
             <TaskForm on_add=on_add />
             {move || match tasks.get() {
-                None => view! { <div>"Loading..."</div> },
+                None => view! {
+                    <div class="loadingContainer">
+                        "Loading..."
+                    </div>
+                },
                 Some(Ok(tasks)) => {
                     console_log(&format!("Tasks received: {:?}", tasks));
-                    view! { <div><TasksList tasks=tasks on_toggle=on_toggle on_delete=on_delete on_edit=on_edit /></div> }
+                    view! {
+                        <div>
+                            <TasksList
+                                tasks=tasks
+                                on_toggle=on_toggle
+                                on_delete=on_delete
+                                on_edit=on_edit
+                            />
+                        </div>
+                    }
                 },
                 Some(Err(err)) => {
                     console_log(&format!("Error details: {:?}", err));
-                    view! { <div>"Error loading tasks: " {err}</div> }
+                    view! {
+                        <div class="errorContainer">
+                            "Error loading tasks: " {err}
+                        </div>
+                    }
                 },
             }}
-        </>
+        </div>
     }
 }

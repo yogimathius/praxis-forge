@@ -1,16 +1,47 @@
-.select {
-  padding: 8px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
+.form {
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
   background-color: white;
-  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.select {
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background-color: white;
+  font-size: 0.875rem;
   cursor: pointer;
   min-width: 140px;
   appearance: none;
   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h6L6 9 3 5z" fill="%236B7280"/></svg>');
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 1rem center;
   background-size: 12px;
+  transition: all 0.2s ease;
 }
 
 .select:focus {
@@ -20,5 +51,26 @@
 }
 
 .select:hover {
-  border-color: #cbd5e1;
+  border-color: #3b82f6;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background-color: #2563eb;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }

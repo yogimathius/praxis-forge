@@ -9,16 +9,19 @@ tasks = [
   %{
     title: "Learn Elixir",
     status: "in_progress",
+    description: "Learn Elixir",
     completed: false
   },
   %{
     title: "Build Phoenix API",
     status: "completed",
+    description: "Build Phoenix API",
     completed: true
   },
   %{
     title: "Master Rust",
     status: "pending",
+    description: "Master Rust",
     completed: false
   }
 ]

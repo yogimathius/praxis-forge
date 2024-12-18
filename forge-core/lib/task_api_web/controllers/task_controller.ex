@@ -30,20 +30,32 @@ defmodule TaskApiWeb.TaskController do
     end
   end
 
-  def update(conn, %{"id" => id, "task" => task_params}) do
-    Logger.info("Updating task #{id} with params: #{inspect(task_params)}")
-    task = Repo.get!(Task, id)
-    changeset = Task.changeset(task, task_params)
+  def update(conn, params) do
+    Logger.debug("Raw update params: #{inspect(params)}")
 
-    case Repo.update(changeset) do
-      {:ok, task} ->
-        Logger.info("Task #{id} updated successfully: #{inspect(task)}")
-        json(conn, %{data: task_to_map(task)})
-      {:error, changeset} ->
-        Logger.warning("Failed to update task #{id}: #{inspect(changeset.errors)}")
+    case params do
+      %{"id" => id, "task" => task_params} ->
+        Logger.info("Updating task #{id} with params: #{inspect(task_params)}")
+        task = Repo.get!(Task, id)
+        changeset = Task.changeset(task, task_params)
+
+        Logger.debug("Changeset: #{inspect(changeset)}")
+
+        case Repo.update(changeset) do
+          {:ok, task} ->
+            Logger.info("Task #{id} updated successfully: #{inspect(task)}")
+            json(conn, %{data: task_to_map(task)})
+          {:error, changeset} ->
+            Logger.warning("Failed to update task #{id}: #{inspect(changeset.errors)}")
+            conn
+            |> put_status(:unprocessable_entity)
+            |> json(%{errors: format_errors(changeset)})
+        end
+      _ ->
+        Logger.warning("Invalid update params received: #{inspect(params)}")
         conn
-        |> put_status(:unprocessable_entity)
-        |> json(%{errors: format_errors(changeset)})
+        |> put_status(:bad_request)
+        |> json(%{error: "Invalid parameters"})
     end
   end
 

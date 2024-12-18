@@ -36,6 +36,13 @@ This synthesis reflects our belief that personal growth occurs through deliberat
 
 ## Core Components
 
+### Forge Operations
+
+- Task Organization
+- Task Prioritization
+- Task Tracking
+- Task Completion
+
 ### Forge Practices (Habit System)
 
 - Habit formation and tracking

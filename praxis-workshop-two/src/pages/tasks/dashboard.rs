@@ -28,7 +28,7 @@ pub fn TasksListPage() -> impl IntoView {
 
     view! {
         <div class="container">
-            <h2 class="title">"Tasks Manager"</h2>
+            <h2 class="title">"Forge Operations"</h2>
             <TaskForm on_add=on_add />
             {move || match tasks.get() {
                 None => view! {

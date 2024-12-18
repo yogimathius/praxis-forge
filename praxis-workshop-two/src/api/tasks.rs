@@ -49,10 +49,20 @@ pub async fn create_task(task: Task) -> Result<Task, String> {
         .map_err(|e| e.to_string())
 }
 
-pub async fn update_task(task: Task) -> Result<Task, String> {
+pub async fn update_task(id: i32, task: Task) -> Result<Task, String> {
+    let payload = serde_json::json!({
+        "task": {
+            "title": task.title,
+            "completed": task.completed,
+            "description": task.description,
+            "status": task.status
+        }
+    });
+    console_log(&format!("Sending update payload: {}", payload));
+
     Client::new()
-        .put(&format!("http://localhost:4000/api/tasks/{}", task.id))
-        .json(&task)
+        .put(&format!("http://localhost:4000/api/tasks/{}", id))
+        .json(&payload)
         .send()
         .await
         .map_err(|e| e.to_string())?

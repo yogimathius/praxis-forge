@@ -1,5 +1,6 @@
 defmodule TaskApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :task_api
+  require Logger
 
   # Add this line near the top of the file
   plug CORSPlug
@@ -50,5 +51,29 @@ defmodule TaskApiWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
+  # Add the structured logging configuration here
+  plug :log_request_info
+
   plug TaskApiWeb.Router
+
+  # Add this function at the bottom of the module
+  defp log_request_info(conn, _opts) do
+    start_time = System.monotonic_time()
+
+    Plug.Conn.register_before_send(conn, fn conn ->
+      stop_time = System.monotonic_time()
+      duration = System.convert_time_unit(stop_time - start_time, :native, :millisecond)
+
+      Logger.info("Request processed",
+        method: conn.method,
+        path: conn.request_path,
+        status: conn.status,
+        duration_ms: duration,
+        request_id: conn.assigns[:request_id] || "unknown"
+      )
+
+      conn
+    end)
+  end
 end

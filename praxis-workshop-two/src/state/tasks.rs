@@ -26,7 +26,7 @@ pub fn use_tasks() -> (
     // Update task action
     let update = create_action(|task: &Task| {
         let task = task.clone();
-        async move { update_task(task).await }
+        async move { update_task(task.id, task).await }
     });
 
     // Delete task action

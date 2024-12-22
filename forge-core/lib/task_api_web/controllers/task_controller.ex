@@ -44,6 +44,7 @@ defmodule TaskApiWeb.TaskController do
         case Repo.update(changeset) do
           {:ok, task} ->
             Logger.info("Task #{id} updated successfully: #{inspect(task)}")
+            TaskApiWeb.TaskChannel.broadcast_update(task)
             json(conn, %{data: task_to_map(task)})
           {:error, changeset} ->
             Logger.warning("Failed to update task #{id}: #{inspect(changeset.errors)}")

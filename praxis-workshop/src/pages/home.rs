@@ -1,58 +1,50 @@
-use crate::utils::invoke;
-use leptos::leptos_dom::ev::SubmitEvent;
 use leptos::*;
-use serde::{Deserialize, Serialize};
+use wasm_bindgen::prelude::wasm_bindgen;
 
-#[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
-}
+#[wasm_bindgen(module = "/src/pages/home.module.css")]
+extern "C" {}
 
 #[component]
 pub fn HomePage() -> impl IntoView {
-    let (name, set_name) = create_signal(String::new());
-    let (greet_msg, set_greet_msg) = create_signal(String::new());
+    let (hover_index, set_hover_index) = create_signal(0);
 
-    let update_name = move |ev| {
-        let v = event_target_value(&ev);
-        set_name.set(v);
-    };
-
-    let greet = move |ev: SubmitEvent| {
-        ev.prevent_default();
-        spawn_local(async move {
-            let name = name.get_untracked();
-            if name.is_empty() {
-                return;
-            }
-
-            let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &name }).unwrap();
-            let new_msg = { invoke("greet", args).await }.as_string().unwrap();
-            set_greet_msg.set(new_msg);
-        });
-    };
+    let principles = vec![
+        ("Praxis", "Theory into Action"),
+        ("Forge", "Shape Your Future"),
+        ("Intention", "Purposeful Progress"),
+        ("Mastery", "Continuous Growth"),
+    ];
 
     view! {
-        <>
-            <div class="row">
-                <a href="https://tauri.app" target="_blank">
-                    <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
-                </a>
-                <a href="https://docs.rs/leptos/" target="_blank">
-                    <img src="public/leptos.svg" class="logo leptos" alt="Leptos logo"/>
+        <div class="home-container">
+            <h1 class="title fade-in">"Welcome to Praxis Forge"</h1>
+
+            <p class="subtitle slide-in">
+                "Transform intentions into actions, actions into habits, habits into mastery."
+            </p>
+
+            <div class="principles-grid">
+                {principles.into_iter().enumerate().map(|(i, (title, desc))| {
+                    let i = i;
+                    view! {
+                        <div
+                            class="principle-card"
+                            class:active=move || hover_index.get() == i
+                            on:mouseenter=move |_| set_hover_index.set(i)
+                            on:mouseleave=move |_| set_hover_index.set(0)
+                        >
+                            <h3 class="principle-title">{title}</h3>
+                            <p class="principle-desc">{desc}</p>
+                        </div>
+                    }
+                }).collect::<Vec<_>>()}
+            </div>
+
+            <div class="cta-section">
+                <a href="/tasks" class="cta-button">
+                    "Start Your Journey"
                 </a>
             </div>
-            <p>"Click on the Tauri and Leptos logos to learn more."</p>
-
-            <form class="row" on:submit=greet>
-                <input
-                    id="greet-input"
-                    placeholder="Enter a name..."
-                    on:input=update_name
-                />
-                <button type="submit">"Greet"</button>
-            </form>
-            <p>{ move || greet_msg.get() }</p>
-        </>
+        </div>
     }
 }

@@ -1,5 +1,4 @@
 use leptos::*;
-use leptos_dom::logging::console_log;
 
 use crate::api::tasks::Task;
 use crate::components::task::form::TaskForm;
@@ -11,33 +10,88 @@ extern "C" {}
 
 #[component]
 pub fn TasksListPage() -> impl IntoView {
-    let (tasks, create, update, delete) = use_tasks();
-    let on_add = move |title| {
-        create.dispatch(Task {
-            id: 0,
-            title,
-            description: None,
-            status: "pending".to_string(),
-            completed: false,
-        })
+    let (tasks, create, update, delete, refetch) = use_tasks();
+
+    let refetch_create = refetch.clone();
+    let refetch_toggle = refetch.clone();
+    let refetch_delete = refetch.clone();
+    let refetch_update = refetch.clone();
+
+    let on_add = move |title: String, description: String| {
+        let refetch = refetch_create.clone();
+        spawn_local(async move {
+            create.dispatch(Task {
+                id: 0,
+                title,
+                description: Some(description),
+                status: "pending".to_string(),
+                completed: false,
+            });
+            let refetch = refetch.clone();
+            set_timeout(
+                move || {
+                    refetch();
+                },
+                std::time::Duration::from_millis(100),
+            );
+        });
     };
 
-    let on_toggle = move |task: Task| update.dispatch(task);
-    let on_delete = move |task: Task| delete.dispatch(task.id);
-    let on_edit = move |task: Task| update.dispatch(task);
+    let on_toggle = move |task: Task| {
+        let refetch = refetch_toggle.clone();
+        spawn_local(async move {
+            update.dispatch(task);
+            let refetch = refetch.clone();
+            set_timeout(
+                move || {
+                    refetch();
+                },
+                std::time::Duration::from_millis(100),
+            );
+        });
+    };
+
+    let on_delete = move |task: Task| {
+        let refetch = refetch_delete.clone();
+        spawn_local(async move {
+            delete.dispatch(task.id);
+            // Clone before the timeout
+            let refetch = refetch.clone();
+            set_timeout(
+                move || {
+                    refetch(); // Use without clone here
+                },
+                std::time::Duration::from_millis(100),
+            );
+        });
+    };
+
+    let on_edit = move |task: Task| {
+        let refetch = refetch_update.clone();
+        spawn_local(async move {
+            update.dispatch(task);
+            let refetch = refetch.clone();
+            set_timeout(
+                move || {
+                    refetch();
+                },
+                std::time::Duration::from_millis(100),
+            );
+        });
+    };
 
     view! {
         <div class="container">
             <h2 class="title">"Forge Operations"</h2>
-            <TaskForm on_add=on_add />
-            {move || match tasks.get() {
-                None => view! {
-                    <div class="loadingContainer">
-                        "Loading..."
-                    </div>
-                },
-                Some(Ok(tasks)) => {
-                    console_log(&format!("Tasks received: {:?}", tasks));
+            <TaskForm on_add=move |title, description| on_add(title, description) />
+            {
+                let tasks = tasks.clone();
+                move || -> View {
+                    let tasks = tasks.get().clone();
+                    let on_toggle = on_toggle.clone();
+                    let on_delete = on_delete.clone();
+                    let on_edit = on_edit.clone();
+
                     view! {
                         <div>
                             <TasksList
@@ -47,17 +101,9 @@ pub fn TasksListPage() -> impl IntoView {
                                 on_edit=on_edit
                             />
                         </div>
-                    }
-                },
-                Some(Err(err)) => {
-                    console_log(&format!("Error details: {:?}", err));
-                    view! {
-                        <div class="errorContainer">
-                            "Error loading tasks: " {err}
-                        </div>
-                    }
-                },
-            }}
+                    }.into_view()
+                }
+            }
         </div>
     }
 }

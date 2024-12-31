@@ -7,13 +7,14 @@ use wasm_bindgen_futures::spawn_local;
 use crate::api::tasks::{create_task, delete_task, fetch_tasks, update_task, Task};
 
 pub fn use_tasks() -> (
-    Resource<(), Result<Vec<Task>, String>>,
+    ReadSignal<Vec<Task>>,
     // Create operation
     Action<Task, Result<Task, String>>,
     // Update operation
     Action<Task, Result<Task, String>>,
     // Delete operation
     Action<i32, Result<(), String>>,
+    impl Fn() + Clone + 'static,
 ) {
     // Create a signal to store tasks
     let (tasks, set_tasks) = create_signal(Vec::new());
@@ -55,10 +56,20 @@ pub fn use_tasks() -> (
     });
 
     // Create a resource that fetches tasks
-    let tasks = create_resource(
-        || (), // Dependencies (empty in this case)
-        |_| async move { fetch_tasks().await },
-    );
+    spawn_local(async move {
+        if let Ok(task_list) = fetch_tasks().await {
+            set_tasks.set(task_list);
+        }
+    });
+
+    // Create refetch function
+    let refetch = move || {
+        spawn_local(async move {
+            if let Ok(task_list) = fetch_tasks().await {
+                set_tasks.set(task_list);
+            }
+        });
+    };
 
     // Create task action
     let create = create_action(|task: &Task| {
@@ -78,5 +89,5 @@ pub fn use_tasks() -> (
         async move { delete_task(id).await }
     });
 
-    (tasks, create, update, delete)
+    (tasks, create, update, delete, refetch)
 }

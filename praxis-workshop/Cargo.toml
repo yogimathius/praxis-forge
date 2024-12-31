@@ -1,5 +1,5 @@
 [package]
-name = "praxis-workshop-two-ui"
+name = "praxis-workshop-ui"
 version = "0.1.0"
 edition = "2021"
 

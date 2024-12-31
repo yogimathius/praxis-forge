@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "praxis-workshop-two",
+  "productName": "praxis-workshop",
   "version": "0.1.0",
-  "identifier": "com.praxis-workshop-two.app",
+  "identifier": "com.praxis-workshop.app",
   "build": {
     "beforeDevCommand": "trunk serve",
     "devUrl": "http://localhost:1420",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "praxis-workshop-two",
+        "title": "praxis-workshop",
         "width": 800,
         "height": 600
       }

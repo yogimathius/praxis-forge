@@ -41,7 +41,7 @@ This synthesis reflects our core principles:
 
 ## Setup
 
-### Backend (forge-core)
+### Backend ([forge-core](forge-core))
 
 1. Navigate to the backend directory:
 
@@ -61,7 +61,7 @@ This synthesis reflects our core principles:
    mix phx.server
    ```
 
-### Frontend (praxis-workshop)
+### Frontend ([praxis-workshop](praxis-workshop))
 
 1. Navigate to the frontend directory:
 

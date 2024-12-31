@@ -117,3 +117,16 @@
 .deleteButton:hover {
   background-color: #fecaca;
 }
+
+.taskItem input {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+}

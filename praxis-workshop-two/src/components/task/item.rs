@@ -19,31 +19,59 @@ pub fn TaskItem(
     #[prop(into)] on_delete: Callback<Task>,
     #[prop(into)] on_edit: Callback<Task>,
 ) -> impl IntoView {
-    let task = create_rw_signal(task);
+    let (task, set_task) = create_signal(task);
+    let (status, set_status) = create_signal(task.get().status);
+    let (is_editing, set_is_editing) = create_signal(false);
+    let (edit_title, set_edit_title) = create_signal(task.get().title);
+    let (edit_description, set_edit_description) =
+        create_signal(task.get().description.unwrap_or_default());
 
-    // Log the initial task status
-    console_log(&format!("Initial task status: {}", task.get().status));
+    let title_input = create_node_ref();
+    let desc_input = create_node_ref();
 
-    // Create a local signal for status, initialized with the task's current status
-    let status = create_rw_signal(task.get().status.clone());
-
-    // Define available statuses
     const STATUSES: &[&str] = &["pending", "in_progress", "completed"];
 
-    // Log available statuses and current selection
-    console_log(&format!("Available statuses: {:?}", STATUSES));
-    console_log(&format!("Current status signal value: {}", status.get()));
+    let handle_save = move |_| {
+        let mut updated_task = task.get();
+        updated_task.title = edit_title.get();
+        updated_task.description = Some(edit_description.get());
+        on_edit.call(updated_task);
+        set_is_editing.set(false);
+    };
 
     view! {
         <div class="taskItem">
             <div class="wrapper">
                 <div class="taskContent">
-                    <p class="taskTitle">{move || task.get().title}</p>
-                    {move || task.get().description.as_ref().map(|desc| {
+                    {move || if is_editing.get() {
                         view! {
-                            <p class="description">{desc}</p>
+                            <input
+                                _ref=title_input
+                                type="text"
+                                value=edit_title.get()
+                                on:change=move |ev| {
+                                    set_edit_title.set(event_target_value(&ev));
+                                }
+                            />
+                            <input
+                                _ref=desc_input
+                                type="text"
+                                value=edit_description.get()
+                                on:change=move |ev| {
+                                    set_edit_description.set(event_target_value(&ev));
+                                }
+                            />
                         }
-                    })}
+                    } else {
+                        view! {
+                            <p class="taskTitle">{move || task.get().title}</p>
+                            {move || task.get().description.as_ref().map(|desc| {
+                                view! {
+                                    <p class="description">{desc}</p>
+                                }
+                            })}
+                        }
+                    }}
                 </div>
             </div>
             <div class="rightContent">
@@ -51,37 +79,41 @@ pub fn TaskItem(
                     class="statusSelect"
                     on:change=move |ev| {
                         let new_status = event_target_value(&ev);
-                        console_log(&format!("Selected new status: {}", new_status));
-                        status.set(new_status.clone());
-
+                        set_status.set(new_status.clone());
                         let mut updated_task = task.get();
                         updated_task.status = new_status;
                         on_toggle.call(updated_task);
                     }
-                    prop:value=move || {
-                        let current = status.get();
-                        console_log(&format!("Current status in select: {}", current));
-                        current
-                    }
+                    prop:value=move || status.get()
                 >
                     {STATUSES.iter().map(|status| {
                         view! {
-                            <option
-                                value={status.to_string()}
-                                selected={move || status == &task.get().status}
-                            >
+                            <option value={status.to_string()}>
                                 {status.to_string().replace("_", " ")}
                             </option>
                         }
                     }).collect::<Vec<_>>()}
                 </select>
                 <div class="actions">
-                    <button
-                        class="button editButton"
-                        on:click=move |_| on_edit.call(task.get())
-                    >
-                        "Edit"
-                    </button>
+                    {move || if is_editing.get() {
+                        view! {
+                            <button
+                                class="button saveButton"
+                                on:click=handle_save
+                            >
+                                "Save"
+                            </button>
+                        }
+                    } else {
+                        view! {
+                            <button
+                                class="button editButton"
+                                on:click=move |_| set_is_editing.set(true)
+                            >
+                                "Edit"
+                            </button>
+                        }
+                    }}
                     <button
                         class="button deleteButton"
                         on:click=move |_| on_delete.call(task.get())

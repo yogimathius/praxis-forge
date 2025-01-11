@@ -43,6 +43,18 @@ This synthesis reflects our core principles:
 
 ### Backend ([forge-core](forge-core))
 
+#### Prerequisites
+
+- **Elixir**: Version 1.12 or higher
+  - Install Elixir by following the instructions on the [official Elixir website](https://elixir-lang.org/install.html). This will also install `mix`, the build tool for Elixir.
+- **Phoenix**: Version 1.5 or higher
+  - Install Phoenix by running:
+    ```bash
+    mix archive.install hex phx_new
+    ```
+
+#### Setup
+
 1. Navigate to the backend directory:
 
    ```bash

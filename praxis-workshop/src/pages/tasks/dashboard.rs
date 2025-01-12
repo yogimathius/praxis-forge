@@ -82,6 +82,8 @@ pub fn TasksListPage() -> impl IntoView {
 
     view! {
         <div class="container">
+            <h2 class="dashboardTitle">"Forge Operations"</h2>
+            <p class="dashboardSubtitle">"Shape your tasks into achievements, one strike at a time."</p>
             <TaskForm on_add=move |title, description| on_add(title, description) />
             {
                 let tasks = tasks.clone();

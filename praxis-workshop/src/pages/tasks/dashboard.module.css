@@ -16,11 +16,10 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.title {
-  font-size: 1.5rem;
+.dashboardTitle {
+  font-size: 2rem;
   font-weight: 600;
   color: var(--forge-spark);
-  margin-bottom: 2rem;
   text-align: center;
   text-shadow: 0 0 10px var(--forge-orange);
 }
@@ -40,4 +39,44 @@
   border-radius: 0.5rem;
   margin: 1rem 0;
   backdrop-filter: blur(5px);
+}
+
+.dashboardTitle {
+  font-size: 2rem;
+  color: var(--forge-spark);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--forge-orange);
+}
+
+@keyframes emberPulse {
+  0% {
+    text-shadow: 0 0 10px var(--forge-orange);
+  }
+  50% {
+    text-shadow:
+      0 0 25px var(--forge-orange),
+      0 0 50px var(--forge-red);
+  }
+  100% {
+    text-shadow: 0 0 10px var(--forge-orange);
+  }
+}
+
+.dashboardSubtitle {
+  font-size: 1.25rem;
+  color: var(--forge-ash);
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  animation: fadeSlideUp 1s ease-out;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
 }

@@ -17,7 +17,7 @@ pub fn HomePage() -> impl IntoView {
 
     view! {
         <div class="home-container">
-            <h1 class="title fade-in">"Welcome to Praxis Forge"</h1>
+            <h3 class="home-title fade-in">"Welcome to Praxis Forge"</h3>
 
             <p class="subtitle slide-in">
                 "Transform intentions into actions, actions into habits, habits into mastery."

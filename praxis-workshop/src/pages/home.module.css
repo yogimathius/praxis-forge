@@ -1,23 +1,35 @@
+:root {
+  --forge-orange: #ff6b35; /* Hot metal/flame color */
+  --forge-red: #cc3311; /* Ember glow */
+  --forge-steel: #2d3142; /* Dark steel */
+  --forge-iron: #4f5d75; /* Cooled metal */
+  --forge-spark: #ffd700; /* Spark highlights */
+  --forge-ash: #e6e8e6; /* Cool ash/background */
+}
+
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, var(--forge-steel), var(--forge-iron));
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: var(--forge-ash);
 }
 
-.title {
-  font-size: 2.5rem;
-  color: #1a202c;
+.home-title {
+  font-size: 2rem;
+  color: var(--forge-spark);
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--forge-orange);
 }
 
 .subtitle {
   font-size: 1.25rem;
-  color: #4a5568;
+  color: var(--forge-ash);
   margin-bottom: 3rem;
+  opacity: 0.9;
 }
 
 .principles-grid {
@@ -28,10 +40,12 @@
 }
 
 .principle-card {
-  padding: 2rem;
-  background: #ffffff;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--forge-orange);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -40,17 +54,17 @@
 .principle-card:hover,
 .principle-card.active {
   transform: translateY(-4px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--forge-orange);
 }
 
 .principle-title {
   font-size: 1.5rem;
-  color: #2d3748;
+  color: var(--forge-orange);
   margin-bottom: 1rem;
 }
 
 .principle-desc {
-  color: #4a5568;
+  color: var(--forge-ash);
 }
 
 .cta-section {
@@ -60,16 +74,20 @@
 .cta-button {
   display: inline-block;
   padding: 1rem 2rem;
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--forge-orange);
+  color: var(--forge-steel);
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .cta-button:hover {
-  background-color: #2563eb;
+  background-color: transparent;
+  border-color: var(--forge-orange);
+  color: var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-orange);
 }
 
 .fade-in {

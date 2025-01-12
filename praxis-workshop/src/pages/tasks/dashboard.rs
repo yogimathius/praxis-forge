@@ -27,12 +27,12 @@ pub fn TasksListPage() -> impl IntoView {
                 status: "pending".to_string(),
                 completed: false,
             });
-            let refetch = refetch.clone();
+
             set_timeout(
                 move || {
                     refetch();
                 },
-                std::time::Duration::from_millis(100),
+                std::time::Duration::from_millis(300),
             );
         });
     };

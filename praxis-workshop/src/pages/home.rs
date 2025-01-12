@@ -6,7 +6,7 @@ extern "C" {}
 
 #[component]
 pub fn HomePage() -> impl IntoView {
-    let (hover_index, set_hover_index) = create_signal(0);
+    let (hover_index, set_hover_index) = create_signal(-1);
 
     let principles = vec![
         ("Praxis", "Theory into Action"),
@@ -29,9 +29,9 @@ pub fn HomePage() -> impl IntoView {
                     view! {
                         <div
                             class="principle-card"
-                            class:active=move || hover_index.get() == i
-                            on:mouseenter=move |_| set_hover_index.set(i)
-                            on:mouseleave=move |_| set_hover_index.set(0)
+                            class:active=move || hover_index.get() == i as i32
+                            on:mouseenter=move |_| set_hover_index.set(i as i32)
+                            on:mouseleave=move |_| set_hover_index.set(-1)
                         >
                             <h3 class="principle-title">{title}</h3>
                             <p class="principle-desc">{desc}</p>

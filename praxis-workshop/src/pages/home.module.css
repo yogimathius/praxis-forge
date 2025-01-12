@@ -41,26 +41,35 @@
 
 .principle-card {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(5px);
   border-radius: 8px;
   border: 1px solid var(--forge-orange);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.3s ease;
 }
 
 .principle-card:hover,
 .principle-card.active {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px var(--forge-orange);
+  background: rgba(255, 107, 53, 0.15); /* Very subtle orange tint */
+  box-shadow:
+    0 4px 12px rgba(255, 107, 53, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.1); /* Subtle golden spark glow */
+  border-color: var(--forge-spark);
 }
 
 .principle-title {
   font-size: 1.5rem;
   color: var(--forge-orange);
   margin-bottom: 1rem;
+}
+
+.principle-card:hover .principle-title {
+  color: var(--forge-spark);
 }
 
 .principle-desc {

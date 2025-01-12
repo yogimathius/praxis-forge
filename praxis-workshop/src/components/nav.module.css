@@ -10,24 +10,34 @@
   border-radius: 12px;
 }
 
-.link {
+.nav-item {
+  position: relative;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-item .link {
+  display: block;
   color: var(--forge-ash);
   text-decoration: none;
   padding: 0.5rem 1.5rem;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
+  transition: color 0.3s ease;
 }
 
-.link:hover {
-  border-color: var(--forge-orange);
-  box-shadow: 0 0 15px var(--forge-orange);
+/* Active state styling */
+.nav-item.active {
+  background: rgba(255, 107, 53, 0.15);
+  box-shadow:
+    0 0 15px rgba(255, 107, 53, 0.2),
+    0 0 20px rgba(255, 215, 0, 0.1);
+  border: 1px solid var(--forge-orange);
 }
 
-.active {
-  background-color: var(--forge-orange);
-  color: var(--forge-steel);
-  box-shadow: 0 0 15px var(--forge-orange);
+/* Hover state styling */
+.nav-item:hover:not(.active) {
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid var(--forge-orange);
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
 }
 
 @media (max-width: 640px) {

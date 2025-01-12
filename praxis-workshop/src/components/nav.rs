@@ -8,20 +8,24 @@ pub fn Navigation(location_state: LocationState) -> impl IntoView {
 
     view! {
         <nav class="nav">
-            <A
-                href="/"
-                class="link"
-                on:click=move |_| set_location.set(Location::Home)
-            >
-                "Home"
-            </A>
-            <A
-                href="/tasks"
-                class="link"
-                on:click=move |_| set_location.set(Location::Tasks)
-            >
-                "Tasks"
-            </A>
+            <div class="nav-item" class:active=move || location.get() == Location::Home>
+                <A
+                    href="/"
+                    class="link"
+                    on:click=move |_| set_location.set(Location::Home)
+                >
+                    "Home"
+                </A>
+            </div>
+            <div class="nav-item" class:active=move || location.get() == Location::Tasks>
+                <A
+                    href="/tasks"
+                    class="link"
+                    on:click=move |_| set_location.set(Location::Tasks)
+                >
+                    "Tasks"
+                </A>
+            </div>
         </nav>
     }
 }

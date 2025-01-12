@@ -1,4 +1,12 @@
-/* Reset default styles */
+:root {
+  --forge-orange: #ff6b35;
+  --forge-red: #cc3311;
+  --forge-steel: #2d3142;
+  --forge-iron: #4f5d75;
+  --forge-spark: #ffd700;
+  --forge-ash: #e6e8e6;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,47 +19,48 @@ body {
     system-ui,
     -apple-system,
     sans-serif;
-  background-color: #f6f6f6;
+  background: var(--forge-steel);
+  color: var(--forge-ash);
+  min-height: 100vh;
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      var(--forge-red) 0%,
+      transparent 20%
+    ),
+    radial-gradient(circle at 80% 70%, var(--forge-orange) 0%, transparent 20%);
+  background-attachment: fixed;
 }
 
-/* Base container styles */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
 }
 
-/* Header styles */
 .title {
-  color: #2d3748;
+  color: var(--forge-spark);
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
   letter-spacing: -0.025em;
+  text-shadow: 0 0 10px var(--forge-orange);
 }
 
-/* Navigation styles */
 .nav {
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding: 1rem;
-  background-color: #f7fafc;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--forge-orange);
 }
 
 .link {
   text-decoration: none;
-  color: #4a5568;
+  color: var(--forge-ash);
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -59,75 +68,52 @@ body {
 }
 
 .link:hover {
-  color: #2b6cb0;
-  background-color: #ebf4ff;
-}
-
-/* Logo container styles */
-.row {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
-/* Logo styles */
-.logo {
-  width: 100px;
-  height: 100px;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.1);
-}
-
-/* Form styles */
-form.row {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  margin: 2rem auto;
+  color: var(--forge-steel);
+  background-color: var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-orange);
 }
 
 input {
   padding: 0.75rem;
-  border: 2px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--forge-orange);
   border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  color: var(--forge-ash);
+  transition: all 0.2s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+  border-color: var(--forge-spark);
+  box-shadow: 0 0 15px var(--forge-orange);
 }
 
 button {
   padding: 0.75rem 1.5rem;
-  background-color: #4299e1;
-  color: white;
-  border: none;
+  background-color: var(--forge-orange);
+  color: var(--forge-steel);
+  border: 2px solid transparent;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 button:hover {
-  background-color: #2b6cb0;
+  background-color: transparent;
+  border-color: var(--forge-orange);
+  color: var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-orange);
 }
 
-/* Message display */
 p {
   text-align: center;
-  color: #4a5568;
+  color: var(--forge-ash);
   line-height: 1.6;
 }
 
-/* Responsive adjustments */
+/* Keep your existing media queries */
 @media (max-width: 640px) {
   .container {
     padding: 1rem;

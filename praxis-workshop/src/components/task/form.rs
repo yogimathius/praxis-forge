@@ -53,7 +53,7 @@ where
                 />
                 <input
                     type="text"
-                    class="input"
+                    class="input description"
                     placeholder="Add a description..."
                     on:input=move |ev| set_task_description.set(event_target_value(&ev))
                     prop:value=move || task_description.get()

@@ -24,9 +24,6 @@ pub async fn fetch_tasks() -> Result<Vec<Task>, String> {
         .await
         .map_err(|e| format!("Error reading response text: {}", e))?;
 
-    // Try to parse and print the raw text
-    console_log(&format!("Raw response: {}", text));
-
     // Then attempt to parse it
     serde_json::from_str(&text)
         .map_err(|e| format!("Deserialize error: {}. Raw response: {}", e, text))

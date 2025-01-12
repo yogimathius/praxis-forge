@@ -1,28 +1,43 @@
+:root {
+  --forge-orange: #ff6b35; /* Hot metal/flame color */
+  --forge-red: #cc3311; /* Ember glow */
+  --forge-steel: #2d3142; /* Dark steel */
+  --forge-iron: #4f5d75; /* Cooled metal */
+  --forge-spark: #ffd700; /* Spark highlights */
+  --forge-ash: #e6e8e6; /* Cool ash/background */
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  background: linear-gradient(135deg, var(--forge-steel), var(--forge-iron));
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--forge-spark);
   margin-bottom: 2rem;
   text-align: center;
+  text-shadow: 0 0 10px var(--forge-orange);
 }
 
 .loadingContainer {
   text-align: center;
   padding: 2rem;
-  color: #6b7280;
+  color: var(--forge-ash);
 }
 
 .errorContainer {
   text-align: center;
   padding: 1rem;
-  color: #dc2626;
-  background-color: #fee2e2;
+  color: var(--forge-red);
+  background-color: rgba(204, 51, 17, 0.1);
+  border: 1px solid var(--forge-red);
   border-radius: 0.5rem;
   margin: 1rem 0;
+  backdrop-filter: blur(5px);
 }

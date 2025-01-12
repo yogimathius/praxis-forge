@@ -1,58 +1,24 @@
+use leptos::*;
+use leptos_router::*;
+
+use crate::components::nav::Navigation;
 use crate::pages::home::HomePage;
 use crate::pages::tasks::dashboard::TasksListPage;
-use leptos::*;
-use leptos_dom::logging::console_log;
-use leptos_router::*;
-use serde::{Deserialize, Serialize};
-use wasm_bindgen::prelude::*;
-use web_sys::console;
-
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "core"])]
-    async fn invoke(cmd: &str, args: JsValue) -> JsValue;
-}
-
-#[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
-}
-
-#[wasm_bindgen(module = "/src/app.css")]
-extern "C" {}
+use crate::state::location::use_location;
 
 #[component]
 pub fn App() -> impl IntoView {
+    let location_state = use_location();
+
     view! {
         <Router>
-            <MainContent />
+            <main>
+                <Navigation location_state=location_state/>
+                <Routes>
+                    <Route path="/" view=HomePage/>
+                    <Route path="/tasks" view=TasksListPage/>
+                </Routes>
+            </main>
         </Router>
-    }
-}
-
-#[component]
-fn MainContent() -> impl IntoView {
-    view! {
-        <main class="container">
-            <h1 class="title">"Praxis Workshop"</h1>
-            <nav class="nav">
-                <A class="link" href="/">"Home"</A>
-                <A class="link" href="/tasks">"Tasks"</A>
-            </nav>
-            <Routes>
-                <Route path="/" view=HomePage/>
-                <Route path="/tasks" view=TasksListPage/>
-                <Route path="/*any" view=NotFound/>
-            </Routes>
-        </main>
-    }
-}
-
-#[component]
-fn NotFound() -> impl IntoView {
-    view! {
-        <div class="container">
-            <h1>"404 Not Found"</h1>
-        </div>
     }
 }

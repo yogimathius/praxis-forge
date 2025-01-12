@@ -1,0 +1,39 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--forge-orange);
+  border-radius: 12px;
+}
+
+.link {
+  color: var(--forge-ash);
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.link:hover {
+  border-color: var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-orange);
+}
+
+.active {
+  background-color: var(--forge-orange);
+  color: var(--forge-steel);
+  box-shadow: 0 0 15px var(--forge-orange);
+}
+
+@media (max-width: 640px) {
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}

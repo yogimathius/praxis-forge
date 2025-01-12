@@ -7,11 +7,6 @@ use crate::api::tasks::Task;
 #[wasm_bindgen(module = "/src/components/task/item.module.css")]
 extern "C" {}
 
-// Helper function for logging
-fn console_log(msg: &str) {
-    console::log_1(&msg.into());
-}
-
 #[component]
 pub fn TaskItem(
     task: Task,

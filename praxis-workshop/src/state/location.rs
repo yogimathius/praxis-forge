@@ -4,6 +4,7 @@ use leptos::*;
 pub enum Location {
     Home,
     Tasks,
+    Goals,
 }
 
 #[derive(Copy, Clone)]

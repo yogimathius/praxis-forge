@@ -2,6 +2,7 @@ use leptos::*;
 use leptos_router::*;
 
 use crate::components::nav::Navigation;
+use crate::pages::goals::goals::GoalsListPage;
 use crate::pages::home::HomePage;
 use crate::pages::tasks::dashboard::TasksListPage;
 use crate::state::location::use_location;
@@ -17,6 +18,7 @@ pub fn App() -> impl IntoView {
                 <Routes>
                     <Route path="/" view=HomePage/>
                     <Route path="/tasks" view=TasksListPage/>
+                    <Route path="/goals" view=GoalsListPage/>
                 </Routes>
             </main>
         </Router>

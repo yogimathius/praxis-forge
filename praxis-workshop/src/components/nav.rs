@@ -26,6 +26,15 @@ pub fn Navigation(location_state: LocationState) -> impl IntoView {
                     "Tasks"
                 </A>
             </div>
+            <div class="nav-item" class:active=move || location.get() == Location::Goals>
+                <A
+                    href="/goals"
+                    class="link"
+                    on:click=move |_| set_location.set(Location::Goals)
+                >
+                    "Goals"
+                </A>
+            </div>
         </nav>
     }
 }

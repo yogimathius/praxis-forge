@@ -9,6 +9,7 @@ pub struct Task {
     pub completed: bool,
     pub description: Option<String>,
     pub status: String,
+    pub goal_id: Option<i32>,
 }
 
 pub async fn fetch_tasks() -> Result<Vec<Task>, String> {

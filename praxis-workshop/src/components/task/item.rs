@@ -1,7 +1,7 @@
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
-use web_sys::console;
 
+use crate::api::goals::Goal;
 use crate::api::tasks::Task;
 
 #[wasm_bindgen(module = "/src/components/task/item.module.css")]
@@ -10,11 +10,12 @@ extern "C" {}
 #[component]
 pub fn TaskItem(
     task: Task,
+    goals: ReadSignal<Vec<Goal>>,
     #[prop(into)] on_toggle: Callback<Task>,
     #[prop(into)] on_delete: Callback<Task>,
     #[prop(into)] on_edit: Callback<Task>,
 ) -> impl IntoView {
-    let (task, set_task) = create_signal(task);
+    let (task, _) = create_signal(task);
     let (status, set_status) = create_signal(task.get().status);
     let (is_editing, set_is_editing) = create_signal(false);
     let (edit_title, set_edit_title) = create_signal(task.get().title);
@@ -25,6 +26,14 @@ pub fn TaskItem(
     let desc_input = create_node_ref();
 
     const STATUSES: &[&str] = &["pending", "in_progress", "completed"];
+
+    let goal_name = create_memo(move |_| {
+        goals
+            .get()
+            .iter()
+            .find(|g| Some(g.id) == task.get().goal_id)
+            .map(|g| g.title.clone())
+    });
 
     let handle_save = move |_| {
         let mut updated_task = task.get();
@@ -117,6 +126,11 @@ pub fn TaskItem(
                     </button>
                 </div>
             </div>
+            {move || goal_name.get().map(|name| view! {
+                <span class="goalTag">
+                    {name}
+                </span>
+            })}
         </div>
     }
 }

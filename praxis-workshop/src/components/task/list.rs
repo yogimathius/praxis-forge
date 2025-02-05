@@ -1,6 +1,7 @@
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
+use crate::api::goals::Goal;
 use crate::api::tasks::Task;
 use crate::components::task::item::TaskItem;
 
@@ -10,6 +11,7 @@ extern "C" {}
 #[component]
 pub fn TasksList(
     tasks: Vec<Task>,
+    goals: ReadSignal<Vec<Goal>>,
     #[prop(into)] on_toggle: Callback<Task>,
     #[prop(into)] on_delete: Callback<Task>,
     #[prop(into)] on_edit: Callback<Task>,
@@ -27,6 +29,7 @@ pub fn TasksList(
                                 on_toggle=on_toggle
                                 on_delete=on_delete
                                 on_edit=on_edit
+                                goals=goals
                             />
                         }
                     })

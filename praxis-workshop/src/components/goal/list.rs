@@ -3,7 +3,6 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::api::goals::Goal;
 use crate::components::goal::item::GoalItem;
-
 #[wasm_bindgen(module = "/src/components/goal/list.module.css")]
 extern "C" {}
 

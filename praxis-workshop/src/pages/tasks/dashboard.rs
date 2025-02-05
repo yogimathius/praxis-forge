@@ -4,6 +4,7 @@ use crate::api::tasks::Task;
 use crate::components::task::form::TaskForm;
 use crate::components::task::list::TasksList;
 use crate::state::tasks::use_tasks;
+use crate::state::use_goals::use_goals;
 use wasm_bindgen::prelude::wasm_bindgen;
 #[wasm_bindgen(module = "/src/pages/tasks/dashboard.module.css")]
 extern "C" {}
@@ -11,13 +12,14 @@ extern "C" {}
 #[component]
 pub fn TasksListPage() -> impl IntoView {
     let (tasks, create, update, delete, refetch) = use_tasks();
+    let (goals, _, _, _, _) = use_goals();
 
     let refetch_create = refetch.clone();
     let refetch_toggle = refetch.clone();
     let refetch_delete = refetch.clone();
     let refetch_update = refetch.clone();
 
-    let on_add = move |title: String, description: String| {
+    let on_add = move |title: String, description: String, goal_id: Option<i32>| {
         let refetch = refetch_create.clone();
         spawn_local(async move {
             create.dispatch(Task {
@@ -26,6 +28,7 @@ pub fn TasksListPage() -> impl IntoView {
                 description: Some(description),
                 status: "pending".to_string(),
                 completed: false,
+                goal_id,
             });
 
             set_timeout(
@@ -84,7 +87,10 @@ pub fn TasksListPage() -> impl IntoView {
         <div class="container">
             <h2 class="dashboardTitle">"Forge Operations"</h2>
             <p class="dashboardSubtitle">"Shape your tasks into achievements, one strike at a time."</p>
-            <TaskForm on_add=move |title, description| on_add(title, description) />
+            <TaskForm
+                on_add=move |title, description, goal_id| on_add(title, description, goal_id)
+                goals=goals
+            />
             {
                 let tasks = tasks.clone();
                 move || -> View {
@@ -100,6 +106,7 @@ pub fn TasksListPage() -> impl IntoView {
                                 on_toggle=on_toggle
                                 on_delete=on_delete
                                 on_edit=on_edit
+                                goals=goals
                             />
                         </div>
                     }.into_view()

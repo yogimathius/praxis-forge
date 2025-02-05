@@ -153,3 +153,14 @@
   color: var(--forge-spark);
   box-shadow: 0 0 10px var(--forge-spark);
 }
+
+.goalTag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--forge-spark);
+  color: var(--forge-steel);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-left: 1rem;
+}

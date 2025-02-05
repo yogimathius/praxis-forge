@@ -13,7 +13,7 @@ pub fn GoalItem(
     #[prop(into)] on_delete: Callback<Goal>,
     #[prop(into)] on_edit: Callback<Goal>,
 ) -> impl IntoView {
-    let (goal, set_goal) = create_signal(goal);
+    let (goal, _) = create_signal(goal);
     let (is_editing, set_is_editing) = create_signal(false);
     let (edit_title, set_edit_title) = create_signal(goal.get().title);
     let (edit_description, set_edit_description) =

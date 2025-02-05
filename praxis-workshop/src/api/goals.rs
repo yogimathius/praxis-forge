@@ -1,4 +1,3 @@
-use leptos::leptos_dom::logging::console_log;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 

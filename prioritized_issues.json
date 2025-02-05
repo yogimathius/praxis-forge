@@ -1,0 +1,458 @@
+[
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7Hdo",
+    "title": "Create goal list component",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7Hd8",
+    "title": "Implement goal creation and editing",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7HeI",
+    "title": "Develop progress tracking for goals",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7Heo",
+    "title": "Add goal completion celebration feature",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBvs",
+    "title": "Implement Goal State Management ",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBws",
+    "title": "Develop Goal Component Library",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB-E",
+    "title": "Implement Progress Indicators",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q1C3 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVX5Nc",
+    "title": "Improve Rust Frontend Styling Developer Experience",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q1C3 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCAQ",
+    "title": "Optimize Component Rendering",
+    "status": "No Status",
+    "component": "UI Components",
+    "iteration": "Q1C3 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVX5NU",
+    "title": "Research and Implement Signal Pattern Improvements for Rust Frontend",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q1C3 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IDY",
+    "title": "Configure Tauri for cross-platform compatibility",
+    "status": "No Status",
+    "component": "Tauri",
+    "iteration": "Q1C4 2025",
+    "priority": "P0"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IFE",
+    "title": "Configure auto-updating mechanism",
+    "status": "No Status",
+    "component": "Tauri",
+    "iteration": "Q1C4 2025",
+    "priority": "P0"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IIY",
+    "title": "Implement data migration and backup functionality",
+    "status": "No Status",
+    "component": "Database",
+    "iteration": "Q1C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7ID4",
+    "title": "Set up IPC between Rust backend and frontend",
+    "status": "No Status",
+    "component": "Tauri",
+    "iteration": "Q1C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IEw",
+    "title": "Add system tray icon and menu",
+    "status": "No Status",
+    "component": "Tauri",
+    "iteration": "Q1C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB_k",
+    "title": "Add Accessibility Features",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q1C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVezM0",
+    "title": "Setup SCSS Build Pipeline",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C5 2025",
+    "priority": "P0"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVezM8",
+    "title": "Create Base SCSS Architecture",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C5 2025",
+    "priority": "P0"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IJ8",
+    "title": "Configure Tauri for creating distributable packages",
+    "status": "No Status",
+    "component": "Tauri",
+    "iteration": "Q1C5 2025",
+    "priority": "P0"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCGg",
+    "title": "Build Rust-based UI Components",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7Hcw",
+    "title": "Implement task filtering and sorting",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBrg",
+    "title": "Add Task Offline Persistence Layer",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBsI",
+    "title": "Create Task Component Library",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBtE",
+    "title": "Implement Task Error Handling",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVFAng",
+    "title": "Add Task form validation",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IHE",
+    "title": "Implement local storage solution",
+    "status": "No Status",
+    "component": "Database",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB4M",
+    "title": "Create Error Handling System",
+    "status": "No Status",
+    "component": "State management",
+    "iteration": "Q1C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IJQ",
+    "title": "Add loading indicators and animations",
+    "status": "No Status",
+    "component": "UI Components",
+    "iteration": "Q1C5 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB-U",
+    "title": "Develop Animation System",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q1C5 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCDQ",
+    "title": "Create Rust WASM Profiling Tools",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWQ59w",
+    "title": "Improve Action/State Management API to Reduce Boilerplate in Leptos",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWQ5-E",
+    "title": "Improve Error Messages for Component Prop Type Mismatches in Leptos",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWQ5-Y",
+    "title": "Improve Documentation and Developer Experience for CSS Module Integration in Leptos",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCBI",
+    "title": "Optimize Rust-WASM Binary Size",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCBk",
+    "title": "Improve Rust-JS Interop Performance",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCEE",
+    "title": "Optimize Phoenix-Rust Integration",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q1C6 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCGM",
+    "title": "Develop Rust Form Handling",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWRJfs",
+    "title": "Add Code Folding Support for HTML in Leptos view! Macros",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWRJf4",
+    "title": "Location Pathname Not Updating on Route Changes in Leptos",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCFc",
+    "title": "Replace JavaScript DOM Manipulations with Rust",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCFo",
+    "title": "Implement Browser APIs in Rust",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVeb5A",
+    "title": "Investigate and Implement Leptos Compile Time Improvements",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgWQ59k",
+    "title": "Investigate State Management Improvements for Leptos Callbacks",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCGE",
+    "title": "Create Rust Animation System",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C1 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlBtg",
+    "title": "Add Task Testing Infrastructure",
+    "status": "No Status",
+    "component": "Task Management",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlByY",
+    "title": "Add Goal Testing Suite",
+    "status": "No Status",
+    "component": "Goal Tracking",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgVX5M4",
+    "title": "Testing and Cleanup",
+    "status": "No Status",
+    "component": "Frontend",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IIs",
+    "title": "Write unit tests for frontend components",
+    "status": "No Status",
+    "component": "Testing",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB48",
+    "title": "Set up Testing Infrastructure",
+    "status": "No Status",
+    "component": "Testing",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCCc",
+    "title": "Implement Rust WASM Testing Patterns",
+    "status": "No Status",
+    "component": "Innovations",
+    "iteration": "Q2C4 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7II8",
+    "title": "Analyze and optimize component rendering",
+    "status": "No Status",
+    "component": "Testing",
+    "iteration": "Q2C4 2025",
+    "priority": "P2"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCKM",
+    "title": "Implement Native Data Processing in Rust",
+    "status": "No Status",
+    "component": "Native implemented functions",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCL8",
+    "title": "Implement Native Text Processing",
+    "status": "No Status",
+    "component": "Native implemented functions",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlCK0",
+    "title": "Develop Native File Operations",
+    "status": "No Status",
+    "component": "Native implemented functions",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgT7IJg",
+    "title": "Write user documentation for application features",
+    "status": "No Status",
+    "component": "Tooling",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB5I",
+    "title": "Create Development Tooling",
+    "status": "No Status",
+    "component": "Tooling",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  },
+  {
+    "id": "PVTI_lAHOA6C4H84AqR8nzgUlB5U",
+    "title": "Implement Performance Monitoring",
+    "status": "No Status",
+    "component": "Tooling",
+    "iteration": "Q2C5 2025",
+    "priority": "P1"
+  }
+]

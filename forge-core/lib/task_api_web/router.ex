@@ -15,6 +15,7 @@ defmodule TaskApiWeb.Router do
 
   scope "/api", TaskApiWeb do
     pipe_through :api
+    resources "/goals", GoalController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
   end
 

@@ -7,6 +7,7 @@ defmodule TaskApi.Task do
     field :completed, :boolean, default: false
     field :description, :string
     field :status, :string
+    belongs_to :goal, TaskApi.Goal  # Establish the relationship
 
     timestamps(type: :utc_datetime)
   end

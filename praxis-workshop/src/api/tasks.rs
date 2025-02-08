@@ -31,20 +31,34 @@ pub async fn fetch_tasks() -> Result<Vec<Task>, String> {
 }
 
 pub async fn create_task(task: Task) -> Result<Task, String> {
-    // Create a wrapper struct or use serde_json::Value
     let payload = serde_json::json!({
-        "task": task
+        "task": {
+            "title": task.title,
+            "description": task.description,
+            "status": task.status,
+            "completed": task.completed,
+            "goal_id": task.goal_id
+        }
     });
 
-    Client::new()
+    let response = Client::new()
         .post("http://localhost:4000/api/tasks")
         .json(&payload)
         .send()
         .await
-        .map_err(|e| e.to_string())?
-        .json::<Task>()
+        .map_err(|e| e.to_string())?;
+
+    // Get the response body as text first for debugging
+    let text = response
+        .text()
         .await
-        .map_err(|e| e.to_string())
+        .map_err(|e| format!("Error reading response text: {}", e))?;
+
+    console_log(&format!("Create task response: {}", text));
+
+    // Then parse it
+    serde_json::from_str(&text)
+        .map_err(|e| format!("Deserialize error: {}. Raw response: {}", e, text))
 }
 
 pub async fn update_task(id: i32, task: Task) -> Result<Task, String> {

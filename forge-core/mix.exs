@@ -46,7 +46,9 @@ defmodule TaskApi.MixProject do
       {:cors_plug, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:exsync, "~> 0.2", only: :dev}
+      {:exsync, "~> 0.2", only: :dev},
+      {:absinthe, "~> 1.6"},
+      {:absinthe_plug, "~> 1.5"}
     ]
   end
 

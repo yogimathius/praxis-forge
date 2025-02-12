@@ -19,15 +19,12 @@ pub async fn fetch_tasks() -> Result<Vec<Task>, String> {
         .await
         .map_err(|e| format!("Request error: {}", e))?;
 
-    // Get the response body as text first
-    let text = response
-        .text()
+    let tasks = response
+        .json::<Vec<Task>>()
         .await
-        .map_err(|e| format!("Error reading response text: {}", e))?;
+        .map_err(|e| format!("Deserialize error: {}", e))?;
 
-    // Then attempt to parse it
-    serde_json::from_str(&text)
-        .map_err(|e| format!("Deserialize error: {}. Raw response: {}", e, text))
+    Ok(tasks)
 }
 
 pub async fn create_task(task: Task) -> Result<Task, String> {

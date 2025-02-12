@@ -85,7 +85,8 @@ pub fn TaskItem(
                         let new_status = event_target_value(&ev);
                         set_status.set(new_status.clone());
                         let mut updated_task = task.get();
-                        updated_task.status = new_status;
+                        updated_task.status = new_status.clone();
+                        updated_task.completed = new_status == "completed";
                         on_toggle.call(updated_task);
                     }
                     prop:value=move || status.get()

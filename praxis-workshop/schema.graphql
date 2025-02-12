@@ -1,0 +1,44 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+type Goal {
+  description: String
+  id: ID
+  tasks: [Task]
+  tasksCompleted: Int
+  tasksRequired: Int
+  title: String
+}
+
+type RootMutationType {
+  """
+  Create a goal
+  """
+  createGoal(description: String, tasksRequired: Int!, title: String!): Goal
+  """
+  Create a task
+  """
+  createTask(description: String, goalId: ID, title: String!): Task
+}
+
+type RootQueryType {
+  """
+  Get all goals
+  """
+  goals: [Goal]
+  """
+  Get all tasks
+  """
+  tasks: [Task]
+}
+
+type Task {
+  completed: Boolean
+  description: String
+  goal: Goal
+  id: ID
+  status: String
+  title: String
+}
+

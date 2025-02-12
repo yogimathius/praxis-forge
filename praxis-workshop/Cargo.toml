@@ -19,6 +19,8 @@ serde_json = "1.0.133"
 gloo-net = { version = "0.6.0", features = ["websocket"] }
 futures = "0.3.31"
 wasm-bindgen-test = "0.3.50"
+async-trait = "0.1.86"
+cynic = { version = "3.10.0", features = ["http-reqwest"] }
 
 [workspace]
 members = ["src-tauri"]
@@ -26,3 +28,4 @@ members = ["src-tauri"]
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
 web-sys = { version = "0.3", features = ["HtmlElement"] }
+cynic-codegen = "3.0"

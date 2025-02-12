@@ -8,7 +8,7 @@ use crate::pages::tasks::dashboard::TasksListPage;
 use crate::state::location::use_location;
 
 #[component]
-pub fn App() -> impl IntoView {
+pub fn app() -> impl IntoView {
     let location_state = use_location();
 
     view! {

@@ -19,6 +19,18 @@ defmodule TaskApiWeb.Router do
     resources "/tasks", TaskController, except: [:new, :edit]
   end
 
+  # GraphQL endpoint
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphql", Absinthe.Plug,
+      schema: TaskApiWeb.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: TaskApiWeb.Schema,
+      interface: :simple
+  end
+
   # LiveDashboard route
   if Mix.env() in [:dev] do
     import Phoenix.LiveDashboard.Router

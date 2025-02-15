@@ -19,7 +19,23 @@ type RootMutationType {
   """
   Create a task
   """
-  createTask(description: String, goalId: ID, title: String!): Task
+  createTask(completed: Boolean, description: String, goalId: ID, status: String, title: String!): Task
+  """
+  Delete a goal
+  """
+  deleteGoal(id: ID!): Goal
+  """
+  Delete a task
+  """
+  deleteTask(id: ID!): Task
+  """
+  Update a goal
+  """
+  updateGoal(id: ID!, title: String): Goal
+  """
+  Update a task
+  """
+  updateTask(completed: Boolean, description: String, goalId: ID, id: ID!, status: String, title: String): Task
 }
 
 type RootQueryType {

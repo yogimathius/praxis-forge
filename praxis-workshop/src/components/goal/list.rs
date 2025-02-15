@@ -1,8 +1,8 @@
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::api::goals::Goal;
 use crate::components::goal::item::GoalItem;
+use crate::graphql::queries::goals::Goal;
 #[wasm_bindgen(module = "/src/components/goal/list.module.css")]
 extern "C" {}
 

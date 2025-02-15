@@ -4,7 +4,9 @@ use leptos::*;
 use serde_json::Value;
 use wasm_bindgen_futures::spawn_local;
 
-use crate::api::tasks::{create_task, delete_task, fetch_tasks, update_task, Task};
+use crate::graphql::mutations::tasks::{create_task, delete_task, update_task, Task};
+use crate::graphql::queries::tasks::Task;
+use crate::services::service_context::use_service;
 
 pub fn use_tasks() -> (
     ReadSignal<Vec<Task>>,

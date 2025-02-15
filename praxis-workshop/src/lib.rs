@@ -1,4 +1,3 @@
-pub mod api;
 pub mod components;
 pub mod graphql;
 pub mod hooks;

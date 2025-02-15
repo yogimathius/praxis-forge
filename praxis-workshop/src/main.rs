@@ -1,5 +1,4 @@
 use leptos::*;
-mod api;
 mod app;
 mod components;
 mod pages;

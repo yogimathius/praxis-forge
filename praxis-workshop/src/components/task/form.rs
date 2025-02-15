@@ -1,7 +1,7 @@
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::api::goals::Goal;
+use crate::graphql::queries::goals::Goal;
 
 #[wasm_bindgen(module = "/src/components/task/form.module.css")]
 extern "C" {}
@@ -73,7 +73,7 @@ where
                     <option value="">"Select a goal (optional)"</option>
                     {move || goals.get().into_iter().map(|goal| {
                         view! {
-                            <option value={goal.id.to_string()}>
+                            <option value={goal.id.unwrap()}>
                                 {goal.title}
                             </option>
                         }

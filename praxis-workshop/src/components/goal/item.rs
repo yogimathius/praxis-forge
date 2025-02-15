@@ -1,7 +1,7 @@
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::api::goals::Goal;
+use crate::graphql::queries::goals::Goal;
 
 #[wasm_bindgen(module = "/src/components/goal/item.module.css")]
 extern "C" {}
@@ -42,7 +42,7 @@ pub fn GoalItem(
                                 class="editInput"
                                 value=edit_title.get()
                                 on:change=move |ev| {
-                                    set_edit_title.set(event_target_value(&ev));
+                                    set_edit_title.set(Some(event_target_value(&ev)));
                                 }
                             />
                             <input
@@ -66,16 +66,17 @@ pub fn GoalItem(
                             <div class="progressInfo">
                                 <span class="progressText">
                                     "Tasks completed: "
-                                    {move || goal.get().tasks_completed}
+                                    {move || goal.get().tasks_completed.unwrap_or_default()}
                                     " / "
-                                    {move || goal.get().tasks_required}
+                                    {move || goal.get().tasks_required.unwrap_or_default()}
                                 </span>
                                 <div class="progressBar">
                                     <div
                                         class="progressFill"
                                         style:width=move || {
-                                            let progress = if goal.get().tasks_required > 0 {
-                                                (goal.get().tasks_completed as f32 / goal.get().tasks_required as f32 * 100.0) as i32
+                                            let progress = if goal.get().tasks_required.unwrap_or_default() > 0 {
+                                                (goal.get().tasks_completed.unwrap_or_default() as f32 /
+                                                 goal.get().tasks_required.unwrap_or_default() as f32 * 100.0) as i32
                                             } else {
                                                 0
                                             };

@@ -11,4 +11,16 @@ defmodule TaskApiWeb.Resolvers.Goals do
     |> Goal.changeset(args)
     |> Repo.insert()
   end
+
+  def update_goal(_parent, args, _resolution) do
+    %Goal{}
+    |> Goal.changeset(args)
+    |> Repo.update()
+  end
+
+  def delete_goal(_parent, args, _resolution) do
+    %Goal{}
+    |> Goal.changeset(args)
+    |> Repo.delete()
+  end
 end

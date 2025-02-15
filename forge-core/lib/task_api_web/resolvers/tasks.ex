@@ -11,4 +11,16 @@ defmodule TaskApiWeb.Resolvers.Tasks do
     |> Task.changeset(args)
     |> Repo.insert()
   end
+
+  def update_task(_parent, args, _resolution) do
+    %Task{}
+    |> Task.changeset(args)
+    |> Repo.update()
+  end
+
+  def delete_task(_parent, args, _resolution) do
+    %Task{}
+    |> Task.changeset(args)
+    |> Repo.delete()
+  end
 end

@@ -18,12 +18,13 @@ impl GraphQLClient {
 
     pub async fn query<T: cynic::QueryFragment>(
         &self,
-        operation: Operation<T, ()>,
+        operation: cynic::Operation<T, T::Variables>,
     ) -> Result<T, Box<dyn std::error::Error>> {
         let response = self
             .client
             .post(&self.endpoint)
-            .run_graphql(operation)
+            .json(&operation)
+            .send()
             .await?;
 
         GraphQLClient::unwrap_response(response)

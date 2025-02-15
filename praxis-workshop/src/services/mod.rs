@@ -3,8 +3,7 @@ pub mod service_context;
 use crate::graphql::queries::{goals::Goal, tasks::Task};
 
 // Define the trait that both implementations will follow
-#[async_trait::async_trait]
-pub trait DataService {
+pub trait DataService: Send + Sync + 'static {
     async fn fetch_tasks(&self) -> Result<Vec<Task>, String>;
     async fn create_task(&self, task: Task) -> Result<Task, String>;
     async fn update_task(&self, id: cynic::Id, task: Task) -> Result<Task, String>;

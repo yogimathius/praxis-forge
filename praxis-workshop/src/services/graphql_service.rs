@@ -1,15 +1,17 @@
 use crate::graphql::mutations::goals::{
-    CreateGoalMutation, DeleteGoalMutation, UpdateGoalMutation,
+    CreateGoalMutation, CreateGoalVariables, DeleteGoalMutation, DeleteGoalVariables,
+    UpdateGoalMutation, UpdateGoalVariables,
 };
 use crate::graphql::mutations::tasks::{
-    CreateTaskMutation, DeleteTaskMutation, UpdateTaskMutation,
+    CreateTaskMutation, CreateTaskVariables, DeleteTaskMutation, DeleteTaskVariables,
+    UpdateTaskMutation, UpdateTaskVariables,
 };
 use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::goals::GoalsQuery;
 use crate::graphql::queries::tasks::Task;
 use crate::graphql::queries::tasks::TasksQuery;
 use crate::services::DataService;
-use cynic::{Operation, QueryBuilder, QueryFragment};
+use cynic::{MutationBuilder, Operation, QueryBuilder, QueryFragment};
 use reqwest::Client;
 
 pub struct GraphQLService {
@@ -17,88 +19,162 @@ pub struct GraphQLService {
     endpoint: String,
 }
 
-#[async_trait::async_trait]
 impl DataService for GraphQLService {
     async fn fetch_tasks(&self) -> Result<Vec<Task>, String> {
-        let operation = Operation::<TasksQuery, ()>::new(TasksQuery::build(()));
+        let query = TasksQuery::build(());
+        let response = self
+            .client
+            .post(&self.endpoint)
+            .json(&query)
+            .send()
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<TasksQuery>>()
+            .await
+            .map_err(|e| e.to_string())?;
+
+        Ok(response
+            .data
+            .unwrap()
+            .tasks
+            .unwrap()
+            .into_iter()
+            .flatten()
+            .collect())
+    }
+
+    async fn create_task(&self, task: Task) -> Result<Task, String> {
+        let operation = CreateTaskMutation::build(CreateTaskVariables {
+            title: task.title.unwrap_or_default(),
+            description: task.description,
+            goal_id: task.goal.and_then(|g| g.id),
+        });
+
         let response = self
             .client
             .post(&self.endpoint)
             .json(&operation)
             .send()
-            .await?;
-        GraphQLService::unwrap_response(response)
-    }
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<CreateTaskMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
 
-    async fn create_task(&self, task: Task) -> Result<Task, String> {
-        let mutation = CreateTaskMutation::build(task);
-        let response = self
-            .client
-            .post(&self.endpoint)
-            .json(&mutation)
-            .send()
-            .await?;
-        Ok(response.create_task)
+        Ok(response.data.unwrap().create_task.unwrap())
     }
 
     async fn update_task(&self, id: cynic::Id, task: Task) -> Result<Task, String> {
-        let mutation = UpdateTaskMutation::build(id, task);
+        let operation = UpdateTaskMutation::build(UpdateTaskVariables {
+            id,
+            title: task.title.unwrap_or_default(),
+            description: task.description,
+            goal_id: task.goal.and_then(|g| g.id),
+        });
+
         let response = self
             .client
             .post(&self.endpoint)
-            .json(&mutation)
+            .json(&operation)
             .send()
-            .await?;
-        Ok(response.update_task)
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<UpdateTaskMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
+
+        Ok(response.data.unwrap().update_task.unwrap())
     }
 
     async fn delete_task(&self, id: cynic::Id) -> Result<(), String> {
-        let mutation = DeleteTaskMutation::build(id);
+        let operation = DeleteTaskMutation::build(DeleteTaskVariables { id });
         let response = self
             .client
             .post(&self.endpoint)
-            .json(&mutation)
+            .json(&operation)
             .send()
-            .await?;
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<DeleteTaskMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
+
         Ok(())
     }
 
     async fn fetch_goals(&self) -> Result<Vec<Goal>, String> {
         let query = GoalsQuery::build(());
-        let response = self.client.post(&self.endpoint).json(&query).send().await?;
-        Ok(response.goals)
+        let response = self
+            .client
+            .post(&self.endpoint)
+            .json(&query)
+            .send()
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<GoalsQuery>>()
+            .await
+            .map_err(|e| e.to_string())?;
+        Ok(response
+            .data
+            .unwrap()
+            .goals
+            .unwrap()
+            .into_iter()
+            .flatten()
+            .collect())
     }
 
     async fn create_goal(&self, goal: Goal) -> Result<Goal, String> {
-        let mutation = CreateGoalMutation::build(goal);
+        let operation = CreateGoalMutation::build(CreateGoalVariables {
+            title: goal.title.unwrap_or_default(),
+            description: goal.description,
+            tasks_required: goal.tasks_required.unwrap_or(0),
+        });
         let response = self
             .client
             .post(&self.endpoint)
-            .json(&mutation)
+            .json(&operation)
             .send()
-            .await?;
-        Ok(response.create_goal)
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<CreateGoalMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
+        Ok(response.data.unwrap().create_goal.unwrap())
     }
 
     async fn update_goal(&self, id: cynic::Id, goal: Goal) -> Result<Goal, String> {
-        let mutation = UpdateGoalMutation::build(id, goal);
+        let operation = UpdateGoalMutation::build(UpdateGoalVariables {
+            id,
+            title: goal.title.unwrap_or_default(),
+            description: goal.description,
+            tasks_required: goal.tasks_required.unwrap_or(0),
+        });
         let response = self
             .client
             .post(&self.endpoint)
-            .json(&mutation)
+            .json(&operation)
             .send()
-            .await?;
-        Ok(response.update_goal)
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<UpdateGoalMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
+        Ok(response.data.unwrap().update_goal.unwrap())
     }
 
     async fn delete_goal(&self, id: cynic::Id) -> Result<(), String> {
-        let mutation = DeleteGoalMutation::build(id);
+        let operation = DeleteGoalMutation::build(DeleteGoalVariables { id });
         let response = self
             .client
             .post(&self.endpoint)
-            .json(&mutation)
+            .json(&operation)
             .send()
-            .await?;
+            .await
+            .map_err(|e| e.to_string())?
+            .json::<cynic::GraphQlResponse<DeleteGoalMutation>>()
+            .await
+            .map_err(|e| e.to_string())?;
         Ok(())
     }
 }

@@ -1,9 +1,10 @@
-use super::DataService;
 use leptos::*;
 use std::sync::Arc;
 
+use crate::services::graphql_service::GraphQLService;
+
 #[derive(Clone)]
-pub struct ServiceContext(pub Arc<dyn DataService>);
+pub struct ServiceContext(pub Arc<GraphQLService>);
 
 pub fn use_service() -> ServiceContext {
     use_context::<ServiceContext>().expect("ServiceContext not provided")

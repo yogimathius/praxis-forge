@@ -1,4 +1,4 @@
-pub mod client;
+pub mod schema;
+
 pub mod mutations;
 pub mod queries;
-pub mod schema;

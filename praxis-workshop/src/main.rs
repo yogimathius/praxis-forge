@@ -1,10 +1,5 @@
 use leptos::*;
-mod app;
-mod components;
-mod pages;
-mod state;
-mod utils;
-use app::App;
+use praxis_workshop_ui::app::App;
 
 pub fn main() {
     _ = console_error_panic_hook::set_once();

@@ -9,9 +9,9 @@ extern "C" {}
 #[component]
 pub fn GoalItem(
     goal: Goal,
-    #[prop(into)] on_toggle: Callback<Goal>,
-    #[prop(into)] on_delete: Callback<Goal>,
-    #[prop(into)] on_edit: Callback<Goal>,
+    #[prop(into)] on_toggle: Action<Goal, Result<Goal, String>>,
+    #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
+    #[prop(into)] on_edit: Action<Goal, Result<Goal, String>>,
 ) -> impl IntoView {
     let (goal, _) = create_signal(goal);
     let (is_editing, set_is_editing) = create_signal(false);
@@ -26,7 +26,7 @@ pub fn GoalItem(
         let mut updated_goal = goal.get();
         updated_goal.title = edit_title.get();
         updated_goal.description = Some(edit_description.get());
-        on_edit.call(updated_goal);
+        let _ = on_edit.dispatch(updated_goal);
         set_is_editing.set(false);
     };
 
@@ -111,7 +111,7 @@ pub fn GoalItem(
                 }}
                 <button
                     class="button deleteButton"
-                    on:click=move |_| on_delete.call(goal.get())
+                    on:click=move |_| on_delete.dispatch(goal.get().id.unwrap())
                 >
                     "Delete"
                 </button>

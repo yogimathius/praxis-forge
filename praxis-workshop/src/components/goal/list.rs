@@ -9,9 +9,9 @@ extern "C" {}
 #[component]
 pub fn GoalsList(
     goals: Vec<Goal>,
-    #[prop(into)] on_toggle: Callback<Goal>,
-    #[prop(into)] on_delete: Callback<Goal>,
-    #[prop(into)] on_edit: Callback<Goal>,
+    #[prop(into)] on_toggle: Action<Goal, Result<Goal, String>>,
+    #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
+    #[prop(into)] on_edit: Action<Goal, Result<Goal, String>>,
 ) -> impl IntoView {
     view! {
         <div class="goalsContainer">

@@ -1,14 +1,18 @@
+use std::rc::Rc;
+
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
+
+use crate::graphql::queries::goals::Goal;
 
 #[wasm_bindgen(module = "/src/components/goal/form.module.css")]
 extern "C" {}
 
 #[component]
-pub fn GoalForm<F>(on_add: F) -> impl IntoView
-where
-    F: Fn(String, String) + 'static,
-{
+pub fn GoalForm(
+    create: Action<Goal, Result<Goal, String>>,
+    refetch: Rc<dyn Fn()>,
+) -> impl IntoView {
     let (goal_text, set_goal_text) = create_signal(String::new());
     let (goal_description, set_goal_description) = create_signal(String::new());
     let (is_submitting, set_is_submitting) = create_signal(false);
@@ -23,19 +27,30 @@ where
         }
 
         set_is_submitting.set(true);
-        on_add(current_text, current_description);
+        let goal = Goal {
+            id: None,
+            title: Some(current_text),
+            description: Some(current_description),
+            tasks_required: None,
+            tasks_completed: None,
+            tasks: None,
+        };
 
         set_goal_text.set(String::new());
         set_goal_description.set(String::new());
         set_show_success.set(true);
         set_is_submitting.set(false);
 
-        set_timeout(
-            move || {
-                set_show_success.set(false);
-            },
-            std::time::Duration::from_millis(2000),
-        );
+        let refetch = refetch.clone();
+        spawn_local(async move {
+            let _ = create.dispatch(goal);
+            set_timeout(
+                move || {
+                    set_show_success.set(false);
+                },
+                std::time::Duration::from_millis(2000),
+            );
+        });
     };
 
     view! {

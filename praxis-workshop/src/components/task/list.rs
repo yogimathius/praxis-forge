@@ -12,9 +12,9 @@ extern "C" {}
 pub fn TasksList(
     tasks: Vec<Task>,
     goals: ReadSignal<Vec<Goal>>,
-    #[prop(into)] on_toggle: Callback<Task>,
-    #[prop(into)] on_delete: Callback<Task>,
-    #[prop(into)] on_edit: Callback<Task>,
+    #[prop(into)] on_toggle: Action<Task, Result<Task, String>>,
+    #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
+    #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
 ) -> impl IntoView {
     view! {
         <div class="tasksContainer">

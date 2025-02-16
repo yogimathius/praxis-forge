@@ -1,103 +1,50 @@
-use leptos::*;
-
-use crate::api::tasks::Task;
 use crate::components::task::form::TaskForm;
 use crate::components::task::list::TasksList;
-use crate::state::tasks::use_tasks;
-use crate::state::use_goals::use_goals;
+use crate::state::use_goals::{use_goals, GoalsState};
+use crate::state::use_tasks::{use_tasks, TasksState};
+use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 #[wasm_bindgen(module = "/src/pages/tasks/dashboard.module.css")]
 extern "C" {}
 
 #[component]
 pub fn TasksListPage() -> impl IntoView {
-    let (tasks, create, update, delete, refetch) = use_tasks();
-    let (goals, _, _, _, _) = use_goals();
-
-    let refetch_create = refetch.clone();
-    let refetch_toggle = refetch.clone();
-    let refetch_delete = refetch.clone();
-    let refetch_update = refetch.clone();
-
-    let on_add = move |title: String, description: String, goal_id: Option<i32>| {
-        let refetch = refetch_create.clone();
-        spawn_local(async move {
-            create.dispatch(Task {
-                id: 0,
-                title,
-                description: Some(description),
-                status: "pending".to_string(),
-                completed: false,
-                goal_id,
-            });
-
-            set_timeout(
-                move || {
-                    refetch();
-                },
-                std::time::Duration::from_millis(300),
-            );
-        });
-    };
-
-    let on_toggle = move |task: Task| {
-        let refetch = refetch_toggle.clone();
-        spawn_local(async move {
-            update.dispatch(task);
-            let refetch = refetch.clone();
-            set_timeout(
-                move || {
-                    refetch();
-                },
-                std::time::Duration::from_millis(100),
-            );
-        });
-    };
-
-    let on_delete = move |task: Task| {
-        let refetch = refetch_delete.clone();
-        spawn_local(async move {
-            delete.dispatch(task.id);
-            // Clone before the timeout
-            let refetch = refetch.clone();
-            set_timeout(
-                move || {
-                    refetch(); // Use without clone here
-                },
-                std::time::Duration::from_millis(100),
-            );
-        });
-    };
-
-    let on_edit = move |task: Task| {
-        let refetch = refetch_update.clone();
-        spawn_local(async move {
-            update.dispatch(task);
-            let refetch = refetch.clone();
-            set_timeout(
-                move || {
-                    refetch();
-                },
-                std::time::Duration::from_millis(100),
-            );
-        });
-    };
+    let TasksState {
+        tasks,
+        loading: _,
+        error: _,
+        create,
+        update,
+        delete,
+        refetch,
+    } = use_tasks();
+    let GoalsState {
+        goals,
+        loading: _,
+        error: _,
+        create: _,
+        update: _,
+        delete: _,
+        refetch: _,
+    } = use_goals();
 
     view! {
         <div class="container">
             <h2 class="dashboardTitle">"Forge Operations"</h2>
             <p class="dashboardSubtitle">"Shape your tasks into achievements, one strike at a time."</p>
             <TaskForm
-                on_add=move |title, description, goal_id| on_add(title, description, goal_id)
+                create=create.clone()
+                refetch=refetch.clone()
                 goals=goals
             />
             {
                 let tasks = tasks.clone();
                 move || -> View {
                     let tasks = tasks.get().clone();
-                    let on_toggle = on_toggle.clone();
-                    let on_delete = on_delete.clone();
-                    let on_edit = on_edit.clone();
+                    let on_toggle = update.clone();
+                    let on_delete = delete.clone();
+                    let on_edit = update.clone();
+                    let goals = goals.clone();
 
                     view! {
                         <div>

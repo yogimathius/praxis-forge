@@ -1,16 +1,19 @@
+use std::rc::Rc;
+
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::graphql::queries::goals::Goal;
+use crate::graphql::queries::{goals::Goal, tasks::Task};
 
 #[wasm_bindgen(module = "/src/components/task/form.module.css")]
 extern "C" {}
 
 #[component]
-pub fn TaskForm<F>(on_add: F, goals: ReadSignal<Vec<Goal>>) -> impl IntoView
-where
-    F: Fn(String, String, Option<i32>) + 'static,
-{
+pub fn TaskForm(
+    create: Action<Task, Result<Task, String>>,
+    refetch: Rc<dyn Fn()>,
+    goals: ReadSignal<Vec<Goal>>,
+) -> impl IntoView {
     let (task_text, set_task_text) = create_signal(String::new());
     let (task_description, set_task_description) = create_signal(String::new());
     let (selected_goal, set_selected_goal) = create_signal(None::<i32>);
@@ -30,7 +33,32 @@ where
 
         set_is_submitting.set(true);
 
-        on_add(current_text, current_description, current_goal);
+        let task = Task {
+            id: None,
+            title: Some(current_text),
+            description: Some(current_description),
+            completed: Some(false),
+            status: Some(task_status.get_untracked()),
+            goal: current_goal.map(|id| Goal {
+                id: Some(cynic::Id::new(id.to_string())),
+                title: None,
+                description: None,
+                tasks_required: None,
+                tasks_completed: None,
+                tasks: None,
+            }),
+        };
+
+        let refetch = refetch.clone();
+        spawn_local(async move {
+            let _ = create.dispatch(task);
+            set_timeout(
+                move || {
+                    refetch();
+                },
+                std::time::Duration::from_millis(100),
+            );
+        });
 
         set_task_text.set(String::new());
         set_task_description.set(String::new());
@@ -73,8 +101,8 @@ where
                     <option value="">"Select a goal (optional)"</option>
                     {move || goals.get().into_iter().map(|goal| {
                         view! {
-                            <option value={goal.id.unwrap()}>
-                                {goal.title}
+                            <option value={goal.id.map(|id| id.inner().to_string()).unwrap_or_default()}>
+                                {goal.title.unwrap_or_default()}
                             </option>
                         }
                     }).collect_view()}

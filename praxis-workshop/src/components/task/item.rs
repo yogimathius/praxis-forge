@@ -11,9 +11,9 @@ extern "C" {}
 pub fn TaskItem(
     task: Task,
     goals: ReadSignal<Vec<Goal>>,
-    #[prop(into)] on_toggle: Callback<Task>,
-    #[prop(into)] on_delete: Callback<Task>,
-    #[prop(into)] on_edit: Callback<Task>,
+    #[prop(into)] on_toggle: Action<Task, Result<Task, String>>,
+    #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
+    #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
 ) -> impl IntoView {
     let (task, _) = create_signal(task);
     let (status, set_status) = create_signal(task.get().status);
@@ -27,19 +27,13 @@ pub fn TaskItem(
 
     const STATUSES: &[&str] = &["pending", "in_progress", "completed"];
 
-    let goal_name = create_memo(move |_| {
-        goals
-            .get()
-            .iter()
-            .find(|g| Some(g.id) == task.get().goal_id)
-            .map(|g| g.title.clone())
-    });
+    let goal_name = create_memo(move |_| task.get().goal.as_ref().map(|g| g.title.clone()));
 
     let handle_save = move |_| {
         let mut updated_task = task.get();
         updated_task.title = edit_title.get();
         updated_task.description = Some(edit_description.get());
-        on_edit.call(updated_task);
+        let _ = on_edit.dispatch(updated_task);
         set_is_editing.set(false);
     };
 
@@ -54,7 +48,7 @@ pub fn TaskItem(
                                 type="text"
                                 value=edit_title.get()
                                 on:change=move |ev| {
-                                    set_edit_title.set(event_target_value(&ev));
+                                    set_edit_title.set(Some(event_target_value(&ev)));
                                 }
                             />
                             <input
@@ -83,11 +77,11 @@ pub fn TaskItem(
                     class="statusSelect"
                     on:change=move |ev| {
                         let new_status = event_target_value(&ev);
-                        set_status.set(new_status.clone());
+                        set_status.set(Some(new_status.clone()));
                         let mut updated_task = task.get();
-                        updated_task.status = new_status.clone();
-                        updated_task.completed = new_status == "completed";
-                        on_toggle.call(updated_task);
+                        updated_task.status = Some(new_status.clone());
+                        updated_task.completed = Some(new_status == "completed");
+                        let _ = on_toggle.dispatch(updated_task);
                     }
                     prop:value=move || status.get()
                 >
@@ -121,7 +115,7 @@ pub fn TaskItem(
                     }}
                     <button
                         class="button deleteButton"
-                        on:click=move |_| on_delete.call(task.get())
+                        on:click=move |_| on_delete.dispatch(task.get().id.unwrap())
                     >
                         "Delete"
                     </button>

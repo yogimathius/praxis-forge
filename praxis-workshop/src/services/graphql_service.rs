@@ -6,11 +6,8 @@ use crate::graphql::mutations::tasks::{
     CreateTaskMutation, CreateTaskVariables, DeleteTaskMutation, DeleteTaskVariables,
     UpdateTaskMutation, UpdateTaskVariables,
 };
-use crate::graphql::queries::goals::Goal;
-use crate::graphql::queries::goals::GoalsQuery;
-use crate::graphql::queries::tasks::Task;
-use crate::graphql::queries::tasks::TasksQuery;
-use crate::services::DataService;
+use crate::graphql::queries::goals::{Goal, GoalsQuery};
+use crate::graphql::queries::tasks::{Task, TasksQuery};
 use cynic::{MutationBuilder, Operation, QueryBuilder, QueryFragment};
 use reqwest::Client;
 
@@ -19,8 +16,15 @@ pub struct GraphQLService {
     endpoint: String,
 }
 
-impl DataService for GraphQLService {
-    async fn fetch_tasks(&self) -> Result<Vec<Task>, String> {
+impl GraphQLService {
+    pub fn new() -> Self {
+        Self {
+            client: Client::new(),
+            endpoint: "http://localhost:8000/graphql".to_string(),
+        }
+    }
+
+    pub async fn fetch_tasks(&self) -> Result<Vec<Task>, String> {
         let query = TasksQuery::build(());
         let response = self
             .client
@@ -43,7 +47,7 @@ impl DataService for GraphQLService {
             .collect())
     }
 
-    async fn create_task(&self, task: Task) -> Result<Task, String> {
+    pub async fn create_task(&self, task: Task) -> Result<Task, String> {
         let operation = CreateTaskMutation::build(CreateTaskVariables {
             title: task.title.unwrap_or_default(),
             description: task.description,
@@ -64,7 +68,7 @@ impl DataService for GraphQLService {
         Ok(response.data.unwrap().create_task.unwrap())
     }
 
-    async fn update_task(&self, id: cynic::Id, task: Task) -> Result<Task, String> {
+    pub async fn update_task(&self, id: cynic::Id, task: Task) -> Result<Task, String> {
         let operation = UpdateTaskMutation::build(UpdateTaskVariables {
             id,
             title: task.title.unwrap_or_default(),
@@ -86,10 +90,9 @@ impl DataService for GraphQLService {
         Ok(response.data.unwrap().update_task.unwrap())
     }
 
-    async fn delete_task(&self, id: cynic::Id) -> Result<(), String> {
+    pub async fn delete_task(&self, id: cynic::Id) -> Result<(), String> {
         let operation = DeleteTaskMutation::build(DeleteTaskVariables { id });
-        let response = self
-            .client
+        self.client
             .post(&self.endpoint)
             .json(&operation)
             .send()
@@ -102,7 +105,7 @@ impl DataService for GraphQLService {
         Ok(())
     }
 
-    async fn fetch_goals(&self) -> Result<Vec<Goal>, String> {
+    pub async fn fetch_goals(&self) -> Result<Vec<Goal>, String> {
         let query = GoalsQuery::build(());
         let response = self
             .client
@@ -124,7 +127,7 @@ impl DataService for GraphQLService {
             .collect())
     }
 
-    async fn create_goal(&self, goal: Goal) -> Result<Goal, String> {
+    pub async fn create_goal(&self, goal: Goal) -> Result<Goal, String> {
         let operation = CreateGoalMutation::build(CreateGoalVariables {
             title: goal.title.unwrap_or_default(),
             description: goal.description,
@@ -143,7 +146,7 @@ impl DataService for GraphQLService {
         Ok(response.data.unwrap().create_goal.unwrap())
     }
 
-    async fn update_goal(&self, id: cynic::Id, goal: Goal) -> Result<Goal, String> {
+    pub async fn update_goal(&self, id: cynic::Id, goal: Goal) -> Result<Goal, String> {
         let operation = UpdateGoalMutation::build(UpdateGoalVariables {
             id,
             title: goal.title.unwrap_or_default(),
@@ -163,10 +166,9 @@ impl DataService for GraphQLService {
         Ok(response.data.unwrap().update_goal.unwrap())
     }
 
-    async fn delete_goal(&self, id: cynic::Id) -> Result<(), String> {
+    pub async fn delete_goal(&self, id: cynic::Id) -> Result<(), String> {
         let operation = DeleteGoalMutation::build(DeleteGoalVariables { id });
-        let response = self
-            .client
+        self.client
             .post(&self.endpoint)
             .json(&operation)
             .send()
@@ -177,9 +179,7 @@ impl DataService for GraphQLService {
             .map_err(|e| e.to_string())?;
         Ok(())
     }
-}
 
-impl GraphQLService {
     fn unwrap_response<T: cynic::QueryFragment>(
         response: cynic::GraphQlResponse<T>,
     ) -> Result<T, String> {

@@ -15,9 +15,9 @@ pub fn GoalItem(
 ) -> impl IntoView {
     let (goal, _) = create_signal(goal);
     let (is_editing, set_is_editing) = create_signal(false);
-    let (edit_title, set_edit_title) = create_signal(goal.get().title);
+    let (edit_title, set_edit_title) = create_signal(goal.get_untracked().title);
     let (edit_description, set_edit_description) =
-        create_signal(goal.get().description.unwrap_or_default());
+        create_signal(goal.get_untracked().description.unwrap_or_default());
 
     let title_input = create_node_ref();
     let desc_input = create_node_ref();

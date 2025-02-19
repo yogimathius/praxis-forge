@@ -8,12 +8,15 @@ pub struct GoalsQuery {
 }
 
 #[derive(cynic::QueryFragment, Debug, Clone)]
-#[cynic(schema_path = "schema.graphql")]
+#[cynic(schema = "forge")]
 pub struct Goal {
     pub id: Option<cynic::Id>,
     pub title: Option<String>,
     pub description: Option<String>,
+    #[cynic(rename = "tasksRequired")]
     pub tasks_required: Option<i32>,
+    #[cynic(rename = "tasksCompleted")]
     pub tasks_completed: Option<i32>,
+    #[cynic(recurse = "1")] // Only go one level deep for tasks
     pub tasks: Option<Vec<Option<Task>>>,
 }

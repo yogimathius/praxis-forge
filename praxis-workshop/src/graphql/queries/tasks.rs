@@ -9,9 +9,9 @@ pub struct Task {
     pub description: Option<String>,
     pub completed: Option<bool>,
     pub status: Option<String>,
+    #[cynic(recurse = "1")] // Only go one level deep for goal
     pub goal: Option<Goal>,
 }
-
 #[derive(cynic::QueryFragment, Debug)]
 #[cynic(schema = "forge", graphql_type = "RootQueryType")]
 pub struct TasksQuery {

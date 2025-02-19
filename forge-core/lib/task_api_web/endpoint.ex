@@ -2,8 +2,11 @@ defmodule TaskApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :task_api
   require Logger
 
-  # Add this line near the top of the file
-  plug CORSPlug
+  # Add this before any other plugs
+  plug CORSPlug,
+    origin: ["http://localhost:1420"],
+    methods: ["GET", "POST", "OPTIONS"],
+    headers: ["Content-Type", "Accept", "Authorization"]
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

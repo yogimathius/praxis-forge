@@ -16,11 +16,13 @@ pub fn TaskItem(
     #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
 ) -> impl IntoView {
     let (task, _) = create_signal(task);
-    let (status, set_status) = create_signal(task.get().status);
+
+    // Use .get_untracked() for initial values since we don't need reactivity here
+    let (status, set_status) = create_signal(task.get_untracked().status);
     let (is_editing, set_is_editing) = create_signal(false);
-    let (edit_title, set_edit_title) = create_signal(task.get().title);
+    let (edit_title, set_edit_title) = create_signal(task.get_untracked().title);
     let (edit_description, set_edit_description) =
-        create_signal(task.get().description.unwrap_or_default());
+        create_signal(task.get_untracked().description.unwrap_or_default());
 
     let title_input = create_node_ref();
     let desc_input = create_node_ref();

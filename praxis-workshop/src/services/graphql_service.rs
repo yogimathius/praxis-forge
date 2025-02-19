@@ -20,7 +20,7 @@ impl GraphQLService {
     pub fn new() -> Self {
         Self {
             client: Client::new(),
-            endpoint: "http://localhost:8000/graphql".to_string(),
+            endpoint: "http://localhost:4000/api/graphql".to_string(),
         }
     }
 

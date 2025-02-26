@@ -1,6 +1,6 @@
 use crate::graphql::queries::{goals::Goal, tasks::Task};
-use leptonic::prelude::*;
-use leptos::*;
+use leptos::prelude::*;
+use thaw::*;
 
 // XP values for different actions
 const TASK_COMPLETION_XP: i32 = 20;
@@ -12,11 +12,11 @@ pub fn ProgressBar(
     #[prop(into)] tasks: Signal<Vec<Task>>,
     #[prop(into)] goals: Signal<Vec<Goal>>,
 ) -> impl IntoView {
-    let (level, set_level) = create_signal(1);
-    let (xp, set_xp) = create_signal(0);
+    let (level, set_level) = signal(1);
+    let (xp, set_xp) = signal(0);
 
     // Create an effect to track completed tasks and goals
-    create_effect(move |_| {
+    Effect::new(move |_| {
         let completed_tasks = tasks
             .get()
             .iter()
@@ -40,18 +40,16 @@ pub fn ProgressBar(
         set_xp.set(remaining_xp);
     });
 
+    // Calculate the progress as a value between 0 and 1
+    let progress = move || xp.get() as f64 / XP_THRESHOLD as f64;
+
     view! {
         <div class="progress-container">
             <h3>"Level " {move || level.get()}</h3>
-            <Progress>
-                <ProgressBar
-                    value=move || xp.get() as f64
-                    max=XP_THRESHOLD as f64
-                    color=ProgressBarColor::Primary
-                    striped=true
-                    animated=true
-                />
-            </Progress>
+            <thaw::ProgressBar
+                value=Signal::derive(progress)
+                color=Signal::derive(move || ProgressBarColor::Brand)
+            />
             <p>"XP: " {move || xp.get()} " / " {XP_THRESHOLD}</p>
         </div>
     }

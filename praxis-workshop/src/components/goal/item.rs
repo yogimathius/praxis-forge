@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::graphql::queries::goals::Goal;
@@ -13,14 +13,14 @@ pub fn GoalItem(
     #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
     #[prop(into)] on_edit: Action<Goal, Result<Goal, String>>,
 ) -> impl IntoView {
-    let (goal, _) = create_signal(goal);
-    let (is_editing, set_is_editing) = create_signal(false);
-    let (edit_title, set_edit_title) = create_signal(goal.get_untracked().title);
+    let (goal, _) = signal(goal);
+    let (is_editing, set_is_editing) = signal(false);
+    let (edit_title, set_edit_title) = signal(goal.get_untracked().title);
     let (edit_description, set_edit_description) =
-        create_signal(goal.get_untracked().description.unwrap_or_default());
+        signal(goal.get_untracked().description.unwrap_or_default());
 
-    let title_input = create_node_ref();
-    let desc_input = create_node_ref();
+    let title_input = NodeRef::new();
+    let desc_input = NodeRef::new();
 
     let handle_save = move |_| {
         let mut updated_goal = goal.get();
@@ -34,33 +34,13 @@ pub fn GoalItem(
         <div class="goalItem">
             <div class="wrapper">
                 <div class="goalContent">
-                    {move || if is_editing.get() {
-                        view! {
-                            <input
-                                _ref=title_input
-                                type="text"
-                                class="editInput"
-                                value=edit_title.get()
-                                on:change=move |ev| {
-                                    set_edit_title.set(Some(event_target_value(&ev)));
-                                }
-                            />
-                            <input
-                                _ref=desc_input
-                                type="text"
-                                class="editInput"
-                                value=edit_description.get()
-                                on:change=move |ev| {
-                                    set_edit_description.set(event_target_value(&ev));
-                                }
-                            />
-                        }
-                    } else {
-                        view! {
-                            <h3 class="goalTitle">{move || goal.get().title}</h3>
+                    <Show
+                        when=move || is_editing.get()
+                        fallback=move || view! {
+                            <h3 class="goalTitle">{move || goal.get().title.clone().unwrap_or_default()}</h3>
                             {move || goal.get().description.as_ref().map(|desc| {
                                 view! {
-                                    <p class="description">{desc}</p>
+                                    <p class="description">{desc.clone()}</p>
                                 }
                             })}
                             <div class="progressInfo">
@@ -86,21 +66,32 @@ pub fn GoalItem(
                                 </div>
                             </div>
                         }
-                    }}
+                    >
+                        <input
+                            node_ref=title_input
+                            type="text"
+                            class="editInput"
+                            value=edit_title.get()
+                            on:change=move |ev| {
+                                set_edit_title.set(Some(event_target_value(&ev)));
+                            }
+                        />
+                        <input
+                            node_ref=desc_input
+                            type="text"
+                            class="editInput"
+                            value=edit_description.get()
+                            on:change=move |ev| {
+                                set_edit_description.set(event_target_value(&ev));
+                            }
+                        />
+                    </Show>
                 </div>
             </div>
             <div class="actions">
-                {move || if is_editing.get() {
-                    view! {
-                        <button
-                            class="button saveButton"
-                            on:click=handle_save
-                        >
-                            "Save"
-                        </button>
-                    }
-                } else {
-                    view! {
+                <Show
+                    when=move || is_editing.get()
+                    fallback=move || view! {
                         <button
                             class="button editButton"
                             on:click=move |_| set_is_editing.set(true)
@@ -108,10 +99,19 @@ pub fn GoalItem(
                             "Edit"
                         </button>
                     }
-                }}
+                >
+                    <button
+                        class="button saveButton"
+                        on:click=handle_save
+                    >
+                        "Save"
+                    </button>
+                </Show>
                 <button
                     class="button deleteButton"
-                    on:click=move |_| on_delete.dispatch(goal.get().id.unwrap())
+                    on:click=move |_| {
+                        let _ = on_delete.dispatch(goal.get().id.unwrap());
+                    }
                 >
                     "Delete"
                 </button>

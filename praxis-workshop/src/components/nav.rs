@@ -1,6 +1,6 @@
 use crate::state::location::{Location, LocationState};
-use leptos::*;
-use leptos_router::A;
+use leptos::prelude::*;
+use leptos_router::components::A;
 
 #[component]
 pub fn Navigation(location_state: LocationState) -> impl IntoView {
@@ -11,7 +11,7 @@ pub fn Navigation(location_state: LocationState) -> impl IntoView {
             <div class="nav-item" class:active=move || location.get() == Location::Home>
                 <A
                     href="/"
-                    class="link"
+                    // class="link"
                     on:click=move |_| set_location.set(Location::Home)
                 >
                     "Home"
@@ -20,7 +20,7 @@ pub fn Navigation(location_state: LocationState) -> impl IntoView {
             <div class="nav-item" class:active=move || location.get() == Location::Tasks>
                 <A
                     href="/tasks"
-                    class="link"
+                    // class="link"
                     on:click=move |_| set_location.set(Location::Tasks)
                 >
                     "Tasks"
@@ -29,7 +29,7 @@ pub fn Navigation(location_state: LocationState) -> impl IntoView {
             <div class="nav-item" class:active=move || location.get() == Location::Goals>
                 <A
                     href="/goals"
-                    class="link"
+                    // class="link"
                     on:click=move |_| set_location.set(Location::Goals)
                 >
                     "Goals"

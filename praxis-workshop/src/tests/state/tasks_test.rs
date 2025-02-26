@@ -1,4 +1,4 @@
-// use leptos::*;
+// use leptos::prelude::*;
 // use wasm_bindgen_test::*;
 
 // wasm_bindgen_test_configure!(run_in_browser);
@@ -10,7 +10,7 @@
 // mod tests {
 //     use crate::api::tasks::Task;
 //     use crate::state::tasks::use_tasks;
-//     use leptos::*;
+//     use leptos::prelude::*;
 //     use wasm_bindgen_test::*;
 
 //     #[wasm_bindgen_test]

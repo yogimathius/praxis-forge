@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use leptos::*;
+use leptos::{ev, prelude::*, task::spawn_local};
 use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::graphql::queries::goals::Goal;
@@ -13,10 +13,10 @@ pub fn GoalForm(
     create: Action<Goal, Result<Goal, String>>,
     refetch: Rc<dyn Fn()>,
 ) -> impl IntoView {
-    let (goal_text, set_goal_text) = create_signal(String::new());
-    let (goal_description, set_goal_description) = create_signal(String::new());
-    let (is_submitting, set_is_submitting) = create_signal(false);
-    let (show_success, set_show_success) = create_signal(false);
+    let (goal_text, set_goal_text) = signal(String::new());
+    let (goal_description, set_goal_description) = signal(String::new());
+    let (is_submitting, set_is_submitting) = signal(false);
+    let (show_success, set_show_success) = signal(false);
 
     let on_submit = move |ev: ev::SubmitEvent| {
         ev.prevent_default();
@@ -41,7 +41,7 @@ pub fn GoalForm(
         set_show_success.set(true);
         set_is_submitting.set(false);
 
-        let refetch = refetch.clone();
+        let _refetch = refetch.clone();
         spawn_local(async move {
             let _ = create.dispatch(goal);
             set_timeout(

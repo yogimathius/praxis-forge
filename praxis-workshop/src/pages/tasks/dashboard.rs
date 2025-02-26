@@ -33,16 +33,12 @@ pub fn TasksListPage() -> impl IntoView {
             <h2 class="dashboardTitle">"Forge Operations"</h2>
             <p class="dashboardSubtitle">"Shape your tasks into achievements, one strike at a time."</p>
             <TaskForm
-                create=create.clone()
                 refetch=refetch.clone()
                 goals=goals
             />
             <div>
                 <TasksList
                     tasks=tasks.get()
-                    on_toggle=update
-                    on_delete=delete
-                    on_edit=update
                     goals=goals
                 />
             </div>

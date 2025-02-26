@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::{rc::Rc, sync::Arc};
 
 use crate::graphql::queries::goals::Goal;
 use leptos::prelude::*;
@@ -12,7 +12,7 @@ pub struct GoalsState {
     pub create: Action<Goal, Result<Goal, String>>,
     pub update: Action<Goal, Result<Goal, String>>,
     pub delete: Action<cynic::Id, Result<(), String>>,
-    pub refetch: Rc<dyn Fn()>,
+    pub refetch: Arc<dyn Fn()>,
 }
 
 pub fn use_goals() -> GoalsState {
@@ -40,13 +40,15 @@ pub fn use_goals() -> GoalsState {
     });
 
     // Actions
-    let create = Action::new(move |goal: &Goal| {
+    #[allow(warnings)]
+    let create = create_action(move |goal: &Goal| {
         let goal = goal.clone();
         let service = service_create.clone();
         async move { service.0.create_goal(goal).await }
     });
 
-    let update = Action::new(move |goal: &Goal| {
+    #[allow(warnings)]
+    let update = create_action(move |goal: &Goal| {
         let goal = goal.clone();
         let service = service_update.clone();
         async move {
@@ -55,7 +57,8 @@ pub fn use_goals() -> GoalsState {
         }
     });
 
-    let delete = Action::new(move |id: &cynic::Id| {
+    #[allow(warnings)]
+    let delete = create_action(move |id: &cynic::Id| {
         let id = id.clone();
         let service = service_delete.clone();
         async move { service.0.delete_goal(id).await }
@@ -68,7 +71,7 @@ pub fn use_goals() -> GoalsState {
         create,
         update,
         delete,
-        refetch: Rc::new(move || {
+        refetch: Arc::new(move || {
             let service = service_refetch.clone();
             spawn_local(async move {
                 set_loading.update(|l| *l = true);

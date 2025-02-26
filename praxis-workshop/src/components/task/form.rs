@@ -5,17 +5,18 @@ use leptos::task::spawn_local;
 use leptos::web_sys;
 use wasm_bindgen::prelude::wasm_bindgen;
 
+use crate::actions::task_actions::create_task_action;
 use crate::graphql::queries::{goals::Goal, tasks::Task};
+use crate::services::service_context::ServiceContext;
 
 #[wasm_bindgen(module = "/src/components/task/form.module.css")]
 extern "C" {}
 
 #[component]
-pub fn TaskForm(
-    create: Action<Task, Result<Task, String>>,
-    refetch: Arc<dyn Fn()>,
-    goals: ReadSignal<Vec<Goal>>,
-) -> impl IntoView {
+pub fn TaskForm(refetch: Arc<dyn Fn()>, goals: ReadSignal<Vec<Goal>>) -> impl IntoView {
+    let service = use_context::<ServiceContext>().expect("No service context found");
+    let create = create_task_action(service);
+
     let (task_text, set_task_text) = signal(String::new());
     let (task_description, set_task_description) = signal(String::new());
     let (selected_goal, set_selected_goal) = signal(None::<i32>);

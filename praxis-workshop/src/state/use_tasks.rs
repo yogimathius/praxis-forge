@@ -43,13 +43,15 @@ pub fn use_tasks() -> TasksState {
     });
 
     // Actions
-    let create = Action::new(move |task: &Task| {
+    #[allow(warnings)]
+    let create = create_action(move |task: &Task| {
         let task = task.clone();
         let service = service_create.clone();
         async move { service.0.create_task(task).await }
     });
 
-    let update = Action::new(move |task: &Task| {
+    #[allow(warnings)]
+    let update = create_action(move |task: &Task| {
         let task = task.clone();
         let service = service_update.clone();
         async move {
@@ -58,7 +60,8 @@ pub fn use_tasks() -> TasksState {
         }
     });
 
-    let delete = Action::new(move |id: &cynic::Id| {
+    #[allow(warnings)]
+    let delete = create_action(move |id: &cynic::Id| {
         let id = id.clone();
         let service = service_delete.clone();
         async move { service.0.delete_task(id).await }

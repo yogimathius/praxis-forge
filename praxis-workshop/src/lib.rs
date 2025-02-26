@@ -3,9 +3,11 @@ use leptos_router::components::{Route, Router, Routes};
 use leptos_router::*;
 use std::sync::Arc;
 
+pub mod actions;
 pub mod components;
 pub mod graphql;
 pub mod pages;
+pub mod queries;
 pub mod services;
 pub mod state;
 pub mod tests;

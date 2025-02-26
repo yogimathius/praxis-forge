@@ -1,5 +1,7 @@
 {
   "emmet.includeLanguages": {
     "rust": "html"
-  }
+  },
+  "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
+  "rust-analyzer.checkOnSave.allTargets": false
 }

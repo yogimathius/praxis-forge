@@ -1,20 +1,21 @@
 use leptos::prelude::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
+use crate::actions::task_actions::{delete_task_action, update_task_action};
 use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
+use crate::services::service_context::ServiceContext;
 
 #[wasm_bindgen(module = "/src/components/task/item.module.css")]
 extern "C" {}
 
 #[component]
-pub fn TaskItem(
-    task: Task,
-    goals: ReadSignal<Vec<Goal>>,
-    #[prop(into)] on_toggle: Action<Task, Result<Task, String>>,
-    #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
-    #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
-) -> impl IntoView {
+pub fn TaskItem(task: Task, goals: ReadSignal<Vec<Goal>>) -> impl IntoView {
+    let service = use_context::<ServiceContext>().expect("No service context found");
+    let on_toggle = update_task_action(service.clone());
+    let on_delete = delete_task_action(service.clone());
+    let on_edit = update_task_action(service.clone());
+
     let (task, _) = signal(task);
 
     // Use .get_untracked() for initial values since we don't need reactivity here

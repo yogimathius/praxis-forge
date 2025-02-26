@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use praxis_workshop_ui::app::App;
+use praxis_workshop_ui::App;
 
 fn main() {
     console_error_panic_hook::set_once();

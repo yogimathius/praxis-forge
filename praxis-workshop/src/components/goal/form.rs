@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::sync::Arc;
 
 use leptos::{ev, prelude::*, task::spawn_local};
 use wasm_bindgen::prelude::wasm_bindgen;
@@ -11,7 +11,7 @@ extern "C" {}
 #[component]
 pub fn GoalForm(
     create: Action<Goal, Result<Goal, String>>,
-    refetch: Rc<dyn Fn()>,
+    refetch: Arc<dyn Fn()>,
 ) -> impl IntoView {
     let (goal_text, set_goal_text) = signal(String::new());
     let (goal_description, set_goal_description) = signal(String::new());

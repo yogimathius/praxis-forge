@@ -8,7 +8,7 @@ use crate::graphql::mutations::tasks::{
 };
 use crate::graphql::queries::goals::{Goal, GoalsQuery};
 use crate::graphql::queries::tasks::{Task, TasksQuery};
-use cynic::{MutationBuilder, Operation, QueryBuilder, QueryFragment};
+use cynic::{MutationBuilder, QueryBuilder};
 use reqwest::Client;
 
 pub struct GraphQLService {

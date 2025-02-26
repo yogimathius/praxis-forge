@@ -1,27 +1,30 @@
-use std::rc::Rc;
+use std::sync::Arc;
 
-use leptos::*;
+use leptos::prelude::*;
+use leptos::task::spawn_local;
+use leptos::web_sys;
 use wasm_bindgen::prelude::wasm_bindgen;
 
+use crate::actions::task_actions::create_task_action;
 use crate::graphql::queries::{goals::Goal, tasks::Task};
+use crate::services::service_context::ServiceContext;
 
 #[wasm_bindgen(module = "/src/components/task/form.module.css")]
 extern "C" {}
 
 #[component]
-pub fn TaskForm(
-    create: Action<Task, Result<Task, String>>,
-    refetch: Rc<dyn Fn()>,
-    goals: ReadSignal<Vec<Goal>>,
-) -> impl IntoView {
-    let (task_text, set_task_text) = create_signal(String::new());
-    let (task_description, set_task_description) = create_signal(String::new());
-    let (selected_goal, set_selected_goal) = create_signal(None::<i32>);
-    let (task_status, set_task_status) = create_signal("pending".to_string());
-    let (is_submitting, set_is_submitting) = create_signal(false);
-    let (show_success, set_show_success) = create_signal(false);
+pub fn TaskForm(refetch: Arc<dyn Fn()>, goals: ReadSignal<Vec<Goal>>) -> impl IntoView {
+    let service = use_context::<ServiceContext>().expect("No service context found");
+    let create = create_task_action(service);
 
-    let on_submit = move |ev: ev::SubmitEvent| {
+    let (task_text, set_task_text) = signal(String::new());
+    let (task_description, set_task_description) = signal(String::new());
+    let (selected_goal, set_selected_goal) = signal(None::<i32>);
+    let (task_status, set_task_status) = signal("pending".to_string());
+    let (is_submitting, set_is_submitting) = signal(false);
+    let (show_success, set_show_success) = signal(false);
+
+    let on_submit = move |ev: web_sys::SubmitEvent| {
         ev.prevent_default();
         let current_text = task_text.get_untracked();
         let current_description = task_description.get_untracked();
@@ -31,7 +34,7 @@ pub fn TaskForm(
             return;
         }
 
-        set_is_submitting.set(true);
+        set_is_submitting.update(|v| *v = true);
 
         let task = Task {
             id: None,
@@ -60,15 +63,15 @@ pub fn TaskForm(
             );
         });
 
-        set_task_text.set(String::new());
-        set_task_description.set(String::new());
-        set_task_status.set("pending".to_string());
-        set_show_success.set(true);
-        set_is_submitting.set(false);
+        set_task_text.update(|v| *v = String::new());
+        set_task_description.update(|v| *v = String::new());
+        set_task_status.update(|v| *v = "pending".to_string());
+        set_show_success.update(|v| *v = true);
+        set_is_submitting.update(|v| *v = false);
 
         set_timeout(
             move || {
-                set_show_success.set(false);
+                set_show_success.update(|v| *v = false);
             },
             std::time::Duration::from_millis(2000),
         );

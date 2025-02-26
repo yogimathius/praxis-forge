@@ -1,7 +1,11 @@
-use leptos::*;
-use praxis_workshop_ui::app::App;
+use leptos::prelude::*;
+use praxis_workshop_ui::App;
 
-pub fn main() {
-    _ = console_error_panic_hook::set_once();
-    mount_to_body(|| view! { <App/> })
+fn main() {
+    console_error_panic_hook::set_once();
+    mount_to_body(|| {
+        view! {
+            <App/>
+        }
+    })
 }

@@ -1,5 +1,5 @@
 use crate::state::use_goals::GoalsState;
-use leptos::*;
+use leptos::prelude::*;
 
 use crate::components::goal::form::GoalForm;
 use crate::components::goal::list::GoalsList;
@@ -25,26 +25,14 @@ pub fn GoalsListPage() -> impl IntoView {
             <h2 class="dashboardTitle">"The Anvil"</h2>
             <p class="dashboardSubtitle">"Mold your goals on the anvil of determination."</p>
             <GoalForm create=create.clone() refetch=refetch.clone() />
-            {
-                let goals = goals.clone();
-                move || -> View {
-                    let goals = goals.get().clone();
-                    let on_toggle = update.clone();
-                    let on_delete = delete.clone();
-                    let on_edit = update.clone();
-
-                    view! {
-                        <div>
-                            <GoalsList
-                                goals=goals
-                                on_toggle=on_toggle
-                                on_delete=on_delete
-                                on_edit=on_edit
-                            />
-                        </div>
-                    }.into_view()
-                }
-            }
+            <div>
+                <GoalsList
+                    goals=goals.get()
+                    on_toggle=update
+                    on_delete=delete
+                    on_edit=update
+                />
+            </div>
         </div>
     }
 }

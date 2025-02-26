@@ -1,13 +1,16 @@
+use crate::components::progress_bar::progress_bar::Progressbar;
+use crate::state::use_goals::{use_goals, GoalsState};
+use crate::state::use_tasks::{use_tasks, TasksState};
 use leptos::*;
 use wasm_bindgen::prelude::wasm_bindgen;
-
 #[wasm_bindgen(module = "/src/pages/home.module.css")]
 extern "C" {}
 
 #[component]
 pub fn HomePage() -> impl IntoView {
     let (hover_index, set_hover_index) = create_signal(-1);
-
+    let tasks = use_tasks(); // Your existing hook
+    let goals = use_goals();
     let principles = vec![
         ("Praxis", "Theory into Action"),
         ("Forge", "Shape Your Future"),
@@ -22,7 +25,7 @@ pub fn HomePage() -> impl IntoView {
             <p class="subtitle slide-in">
                 "Transform intentions into actions, actions into habits, habits into mastery."
             </p>
-
+            <Progressbar tasks=tasks.tasks goals=goals.goals />
             <div class="principles-grid">
                 {principles.into_iter().enumerate().map(|(i, (title, desc))| {
                     let i = i;

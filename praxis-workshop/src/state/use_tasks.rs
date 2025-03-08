@@ -57,14 +57,16 @@ pub fn use_tasks() -> TasksState {
     });
 
     let update = Action::new(move |task: &Task| {
-        let task = task.clone();
+        let task = dbg!(task.clone());
         let service = service_update.clone();
-        let id = task.id.clone().unwrap();
+        let id = dbg!(task.id.clone().unwrap());
 
         let (tx, rx) = channel();
 
         spawn_local(async move {
+            dbg!("Before update_task call");
             let result = service.0.update_task(id, task).await;
+            dbg!(&result);
             let _ = tx.send(result);
         });
 

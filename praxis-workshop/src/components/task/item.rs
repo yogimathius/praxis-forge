@@ -83,7 +83,10 @@ pub fn TaskItem(
                     prop:value=move || task.get().status.unwrap_or_default()
                     on:change=move |ev| {
                         let mut updated_task = task.get();
-                        updated_task.status = Some(event_target_value(&ev));
+                        let new_status = event_target_value(&ev);
+                        dbg!(&new_status);  // Debug the new status value
+                        updated_task.status = Some(new_status);
+                        dbg!(&updated_task);  // Debug the full task before dispatch
                         let _ = on_toggle.dispatch(updated_task);
                     }
                 >

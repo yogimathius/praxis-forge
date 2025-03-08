@@ -53,6 +53,8 @@ impl GraphQLService {
             title: task.title.unwrap_or_default(),
             description: task.description,
             goal_id: task.goal.and_then(|g| g.id),
+            status: task.status,
+            completed: task.completed,
         });
 
         let response = self
@@ -75,6 +77,8 @@ impl GraphQLService {
             title: task.title.unwrap_or_default(),
             description: task.description,
             goal_id: task.goal.and_then(|g| g.id),
+            status: task.status,
+            completed: task.completed,
         });
 
         let response = self
@@ -88,7 +92,14 @@ impl GraphQLService {
             .await
             .map_err(|e| e.to_string())?;
 
-        Ok(response.data.unwrap().update_task.unwrap())
+        // Safer unwrapping with error messages
+        let data = response
+            .data
+            .ok_or_else(|| "No data received from server".to_string())?;
+        let updated_task = data
+            .update_task
+            .ok_or_else(|| "No task returned from update".to_string())?;
+        Ok(updated_task)
     }
 
     pub async fn delete_task(&self, id: cynic::Id) -> Result<(), String> {

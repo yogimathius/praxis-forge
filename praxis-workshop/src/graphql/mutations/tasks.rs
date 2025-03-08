@@ -7,8 +7,8 @@ pub struct CreateTaskVariables {
     pub title: String,
     pub description: Option<String>,
     pub goal_id: Option<cynic::Id>,
-    // pub status: Option<String>,
-    // pub completed: Option<bool>,
+    pub status: Option<String>,
+    pub completed: Option<bool>,
 }
 
 #[derive(QueryFragment, Debug)]
@@ -36,6 +36,8 @@ pub fn build_mutation(
         title,
         description,
         goal_id,
+        status: Some("pending".to_string()),
+        completed: Some(false),
     })
 }
 
@@ -45,8 +47,8 @@ pub struct UpdateTaskVariables {
     pub title: String,
     pub description: Option<String>,
     pub goal_id: Option<cynic::Id>,
-    // pub status: Option<String>,
-    // pub completed: Option<bool>,
+    pub status: Option<String>,
+    pub completed: Option<bool>,
 }
 
 #[derive(cynic::QueryFragment, Debug)]

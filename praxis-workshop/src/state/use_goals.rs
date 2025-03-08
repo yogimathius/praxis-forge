@@ -1,7 +1,8 @@
 use std::rc::Rc;
 
 use crate::graphql::queries::goals::Goal;
-use leptos::*;
+use futures::channel::oneshot::channel;
+use leptos::prelude::*;
 use wasm_bindgen_futures::spawn_local;
 
 use crate::services::service_context::ServiceContext;
@@ -17,9 +18,9 @@ pub struct GoalsState {
 
 pub fn use_goals() -> GoalsState {
     let service = use_context::<ServiceContext>().expect("No service context found");
-    let (goals, set_goals) = create_signal(Vec::new());
-    let (loading, set_loading) = create_signal(false);
-    let (error, set_error) = create_signal(None::<String>);
+    let (goals, set_goals) = signal(Vec::new());
+    let (loading, set_loading) = signal(false);
+    let (error, set_error) = signal(None::<String>);
 
     let service_create = service.clone();
     let service_update = service.clone();
@@ -27,10 +28,10 @@ pub fn use_goals() -> GoalsState {
     let service_refetch = service.clone();
 
     // Initial fetch
-    create_effect(move |_| {
+    Effect::new(move |_| {
         let service = service.clone();
+        set_loading.set(true);
         spawn_local(async move {
-            set_loading.set(true);
             match service.0.fetch_goals().await {
                 Ok(data) => set_goals.set(data),
                 Err(e) => set_error.set(Some(e)),
@@ -40,25 +41,61 @@ pub fn use_goals() -> GoalsState {
     });
 
     // Actions
-    let create = create_action(move |goal: &Goal| {
+    let create = Action::new(move |goal: &Goal| {
         let goal = goal.clone();
         let service = service_create.clone();
-        async move { service.0.create_goal(goal).await }
+
+        // Return a placeholder immediately
+        let (tx, rx) = channel();
+
+        spawn_local(async move {
+            let result: std::result::Result<Goal, String> = service.0.create_goal(goal).await;
+            let _ = tx.send(result);
+        });
+
+        async move { rx.await.unwrap_or(Err("Action canceled".to_string())) }
     });
 
-    let update = create_action(move |goal: &Goal| {
-        let goal = goal.clone();
-        let service = service_update.clone();
-        async move {
+    let update: Action<Goal, std::result::Result<Goal, String>> =
+        Action::new(move |goal: &Goal| {
+            let goal = goal.clone();
+            let service = service_update.clone();
             let id = goal.id.clone().unwrap();
-            service.0.update_goal(id, goal).await
-        }
-    });
 
-    let delete = create_action(move |id: &cynic::Id| {
+            let (tx, rx) = channel();
+
+            spawn_local(async move {
+                let result = service.0.update_goal(id, goal).await;
+                let _ = tx.send(result);
+            });
+
+            async move { rx.await.unwrap_or(Err("Action canceled".to_string())) }
+        });
+
+    let delete = Action::new(move |id: &cynic::Id| {
         let id = id.clone();
         let service = service_delete.clone();
-        async move { service.0.delete_goal(id).await }
+
+        let (tx, rx) = channel();
+
+        spawn_local(async move {
+            let result = service.0.delete_goal(id).await;
+            let _ = tx.send(result);
+        });
+
+        async move { rx.await.unwrap_or(Err("Action canceled".to_string())) }
+    });
+
+    // Set up refetch function
+    let refetch_fn = Rc::new(move || {
+        let service = service_refetch.clone();
+        set_loading.set(true);
+        spawn_local(async move {
+            if let Ok(data) = service.0.fetch_goals().await {
+                set_goals.set(data);
+            }
+            set_loading.set(false);
+        });
     });
 
     GoalsState {
@@ -68,15 +105,6 @@ pub fn use_goals() -> GoalsState {
         create,
         update,
         delete,
-        refetch: Rc::new(move || {
-            let service = service_refetch.clone();
-            spawn_local(async move {
-                set_loading.set(true);
-                if let Ok(data) = service.0.fetch_goals().await {
-                    set_goals.set(data);
-                }
-                set_loading.set(false);
-            });
-        }),
+        refetch: refetch_fn,
     }
 }

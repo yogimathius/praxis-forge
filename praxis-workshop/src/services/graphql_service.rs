@@ -26,6 +26,7 @@ impl GraphQLService {
 
     pub async fn fetch_tasks(&self) -> Result<Vec<Task>, String> {
         let query = TasksQuery::build(());
+
         let response = self
             .client
             .post(&self.endpoint)
@@ -37,11 +38,11 @@ impl GraphQLService {
             .await
             .map_err(|e| e.to_string())?;
 
-        Ok(response
-            .data
-            .unwrap()
+        let data = Self::unwrap_response(response)?;
+
+        Ok(data
             .tasks
-            .unwrap()
+            .unwrap_or_default()
             .into_iter()
             .flatten()
             .collect())

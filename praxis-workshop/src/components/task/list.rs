@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::components::task::item::TaskItem;
@@ -16,25 +16,37 @@ pub fn TasksList(
     #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
     #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
 ) -> impl IntoView {
+    let tasks_clone = tasks.clone();
+
     view! {
-        <div class="tasksContainer">
-            <h2 class="listTitle">"Your Tasks"</h2>
-            <div class="tasksList">
-                {tasks
-                    .iter()
-                    .map(|task| {
-                        view! {
-                            <TaskItem
-                                task=task.clone()
-                                on_toggle=on_toggle
-                                on_delete=on_delete
-                                on_edit=on_edit
-                                goals=goals
-                            />
-                        }
-                    })
-                    .collect_view()}
-            </div>
+        <div class="tasks-container">
+            <h2 class="tasks-list-title">"Your Tasks"</h2>
+            <Show
+                when=move || !tasks_clone.is_empty()
+                fallback=|| view! {
+                    <div class="tasks-empty-state">
+                        <h3>"No tasks yet"</h3>
+                        <p>"Add your first task to get started on your journey."</p>
+                    </div>
+                }
+            >
+                <div class="tasks-list">
+                    {tasks
+                        .iter()
+                        .map(|task| {
+                            view! {
+                                <TaskItem
+                                    task=task.clone()
+                                    on_toggle=on_toggle
+                                    on_delete=on_delete
+                                    on_edit=on_edit
+                                    goals=goals
+                                />
+                            }
+                        })
+                        .collect_view()}
+                </div>
+            </Show>
         </div>
     }
 }

@@ -1,5 +1,6 @@
-use leptos::*;
+use leptos::prelude::*;
 use wasm_bindgen::prelude::wasm_bindgen;
+use wasm_bindgen_test::console_log;
 
 use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
@@ -15,21 +16,20 @@ pub fn TaskItem(
     #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
     #[prop(into)] on_edit: Action<Task, Result<Task, String>>,
 ) -> impl IntoView {
-    let (task, _) = create_signal(task);
+    let (task, _) = signal(task);
 
-    // Use .get_untracked() for initial values since we don't need reactivity here
-    let (status, set_status) = create_signal(task.get_untracked().status);
-    let (is_editing, set_is_editing) = create_signal(false);
-    let (edit_title, set_edit_title) = create_signal(task.get_untracked().title);
+    let (status, set_status) = signal(task.get_untracked().status);
+    let (is_editing, set_is_editing) = signal(false);
+    let (edit_title, set_edit_title) = signal(task.get_untracked().title);
     let (edit_description, set_edit_description) =
-        create_signal(task.get_untracked().description.unwrap_or_default());
+        signal(task.get_untracked().description.unwrap_or_default());
 
-    let title_input = create_node_ref();
-    let desc_input = create_node_ref();
+    let title_input = NodeRef::new();
+    let desc_input = NodeRef::new();
 
     const STATUSES: &[&str] = &["pending", "in_progress", "completed"];
 
-    let goal_name = create_memo(move |_| task.get().goal.as_ref().map(|g| g.title.clone()));
+    let goal_name = Memo::new(move |_| task.get().goal.as_ref().map(|g| g.title.clone()));
 
     let handle_save = move |_| {
         let mut updated_task = task.get();
@@ -40,94 +40,93 @@ pub fn TaskItem(
     };
 
     view! {
-        <div class="taskItem">
-            <div class="wrapper">
-                <div class="taskContent">
-                    {move || if is_editing.get() {
-                        view! {
-                            <input
-                                _ref=title_input
-                                type="text"
-                                value=edit_title.get()
-                                on:change=move |ev| {
-                                    set_edit_title.set(Some(event_target_value(&ev)));
-                                }
-                            />
-                            <input
-                                _ref=desc_input
-                                type="text"
-                                value=edit_description.get()
-                                on:change=move |ev| {
-                                    set_edit_description.set(event_target_value(&ev));
-                                }
-                            />
+        <div class="task-item">
+            <div class="task-wrapper">
+                <div class="task-content">
+                    <Show
+                        when=move || is_editing.get()
+                        fallback=move || {
+                            view! {
+                                <p class="task-title">{move || task.get().title}</p>
+                                {move || task.get().description.as_ref().map(|desc| {
+                                    view! {
+                                        <p class="task-description">{desc.clone()}</p>
+                                    }
+                                })}
+                            }
                         }
-                    } else {
-                        view! {
-                            <p class="taskTitle">{move || task.get().title}</p>
-                            {move || task.get().description.as_ref().map(|desc| {
-                                view! {
-                                    <p class="description">{desc}</p>
-                                }
-                            })}
-                        }
-                    }}
+                    >
+                        <input
+                            node_ref=title_input
+                            type="text"
+                            class="task-edit-input"
+                            value=edit_title.get()
+                            on:change=move |ev| {
+                                set_edit_title.set(Some(event_target_value(&ev)));
+                            }
+                        />
+                        <input
+                            node_ref=desc_input
+                            type="text"
+                            class="task-edit-input"
+                            value=edit_description.get()
+                            on:change=move |ev| {
+                                set_edit_description.set(event_target_value(&ev));
+                            }
+                        />
+                    </Show>
                 </div>
             </div>
-            <div class="rightContent">
+            <div class="task-right-content">
                 <select
-                    class="statusSelect"
+                    class="task-status-select"
+                    prop:value=move || task.get().status.unwrap_or_default()
                     on:change=move |ev| {
-                        let new_status = event_target_value(&ev);
-                        set_status.set(Some(new_status.clone()));
                         let mut updated_task = task.get();
-                        updated_task.status = Some(new_status.clone());
-                        updated_task.completed = Some(new_status == "completed");
+                        updated_task.status = Some(event_target_value(&ev));
                         let _ = on_toggle.dispatch(updated_task);
                     }
-                    prop:value=move || status.get()
                 >
-                    {STATUSES.iter().map(|status| {
-                        view! {
-                            <option value={status.to_string()}>
-                                {status.to_string().replace("_", " ")}
-                            </option>
-                        }
-                    }).collect::<Vec<_>>()}
+                    <option value="pending">"Pending"</option>
+                    <option value="in_progress">"In Progress"</option>
+                    <option value="completed">"Completed"</option>
                 </select>
-                <div class="actions">
-                    {move || if is_editing.get() {
-                        view! {
-                            <button
-                                class="button saveButton"
-                                on:click=handle_save
-                            >
-                                "Save"
-                            </button>
+                <div class="task-actions">
+                    <Show
+                        when=move || is_editing.get()
+                        fallback=move || {
+                            view! {
+                                <button
+                                    class="task-button task-edit-button"
+                                    on:click=move |_| set_is_editing.set(true)
+                                >
+                                    "Edit"
+                                </button>
+                            }
                         }
-                    } else {
-                        view! {
-                            <button
-                                class="button editButton"
-                                on:click=move |_| set_is_editing.set(true)
-                            >
-                                "Edit"
-                            </button>
-                        }
-                    }}
+                    >
+                        <button
+                            class="task-button task-save-button"
+                            on:click=handle_save
+                        >
+                            "Save"
+                        </button>
+                    </Show>
                     <button
-                        class="button deleteButton"
-                        on:click=move |_| on_delete.dispatch(task.get().id.unwrap())
+                        class="task-button task-delete-button"
+                        on:click=move |_| {
+                            let _ = on_delete.dispatch(task.get().id.unwrap());
+                        }
                     >
                         "Delete"
                     </button>
                 </div>
+                {move || goal_name.get().map(|name| view! {
+                    <span class="task-goal-tag">
+                        {name}
+                    </span>
+                })}
             </div>
-            {move || goal_name.get().map(|name| view! {
-                <span class="goalTag">
-                    {name}
-                </span>
-            })}
         </div>
     }
 }

@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use leptos::*;
+use leptos::{ev, prelude::*, task::spawn_local};
 use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::graphql::queries::{goals::Goal, tasks::Task};
@@ -14,12 +14,12 @@ pub fn TaskForm(
     refetch: Rc<dyn Fn()>,
     goals: ReadSignal<Vec<Goal>>,
 ) -> impl IntoView {
-    let (task_text, set_task_text) = create_signal(String::new());
-    let (task_description, set_task_description) = create_signal(String::new());
-    let (selected_goal, set_selected_goal) = create_signal(None::<i32>);
-    let (task_status, set_task_status) = create_signal("pending".to_string());
-    let (is_submitting, set_is_submitting) = create_signal(false);
-    let (show_success, set_show_success) = create_signal(false);
+    let (task_text, set_task_text) = signal(String::new());
+    let (task_description, set_task_description) = signal(String::new());
+    let (selected_goal, set_selected_goal) = signal(None::<i32>);
+    let (task_status, set_task_status) = signal("pending".to_string());
+    let (is_submitting, set_is_submitting) = signal(false);
+    let (show_success, set_show_success) = signal(false);
 
     let on_submit = move |ev: ev::SubmitEvent| {
         ev.prevent_default();
@@ -75,50 +75,55 @@ pub fn TaskForm(
     };
 
     view! {
-        <form class="form" on:submit=on_submit>
-            <div class="formGroup">
-                <input
-                    type="text"
-                    class="input"
-                    placeholder="Add a new task..."
-                    on:input=move |ev| set_task_text.set(event_target_value(&ev))
-                    prop:value=move || task_text.get()
-                />
-                <input
-                    type="text"
-                    class="input description"
-                    placeholder="Add a description..."
-                    on:input=move |ev| set_task_description.set(event_target_value(&ev))
-                    prop:value=move || task_description.get()
-                />
-                <select
-                    class="select"
-                    on:change=move |ev| {
-                        let value = event_target_value(&ev);
-                        set_selected_goal.set(value.parse::<i32>().ok());
-                    }
-                >
-                    <option value="">"Select a goal (optional)"</option>
-                    {move || goals.get().into_iter().map(|goal| {
-                        view! {
-                            <option value={goal.id.map(|id| id.inner().to_string()).unwrap_or_default()}>
-                                {goal.title.unwrap_or_default()}
-                            </option>
+        <form class="task-form" on:submit=on_submit>
+            <div class="task-form-group">
+                <div class="task-input-group">
+                    <input
+                        type="text"
+                        class="task-input"
+                        placeholder="Add a new task..."
+                        on:input=move |ev| set_task_text.set(event_target_value(&ev))
+                        prop:value=move || task_text.get()
+                    />
+                    <input
+                        type="text"
+                        class="task-input description"
+                        placeholder="Add a description..."
+                        on:input=move |ev| set_task_description.set(event_target_value(&ev))
+                        prop:value=move || task_description.get()
+                    />
+                </div>
+
+                <div class="task-select-group">
+                    <select
+                        class="task-select"
+                        on:change=move |ev| {
+                            let value = event_target_value(&ev);
+                            set_selected_goal.set(value.parse::<i32>().ok());
                         }
-                    }).collect_view()}
-                </select>
-                <select
-                    class="select"
-                    on:input=move |ev| set_task_status.set(event_target_value(&ev))
-                    prop:value=move || task_status.get()
-                >
-                    <option value="pending">"Pending"</option>
-                    <option value="in_progress">"In Progress"</option>
-                    <option value="completed">"Completed"</option>
-                </select>
+                    >
+                        <option value="">"Select a goal (optional)"</option>
+                        {move || goals.get().into_iter().map(|goal| {
+                            view! {
+                                <option value={goal.id.map(|id| id.inner().to_string()).unwrap_or_default()}>
+                                    {goal.title.unwrap_or_default()}
+                                </option>
+                            }
+                        }).collect_view()}
+                    </select>
+                    <select
+                        class="task-select"
+                        on:input=move |ev| set_task_status.set(event_target_value(&ev))
+                        prop:value=move || task_status.get()
+                    >
+                        <option value="pending">"Pending"</option>
+                        <option value="in_progress">"In Progress"</option>
+                        <option value="completed">"Completed"</option>
+                    </select>
+                </div>
                 <button
                     type="submit"
-                    class="button"
+                    class="task-button"
                     disabled=move || is_submitting.get()
                 >
                     {move || if is_submitting.get() { "Adding..." } else { "Add Task" }}
@@ -126,7 +131,7 @@ pub fn TaskForm(
             </div>
 
             {move || show_success.get().then(|| view! {
-                <div class="successMessage">
+                <div class="task-success-message">
                     "Task added successfully!"
                 </div>
             })}

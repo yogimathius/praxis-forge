@@ -1,9 +1,10 @@
 pub mod goal;
-pub mod nav;
-pub mod progress_bar;
-pub mod task {
-    pub mod form;
-    pub mod item;
-    pub mod list;
-    // ... other task-related modules
-}
+pub mod navigation;
+pub mod progress;
+pub mod task;
+pub use goal::form::GoalForm;
+pub use goal::list::GoalsList;
+pub use navigation::Navigation;
+pub use progress::ProgressBar;
+pub use task::form::TaskForm;
+pub use task::list::TasksList;

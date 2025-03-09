@@ -79,14 +79,14 @@ pub fn TaskItem(
             </div>
             <div class="task-right-content">
                 <select
-                    class="task-status-select"
+                    class={move || format!("task-status-select status-{}", task.get().status.unwrap_or_default())}
                     prop:value=move || task.get().status.unwrap_or_default()
                     on:change=move |ev| {
                         let mut updated_task = task.get();
                         let new_status = event_target_value(&ev);
-                        dbg!(&new_status);  // Debug the new status value
+                        console_log!("Status change triggered with value: {}", &new_status);
                         updated_task.status = Some(new_status);
-                        dbg!(&updated_task);  // Debug the full task before dispatch
+                        console_log!("Updated task before dispatch: {:?}", &updated_task);
                         let _ = on_toggle.dispatch(updated_task);
                     }
                 >

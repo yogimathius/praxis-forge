@@ -31,13 +31,15 @@ pub fn build_mutation(
     title: String,
     description: Option<String>,
     goal_id: Option<cynic::Id>,
+    status: Option<String>,
+    completed: Option<bool>,
 ) -> cynic::Operation<CreateTaskMutation, CreateTaskVariables> {
     CreateTaskMutation::build(CreateTaskVariables {
         title,
         description,
         goal_id,
-        status: Some("pending".to_string()),
-        completed: Some(false),
+        status,
+        completed,
     })
 }
 
@@ -58,7 +60,7 @@ pub struct UpdateTaskVariables {
     variables = "UpdateTaskVariables"
 )]
 pub struct UpdateTaskMutation {
-    #[arguments(id: $id, title: $title, description: $description)]
+    #[arguments(id: $id, title: $title, description: $description, status: $status, completed: $completed)]
     pub update_task: Option<Task>,
 }
 

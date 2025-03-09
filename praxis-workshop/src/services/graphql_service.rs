@@ -10,6 +10,7 @@ use crate::graphql::queries::goals::{Goal, GoalsQuery};
 use crate::graphql::queries::tasks::{Task, TasksQuery};
 use cynic::{MutationBuilder, Operation, QueryBuilder, QueryFragment};
 use reqwest::Client;
+use wasm_bindgen_test::console_log;
 
 pub struct GraphQLService {
     client: Client,
@@ -72,14 +73,19 @@ impl GraphQLService {
     }
 
     pub async fn update_task(&self, id: cynic::Id, task: Task) -> Result<Task, String> {
+        console_log!("Starting update_task with id: {:?}", id);
+        console_log!("Task to update: {:?}", task);
+
         let operation = UpdateTaskMutation::build(UpdateTaskVariables {
             id,
             title: task.title.unwrap_or_default(),
             description: task.description,
             goal_id: task.goal.and_then(|g| g.id),
-            status: task.status,
+            status: task.status.clone(),
             completed: task.completed,
         });
+
+        console_log!("Built mutation variables: {:?}", operation);
 
         let response = self
             .client
@@ -87,18 +93,30 @@ impl GraphQLService {
             .json(&operation)
             .send()
             .await
-            .map_err(|e| e.to_string())?
+            .map_err(|e| {
+                console_log!("Error sending request: {:?}", e);
+                e.to_string()
+            })?
             .json::<cynic::GraphQlResponse<UpdateTaskMutation>>()
             .await
-            .map_err(|e| e.to_string())?;
+            .map_err(|e| {
+                console_log!("Error parsing response: {:?}", e);
+                e.to_string()
+            })?;
+
+        console_log!("Received response: {:?}", response);
 
         // Safer unwrapping with error messages
-        let data = response
-            .data
-            .ok_or_else(|| "No data received from server".to_string())?;
-        let updated_task = data
-            .update_task
-            .ok_or_else(|| "No task returned from update".to_string())?;
+        let data = response.data.ok_or_else(|| {
+            console_log!("No data in response");
+            "No data received from server".to_string()
+        })?;
+        let updated_task = data.update_task.ok_or_else(|| {
+            console_log!("No task in response data");
+            "No task returned from update".to_string()
+        })?;
+
+        console_log!("Successfully updated task: {:?}", updated_task);
         Ok(updated_task)
     }
 

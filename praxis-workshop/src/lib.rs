@@ -28,14 +28,32 @@ pub fn App() -> impl IntoView {
     // Inject Tailwind styles
     let window = window().unwrap();
     let document = window.document().unwrap();
-    let style_el = document.create_element("style").unwrap();
-    let styles = get_tailwind_bundle();
-    console_log!("Generated styles: {}", styles);
-    style_el.set_text_content(Some(&styles));
-    document.head().unwrap().append_child(&style_el).unwrap();
+
+    // Inject Tailwind styles
+    let tailwind_style_el = document.create_element("style").unwrap();
+    let tailwind_styles = get_tailwind_bundle();
+    tailwind_style_el.set_text_content(Some(&tailwind_styles));
+    document
+        .head()
+        .unwrap()
+        .append_child(&tailwind_style_el)
+        .unwrap();
+
+    // Inject custom utility styles
+    let custom_style_el = document.create_element("style").unwrap();
+    let custom_styles = include_str!("styles/custom-utilities.css");
+    custom_style_el.set_text_content(Some(custom_styles));
+    document
+        .head()
+        .unwrap()
+        .append_child(&custom_style_el)
+        .unwrap();
 
     view! {
         <Router>
+            <div style="display: none;" id="tailwind-debug">
+                {tailwind_styles}
+            </div>
             <main>
                 <Navigation/>
                 <Routes fallback=move || view! { <p>"Not found."</p> }>

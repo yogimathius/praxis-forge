@@ -1,12 +1,9 @@
 use leptos::prelude::*;
-use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen_test::console_log;
 
 use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
 
-#[wasm_bindgen(module = "/src/components/task/item.module.css")]
-extern "C" {}
 
 #[component]
 pub fn TaskItem(

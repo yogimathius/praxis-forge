@@ -1,10 +1,7 @@
 use leptos::prelude::*;
-use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::components::goal::item::GoalItem;
 use crate::graphql::queries::goals::Goal;
-#[wasm_bindgen(module = "/src/components/goal/list.module.css")]
-extern "C" {}
 
 #[component]
 pub fn GoalsList(

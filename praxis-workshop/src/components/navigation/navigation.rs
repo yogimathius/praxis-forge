@@ -1,6 +1,5 @@
 use leptos::prelude::*;
 use leptos_router::{components::*, hooks::use_navigate};
-use wasm_bindgen::prelude::*;
 
 // Let's define our own Location enum since we need it
 #[derive(Clone, Debug, PartialEq)]
@@ -10,9 +9,6 @@ pub enum Location {
     Goals,
     Progress,
 }
-
-#[wasm_bindgen(module = "/src/components/navigation/navigation.module.css")]
-extern "C" {}
 
 #[component]
 pub fn Navigation() -> impl IntoView {
@@ -41,24 +37,45 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <nav class="nav">
+        <nav class="flex justify-center gap-8 p-4 mb-8 bg-white/5 backdrop-blur border border-[#ff6b35] rounded-xl">
             <button
-                class="nav-item"
-                class:active=move || location.get() == Location::Home
+                class=move || {
+                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
+                    let active = if location.get() == Location::Home {
+                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+                    } else {
+                        ""
+                    };
+                    format!("{} {}", base, active)
+                }
                 on:click=move |_| { handle_navigation.dispatch(Location::Home); }
             >
                 "Home"
             </button>
             <button
-                class="nav-item"
-                class:active=move || location.get() == Location::Tasks
+                class=move || {
+                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
+                    let active = if location.get() == Location::Tasks {
+                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+                    } else {
+                        ""
+                    };
+                    format!("{} {}", base, active)
+                }
                 on:click=move |_| { handle_navigation.dispatch(Location::Tasks); }
             >
                 "Tasks"
             </button>
             <button
-                class="nav-item"
-                class:active=move || location.get() == Location::Goals
+                class=move || {
+                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
+                    let active = if location.get() == Location::Goals {
+                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+                    } else {
+                        ""
+                    };
+                    format!("{} {}", base, active)
+                }
                 on:click=move |_| { handle_navigation.dispatch(Location::Goals); }
             >
                 "Goals"

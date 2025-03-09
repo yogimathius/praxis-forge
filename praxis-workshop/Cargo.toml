@@ -22,6 +22,8 @@ cynic = { version = "3.10.0", features = ["http-reqwest"] }
 async-trait = "0.1.86"
 reqwest = { version = "0.12.12", features = ["json"] }
 thaw = "0.4.3"
+tailwind-css = "0.13.0"
+web-sys = { version = "0.3.77", features = ["Document", "Element", "HtmlElement", "Window", "HtmlHeadElement"] }
 
 [workspace]
 members = ["src-tauri"]

@@ -4,9 +4,6 @@ use leptos::prelude::*;
 use crate::components::goal::form::GoalForm;
 use crate::components::goal::list::GoalsList;
 use crate::state::use_goals::use_goals;
-use wasm_bindgen::prelude::wasm_bindgen;
-#[wasm_bindgen(module = "/src/pages/goals/goals.module.css")]
-extern "C" {}
 
 #[component]
 pub fn GoalsListPage() -> impl IntoView {

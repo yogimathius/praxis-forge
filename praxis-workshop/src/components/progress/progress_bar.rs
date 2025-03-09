@@ -1,9 +1,4 @@
 use leptos::prelude::*;
-use wasm_bindgen::prelude::*;
-
-// Import CSS module
-#[wasm_bindgen(module = "/src/components/progress/progress_bar.module.css")]
-extern "C" {}
 
 #[derive(Clone)]
 pub struct Task {

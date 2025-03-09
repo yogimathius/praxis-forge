@@ -1,11 +1,8 @@
 use leptos::prelude::*;
-use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::components::progress::ProgressBar;
 use crate::graphql::queries::goals::Goal;
 
-#[wasm_bindgen(module = "/src/components/goal/item.module.css")]
-extern "C" {}
 
 #[component]
 pub fn GoalItem(

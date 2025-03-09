@@ -1,12 +1,9 @@
 use std::rc::Rc;
 
 use leptos::{ev, prelude::*, task::spawn_local};
-use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::graphql::queries::{goals::Goal, tasks::Task};
 
-#[wasm_bindgen(module = "/src/components/task/form.module.css")]
-extern "C" {}
 
 #[component]
 pub fn TaskForm(

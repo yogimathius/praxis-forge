@@ -9,7 +9,7 @@
 
 /* ===== Background Utilities ===== */
 .bg-glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(45, 49, 66, 0.4);
   backdrop-filter: blur(10px);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .text-ash {
-  color: var(--forge-ash);
+  color: rgba(230, 232, 230, 0.9);
 }
 
 .text-steel {
@@ -155,32 +155,49 @@
 
 /* ===== Animation Utilities ===== */
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0; /* Start invisible */
 }
 
 .animate-slide-up {
-  animation: slideUp 0.5s ease-out;
+  animation: slideUp 1s ease-out forwards;
+  opacity: 0; /* Start invisible */
+  transform: translateY(20px); /* Start below final position */
 }
 
 .animate-ember-pulse {
   animation: emberPulse 4s ease-in-out infinite;
 }
 
+/* Delay utilities */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+
 @keyframes fadeIn {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  100% {
     opacity: 1;
   }
 }
 
 @keyframes slideUp {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -287,4 +304,24 @@
   cursor: not-allowed;
   background: var(--forge-iron);
   box-shadow: none;
+}
+
+/* Z-index utilities */
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+/* Improved spacing for grid */
+.grid-container {
+  margin-top: 2rem;
+  position: relative;
+  z-index: 5;
 }

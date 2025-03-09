@@ -4,7 +4,6 @@ use crate::state::use_goals::{use_goals, GoalsState};
 use crate::state::use_tasks::{use_tasks, TasksState};
 use leptos::prelude::*;
 
-
 #[component]
 pub fn TasksListPage() -> impl IntoView {
     let TasksState {
@@ -27,25 +26,33 @@ pub fn TasksListPage() -> impl IntoView {
     } = use_goals();
 
     view! {
-        <div class="tasksContainer">
-            <h2 class="tasksTitle">"Forge Operations"</h2>
-            <p class="tasksSubtitle">"Shape your tasks into achievements, one strike at a time."</p>
-            <TaskForm
-                create=create.clone()
-                refetch=refetch.clone()
-                goals=goals
-            />
-            {
-                let tasks = tasks.clone();
-                move || -> View<_> {
-                    let tasks = tasks.get().clone();
-                    let on_toggle = update.clone();
-                    let on_delete = delete.clone();
-                    let on_edit = update.clone();
-                    let goals = goals.clone();
+        <div class="max-w-7xl mx-auto p-8 my-8">
+            <h2 class="text-4xl font-bold text-spark text-center mb-8 animate-ember-pulse">
+                "Forge Operations"
+            </h2>
+            <p class="text-xl text-center text-ash mb-12 animate-slide-up">
+                "Shape your tasks into achievements, one strike at a time."
+            </p>
 
-                    view! {
-                        <div>
+            <div class="bg-glass-dark rounded-xl border border-orange-30 p-8 mb-12 animate-fade-in delay-300">
+                <TaskForm
+                    create=create.clone()
+                    refetch=refetch.clone()
+                    goals=goals
+                />
+            </div>
+
+            <div class="bg-glass rounded-xl border border-orange-30 p-8 animate-fade-in delay-500">
+                {
+                    let tasks = tasks.clone();
+                    move || -> View<_> {
+                        let tasks = tasks.get().clone();
+                        let on_toggle = update.clone();
+                        let on_delete = delete.clone();
+                        let on_edit = update.clone();
+                        let goals = goals.clone();
+
+                        view! {
                             <TasksList
                                 tasks=tasks
                                 on_toggle=on_toggle
@@ -53,10 +60,10 @@ pub fn TasksListPage() -> impl IntoView {
                                 on_edit=on_edit
                                 goals=goals
                             />
-                        </div>
-                    }.into_view()
+                        }.into_view()
+                    }
                 }
-            }
+            </div>
         </div>
     }
 }

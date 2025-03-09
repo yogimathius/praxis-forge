@@ -4,7 +4,6 @@ use crate::components::task::item::TaskItem;
 use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
 
-
 #[component]
 pub fn TasksList(
     tasks: Vec<Task>,
@@ -16,18 +15,20 @@ pub fn TasksList(
     let tasks_clone = tasks.clone();
 
     view! {
-        <div class="tasks-container">
-            <h2 class="tasks-list-title">"Your Tasks"</h2>
+        <div>
+            <h3 class="text-2xl font-bold text-spark text-center mb-6 animate-ember-pulse">
+                "Your Tasks"
+            </h3>
             <Show
                 when=move || !tasks_clone.is_empty()
                 fallback=|| view! {
-                    <div class="tasks-empty-state">
-                        <h3>"No tasks yet"</h3>
-                        <p>"Add your first task to get started on your journey."</p>
+                    <div class="border-2 border-dashed border-orange-30 rounded-xl p-8 text-center">
+                        <h3 class="text-xl font-bold text-spark mb-2">"No tasks yet"</h3>
+                        <p class="text-ash opacity-80">"Add your first task to get started on your journey."</p>
                     </div>
                 }
             >
-                <div class="tasks-list">
+                <div class="space-y-4">
                     {tasks
                         .iter()
                         .map(|task| {

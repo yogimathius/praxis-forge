@@ -43,41 +43,53 @@ pub fn Navigation() -> impl IntoView {
             class="gap-8 p-4 mb-8 bg-glass border border-orange rounded-xl"
         >
             <Button
-                appearance=Signal::derive(move || {
+                appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                class=Signal::derive(move || {
                     if location.get() == Location::Home {
-                        ButtonAppearance::Primary
+                        "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                            .to_string()
                     } else {
-                        ButtonAppearance::Subtle
+                        "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                            .to_string()
                     }
                 })
-                class="text-orange hover-glow-orange"
-                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Home); }
+                on_click=move |_| {
+                    let _ = handle_navigation.dispatch(Location::Home);
+                }
             >
                 "Home"
             </Button>
             <Button
-                appearance=Signal::derive(move || {
+                appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                class=Signal::derive(move || {
                     if location.get() == Location::Tasks {
-                        ButtonAppearance::Primary
+                        "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                            .to_string()
                     } else {
-                        ButtonAppearance::Subtle
+                        "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                            .to_string()
                     }
                 })
-                class="text-orange hover-glow-orange"
-                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Tasks); }
+                on_click=move |_| {
+                    let _ = handle_navigation.dispatch(Location::Tasks);
+                }
             >
                 "Tasks"
             </Button>
             <Button
-                appearance=Signal::derive(move || {
+                appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                class=Signal::derive(move || {
                     if location.get() == Location::Goals {
-                        ButtonAppearance::Primary
+                        "text-spark font-bold border-b-2 border-spark shadow-spark-md px-6 py-3 rounded-xl hover:text-white"
+                            .to_string()
                     } else {
-                        ButtonAppearance::Subtle
+                        "text-ash hover:text-spark hover:shadow-spark-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                            .to_string()
                     }
                 })
-                class="text-orange hover-glow-orange"
-                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Goals); }
+                on_click=move |_| {
+                    let _ = handle_navigation.dispatch(Location::Goals);
+                }
             >
                 "Goals"
             </Button>

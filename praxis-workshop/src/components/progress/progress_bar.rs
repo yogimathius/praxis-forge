@@ -23,9 +23,10 @@ pub fn ProgressBar(
     let goals = goals.unwrap_or_default();
 
     view! {
-        <div class="progress-container">
-            <div class="goals-list">
-                {goals.iter().map(|goal| {
+        <div>
+            {goals
+                .iter()
+                .map(|goal| {
                     let tasks_completed = goal.tasks_completed.unwrap_or(0);
                     let tasks_required = goal.tasks_required.unwrap_or(1);
                     let progress_percentage = if tasks_required > 0 {
@@ -35,28 +36,27 @@ pub fn ProgressBar(
                     };
 
                     view! {
-                        <div class="goal-item">
-                            <div class="goal-header">
-                                <h3>{goal.title.clone().unwrap_or_default()}</h3>
-                                <span class="task-count">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-ash font-medium">Progress</span>
+                                <span class="text-ash text-sm">
                                     {tasks_completed} "/" {tasks_required} " tasks"
                                 </span>
                             </div>
 
-                            <div class="progress-bar">
+                            <div class="bg-glass h-8 rounded-full overflow-hidden border border-spark-30">
                                 <div
-                                    class="progress-fill"
+                                    class="bg-gradient-steel h-full rounded-full transition-all duration-500"
                                     style=format!("width: {}%;", progress_percentage)
-                                >
-                                </div>
-                                <div class="progress-text">
+                                ></div>
+                                <div class="relative -top-8 text-center text-ash font-medium">
                                     {progress_percentage}"% Complete"
                                 </div>
                             </div>
                         </div>
                     }
-                }).collect::<Vec<_>>()}
-            </div>
+                })
+                .collect::<Vec<_>>()}
         </div>
     }
 }

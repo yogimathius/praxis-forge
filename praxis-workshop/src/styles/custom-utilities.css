@@ -498,3 +498,28 @@
   position: relative;
   z-index: 5;
 }
+
+/* Add these hover text color utilities */
+.hover\:text-white:hover {
+  color: white;
+}
+
+.hover\:text-orange:hover {
+  color: var(--forge-orange);
+}
+
+.hover\:text-spark:hover {
+  color: var(--forge-spark);
+}
+
+.hover\:text-ash:hover {
+  color: var(--forge-ash);
+}
+
+.hover\:text-steel:hover {
+  color: var(--forge-steel);
+}
+
+.hover\:text-red:hover {
+  color: var(--forge-red);
+}

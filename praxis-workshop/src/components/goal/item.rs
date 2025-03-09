@@ -1,8 +1,8 @@
 use leptos::prelude::*;
+use thaw::{Button, Card};
 
 use crate::components::progress::ProgressBar;
 use crate::graphql::queries::goals::Goal;
-
 
 #[component]
 pub fn GoalItem(
@@ -28,82 +28,84 @@ pub fn GoalItem(
     };
 
     view! {
-        <div class="goalItem">
-            <div class="wrapper">
-                <div class="goalContent">
-                    <Show
-                        when=move || is_editing.get()
-                        fallback=move || {
-                            view! {
-                                <h3 class="goalTitle">{move || goal.get().title}</h3>
-                                {move || goal.get().description.as_ref().map(|desc| {
-                                    view! {
-                                        <p class="description">{desc.clone()}</p>
-                                    }
-                                })}
+        <Card class="bg-glass border border-spark-30 p-6 hover-lift transition-all duration-300 mb-8 shadow-spark-sm">
+            <div class="flex flex-col gap-6">
+                <div class="flex justify-between items-start flex-wrap md:flex-nowrap gap-4">
+                    <div class="flex-1">
+                        <Show
+                            when=move || is_editing.get()
+                            fallback=move || {
+                                view! {
+                                    <h3 class="text-2xl font-bold text-spark mb-3">
+                                        {move || goal.get().title}
+                                    </h3>
+                                    {move || {
+                                        goal.get()
+                                            .description
+                                            .as_ref()
+                                            .map(|desc| {
+                                                view! { <p class="text-ash opacity-80">{desc.clone()}</p> }
+                                            })
+                                    }}
+                                }
                             }
-                        }
-                    >
-                        <input
-                            node_ref=title_input
-                            type="text"
-                            class="editInput"
-                            value=edit_title.get()
-                            on:change=move |ev| {
-                                set_edit_title.set(Some(event_target_value(&ev)));
+                        >
+                            <input
+                                node_ref=title_input
+                                type="text"
+                                class="bg-white/10 border border-spark-30 rounded-lg p-4 w-full text-ash mb-3 focus:border-spark focus:shadow-spark-sm"
+                                value=edit_title.get()
+                                on:change=move |ev| {
+                                    set_edit_title.set(Some(event_target_value(&ev)));
+                                }
+                            />
+                            <textarea
+                                node_ref=desc_input
+                                class="bg-white/10 border border-spark-30 rounded-lg p-4 w-full text-ash focus:border-spark focus:shadow-spark-sm min-h-[80px]"
+                                prop:value=edit_description.get()
+                                on:change=move |ev| {
+                                    set_edit_description.set(event_target_value(&ev));
+                                }
+                            ></textarea>
+                        </Show>
+                    </div>
+                    <div class="flex gap-3">
+                        <Show
+                            when=move || is_editing.get()
+                            fallback=move || {
+                                view! {
+                                    <Button
+                                        class="btn btn-spark btn-sm"
+                                        on:click=move |_| set_is_editing.set(true)
+                                    >
+                                        "Edit"
+                                    </Button>
+                                }
                             }
-                        />
-                        <input
-                            node_ref=desc_input
-                            type="text"
-                            class="editInput"
-                            value=edit_description.get()
-                            on:change=move |ev| {
-                                set_edit_description.set(event_target_value(&ev));
+                        >
+                            <Button class="btn btn-spark btn-sm" on:click=handle_save>
+                                "Save"
+                            </Button>
+                        </Show>
+                        <Button
+                            class="btn btn-red btn-sm"
+                            on:click=move |_| {
+                                let _ = on_delete.dispatch(goal.get().id.unwrap());
                             }
-                        />
-                    </Show>
+                        >
+                            "Delete"
+                        </Button>
+                    </div>
+                </div>
+
+                <div class="bg-glass-darker rounded-lg p-4 border border-orange-30">
+                    {move || {
+                        let current_goal = goal.get();
+                        let goals_vec = vec![current_goal.clone()];
+                        view! { <ProgressBar goals=goals_vec /> }
+                    }}
                 </div>
             </div>
-            <div class="actions">
-                <Show
-                    when=move || is_editing.get()
-                    fallback=move || {
-                        view! {
-                            <button
-                                class="button editButton"
-                                on:click=move |_| set_is_editing.set(true)
-                            >
-                                "Edit"
-                            </button>
-                        }
-                    }
-                >
-                    <button
-                        class="button saveButton"
-                        on:click=handle_save
-                    >
-                        "Save"
-                    </button>
-                </Show>
-                <button
-                    class="button deleteButton"
-                    on:click=move |_| {
-                        let _ = on_delete.dispatch(goal.get().id.unwrap());
-                    }
-                >
-                    "Delete"
-                </button>
-            </div>
-            <div class="progressInfo">
-                {move || {
-                    let current_goal = goal.get();
-                    let goals_vec = vec![current_goal.clone()];
-                    view! {
-                        <ProgressBar goals=goals_vec />
-                    }
-                }}
-            </div>
-        </div>
+        </Card>
     }
 }

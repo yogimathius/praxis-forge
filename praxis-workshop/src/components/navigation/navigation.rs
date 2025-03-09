@@ -1,5 +1,6 @@
 use leptos::prelude::*;
 use leptos_router::{components::*, hooks::use_navigate};
+use thaw::*;
 
 // Let's define our own Location enum since we need it
 #[derive(Clone, Debug, PartialEq)]
@@ -37,49 +38,49 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <nav class="flex justify-center gap-8 p-4 mb-8 bg-white/5 backdrop-blur border border-[#ff6b35] rounded-xl">
-            <button
-                class=move || {
-                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
-                    let active = if location.get() == Location::Home {
-                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+        <Flex
+            justify=FlexJustify::Center
+            class="gap-8 p-4 mb-8 bg-glass border border-orange rounded-xl"
+        >
+            <Button
+                appearance=Signal::derive(move || {
+                    if location.get() == Location::Home {
+                        ButtonAppearance::Primary
                     } else {
-                        ""
-                    };
-                    format!("{} {}", base, active)
-                }
-                on:click=move |_| { handle_navigation.dispatch(Location::Home); }
+                        ButtonAppearance::Subtle
+                    }
+                })
+                class="text-orange hover-glow-orange"
+                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Home); }
             >
                 "Home"
-            </button>
-            <button
-                class=move || {
-                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
-                    let active = if location.get() == Location::Tasks {
-                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+            </Button>
+            <Button
+                appearance=Signal::derive(move || {
+                    if location.get() == Location::Tasks {
+                        ButtonAppearance::Primary
                     } else {
-                        ""
-                    };
-                    format!("{} {}", base, active)
-                }
-                on:click=move |_| { handle_navigation.dispatch(Location::Tasks); }
+                        ButtonAppearance::Subtle
+                    }
+                })
+                class="text-orange hover-glow-orange"
+                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Tasks); }
             >
                 "Tasks"
-            </button>
-            <button
-                class=move || {
-                    let base = "rounded-md transition-all duration-300 cursor-pointer hover:bg-[#ff6b35]/10 hover:border hover:border-[#ff6b35] hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] active:bg-[#ff6b35]/15 active:shadow-[0_0_15px_rgba(255,107,53,0.2)]";
-                    let active = if location.get() == Location::Goals {
-                        "bg-[#ff6b35]/15 shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]"
+            </Button>
+            <Button
+                appearance=Signal::derive(move || {
+                    if location.get() == Location::Goals {
+                        ButtonAppearance::Primary
                     } else {
-                        ""
-                    };
-                    format!("{} {}", base, active)
-                }
-                on:click=move |_| { handle_navigation.dispatch(Location::Goals); }
+                        ButtonAppearance::Subtle
+                    }
+                })
+                class="text-orange hover-glow-orange"
+                on_click=move |_| { let _ = handle_navigation.dispatch(Location::Goals); }
             >
                 "Goals"
-            </button>
-        </nav>
+            </Button>
+        </Flex>
     }
 }

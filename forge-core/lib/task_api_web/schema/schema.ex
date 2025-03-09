@@ -35,6 +35,8 @@ defmodule TaskApiWeb.Schema do
       arg(:goal_id, :id)
       arg(:status, :string)
       arg(:completed, :boolean)
+
+      resolve(&TaskApiWeb.Resolvers.Tasks.update_task/3)
     end
 
     @desc "Delete a task"
@@ -57,6 +59,10 @@ defmodule TaskApiWeb.Schema do
     field :update_goal, :goal do
       arg(:id, non_null(:id))
       arg(:title, :string)
+      arg(:description, :string)
+      arg(:tasks_required, :integer)
+
+      resolve(&TaskApiWeb.Resolvers.Goals.update_goal/3)
     end
 
     @desc "Delete a goal"

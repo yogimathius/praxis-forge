@@ -24,19 +24,28 @@ defmodule TaskApiWeb.Resolvers.Tasks do
     end
   end
 
-  def update_task(_parent, args, _resolution) do
-    Logger.info("Updating task with args: #{inspect(args)}")
-    result = %Task{}
-    |> Task.changeset(args)
-    |> Repo.update()
+  def update_task(_parent, %{id: id} = args, _resolution) do
+    Logger.debug("→ UPDATE TASK STARTED")
+    Logger.debug("→ Received args: #{inspect(args, pretty: true)}")
 
-    case result do
-      {:ok, task} ->
-        Logger.info("Successfully updated task: #{inspect(task)}")
-        result
-      {:error, changeset} ->
-        Logger.error("Failed to update task: #{inspect(changeset.errors)}")
-        result
+    case Repo.get(Task, id) do
+        nil ->
+            Logger.warn("→ Task not found with ID: #{id}")
+            {:error, "Task not found"}
+        task ->
+            Logger.debug("→ Found existing task: #{inspect(task, pretty: true)}")
+
+            changeset = Task.changeset(task, args)
+            Logger.debug("→ Built changeset: #{inspect(changeset, pretty: true)}")
+
+            case Repo.update(changeset) do
+                {:ok, updated_task} ->
+                    Logger.debug("→ Successfully updated task: #{inspect(updated_task, pretty: true)}")
+                    {:ok, updated_task}
+                {:error, failed_changeset} ->
+                    Logger.error("→ Update failed with errors: #{inspect(failed_changeset.errors, pretty: true)}")
+                    {:error, "Failed to update task"}
+            end
     end
   end
 

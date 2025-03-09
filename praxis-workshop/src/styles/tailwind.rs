@@ -12,7 +12,7 @@ pub fn get_tailwind_bundle() -> String {
         false,
     );
     let _ = tw.trace("flex items-center justify-center space-x-4", false);
-
+    let _ = tw.trace("text-center", false);
     // Cards & Containers - These might have issues with complex values
     let _ = tw.trace(
         "bg-slate-900/80 backdrop-blur-lg rounded-xl border border-[#ff6b35]/30", // ⚠️ Arbitrary color values with opacity might not work well

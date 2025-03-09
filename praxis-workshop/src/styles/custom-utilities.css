@@ -234,6 +234,14 @@
   color: #00ff00;
 }
 
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
 /* ===== Button Styles ===== */
 /* Base Button Class */
 .btn {
@@ -247,6 +255,7 @@
   border: 2px solid transparent;
   line-height: 1.5;
   font-size: 1rem;
+  text-decoration: none;
 }
 
 /* Button Variants */

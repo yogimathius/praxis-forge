@@ -13,12 +13,12 @@ pub fn Home() -> impl IntoView {
     ];
 
     view! {
-        <div class="max-w-7xl mx-auto p-4 md:p-8 animate-fade-in">
-            <h2 class="text-4xl font-bold text-ash text-center mb-12 animate-fade-in">
+        <div class="max-w-7xl mx-auto p-4 md:p-8">
+            <h2 class="text-4xl font-bold text-ash flex justify-center mb-12 animate-fade-in">
                 "Welcome to Praxis Forge"
             </h2>
 
-            <p class="text-xl text-center text-ash mb-12 animate-slide-up">
+            <p class="text-xl flex justify-center text-ash mb-12 animate-slide-up">
                 "Transform intentions into actions, actions into habits, habits into mastery."
             </p>
             <Grid

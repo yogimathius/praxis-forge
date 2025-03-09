@@ -1,0 +1,290 @@
+:root {
+  --forge-orange: #ff6b35; /* Hot metal/flame color */
+  --forge-red: #cc3311; /* Ember glow */
+  --forge-steel: #2d3142; /* Dark steel */
+  --forge-iron: #4f5d75; /* Cooled metal */
+  --forge-spark: #ffd700; /* Spark highlights */
+  --forge-ash: #e6e8e6; /* Cool ash/background */
+}
+
+/* ===== Background Utilities ===== */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.bg-glass-dark {
+  background: rgba(45, 49, 66, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.bg-gradient-steel {
+  background: linear-gradient(135deg, var(--forge-steel), var(--forge-iron));
+}
+
+.bg-orange-10 {
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+.bg-orange-15 {
+  background-color: rgba(255, 107, 53, 0.15);
+}
+
+.bg-orange-20 {
+  background-color: rgba(255, 107, 53, 0.2);
+}
+
+.bg-spark-10 {
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
+.bg-spark-15 {
+  background-color: rgba(255, 215, 0, 0.15);
+}
+
+.bg-spark-20 {
+  background-color: rgba(255, 215, 0, 0.2);
+}
+
+.bg-green-20 {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+/* ===== Border Utilities ===== */
+.border-orange {
+  border-color: var(--forge-orange);
+}
+
+.border-spark {
+  border-color: var(--forge-spark);
+}
+
+.border-orange-20 {
+  border-color: rgba(255, 107, 53, 0.2);
+}
+
+.border-orange-30 {
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.border-spark-30 {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.border-dashed {
+  border-style: dashed;
+}
+
+/* ===== Text Utilities ===== */
+.text-orange {
+  color: var(--forge-orange);
+}
+
+.text-spark {
+  color: var(--forge-spark);
+}
+
+.text-ash {
+  color: var(--forge-ash);
+}
+
+.text-steel {
+  color: var(--forge-steel);
+}
+
+.text-shadow-orange {
+  text-shadow: 0 0 10px var(--forge-orange);
+}
+
+.text-shadow-spark {
+  text-shadow: 0 0 10px var(--forge-spark);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--forge-orange), var(--forge-spark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== Shadow Utilities ===== */
+.shadow-orange-sm {
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+}
+
+.shadow-orange-md {
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.shadow-orange-lg {
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+}
+
+.shadow-spark-sm {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.shadow-spark-md {
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.shadow-spark-lg {
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4);
+}
+
+.shadow-inset {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Hover Effects ===== */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-glow-orange:hover {
+  box-shadow: 0 0 15px var(--forge-orange);
+}
+
+.hover-glow-spark:hover {
+  box-shadow: 0 0 15px var(--forge-spark);
+}
+
+/* ===== Animation Utilities ===== */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-ember-pulse {
+  animation: emberPulse 4s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes emberPulse {
+  0% {
+    text-shadow: 0 0 10px var(--forge-orange);
+  }
+  50% {
+    text-shadow: 0 0 25px var(--forge-orange), 0 0 50px var(--forge-red);
+  }
+  100% {
+    text-shadow: 0 0 10px var(--forge-orange);
+  }
+}
+
+/* ===== Status Colors ===== */
+.status-pending {
+  background-color: rgba(255, 107, 53, 0.2);
+  border-color: var(--forge-orange);
+  color: var(--forge-orange);
+}
+
+.status-in-progress {
+  background-color: rgba(255, 215, 0, 0.2);
+  border-color: var(--forge-spark);
+  color: var(--forge-spark);
+}
+
+.status-completed {
+  background-color: rgba(0, 255, 0, 0.2);
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+/* ===== Button Styles ===== */
+/* Base Button Class */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 2px solid transparent;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* Button Variants */
+.btn-orange {
+  background-color: var(--forge-orange);
+  color: var(--forge-steel);
+}
+
+.btn-orange:hover:not(:disabled) {
+  background-color: transparent;
+  border-color: var(--forge-orange);
+  color: var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-orange);
+}
+
+.btn-spark {
+  background-color: var(--forge-spark);
+  color: var(--forge-steel);
+}
+
+.btn-spark:hover:not(:disabled) {
+  background-color: transparent;
+  border-color: var(--forge-spark);
+  color: var(--forge-spark);
+  box-shadow: 0 0 15px var(--forge-spark);
+}
+
+.btn-red {
+  background-color: var(--forge-red);
+  color: var(--forge-ash);
+}
+
+.btn-red:hover:not(:disabled) {
+  background-color: transparent;
+  border-color: var(--forge-red);
+  color: var(--forge-red);
+  box-shadow: 0 0 15px var(--forge-red);
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* Button States */
+.btn-disabled,
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--forge-iron);
+  box-shadow: none;
+}

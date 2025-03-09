@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use thaw::{Grid, GridItem};
 
 #[component]
 pub fn Home() -> impl IntoView {
@@ -13,42 +14,55 @@ pub fn Home() -> impl IntoView {
 
     view! {
         <div class="max-w-7xl mx-auto p-4 md:p-8 animate-fade-in">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 bg-gradient-to-r from-[#ff6b35] to-[#ffd700] bg-clip-text text-transparent">
+            <h2 class="text-4xl font-bold text-center mb-6 text-gradient">
                 "Welcome to Praxis Forge"
             </h2>
 
-            <p class="text-xl text-center text-slate-300 mb-12 animate-slide-up">
+            <p class="text-xl text-center text-ash mb-12 animate-slide-up">
                 "Transform intentions into actions, actions into habits, habits into mastery."
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <Grid
+                cols=Signal::derive(move || {
+                    let width = window().inner_width().unwrap().as_f64().unwrap_or(0.0);
+                    if width > 768.0 { 2 } else { 1 }
+                })
+                x_gap=Signal::derive(|| 6)
+                y_gap=Signal::derive(|| 6)
+                class="mb-12"
+            >
                 {principles.into_iter().enumerate().map(|(i, (title, desc))| {
                     let i = i;
                     let hover_class = move || {
                         if hover_index.get() == i as i32 {
-                            "bg-slate-900/90 border-[#ff6b35] shadow-lg shadow-[#ff6b35]/20"
+                            "bg-glass-dark border-orange shadow-orange-md"
                         } else {
-                            "bg-slate-900/80 border-[#ff6b35]/30"
+                            "bg-glass-dark border-orange-30"
                         }
                     };
 
                     view! {
-                        <div
-                            class=move || format!("{} backdrop-blur-lg rounded-xl border p-6 md:p-8 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#ff6b35]/20 transition-all duration-300", hover_class())
-                            on:mouseenter=move |_| set_hover_index.set(i as i32)
-                            on:mouseleave=move |_| set_hover_index.set(-1)
+                        <GridItem
+                            column=Signal::derive(|| 1)
+                            offset=Signal::derive(|| 0)
                         >
-                            <h3 class="text-2xl font-bold text-[#ff6b35] mb-3">{title}</h3>
-                            <p class="text-slate-300">{desc}</p>
-                        </div>
+                            <div
+                                class=move || format!("{} rounded-xl border p-6 hover-lift transition-all duration-300", hover_class())
+                                on:mouseenter=move |_| set_hover_index.set(i as i32)
+                                on:mouseleave=move |_| set_hover_index.set(-1)
+                            >
+                                <h3 class="text-2xl font-bold text-orange mb-3">{title}</h3>
+                                <p class="text-ash">{desc}</p>
+                            </div>
+                        </GridItem>
                     }
                 }).collect::<Vec<_>>()}
-            </div>
+            </Grid>
 
             <div class="flex justify-center">
                 <a
                     href="/tasks"
-                    class="bg-[#ff6b35] text-slate-900 font-semibold px-6 py-3 rounded-xl hover:bg-[#ff6b35]/90 hover:shadow-lg hover:shadow-[#ff6b35]/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#ff6b35] focus:ring-offset-2 focus:ring-offset-slate-900"
+                    class="btn btn-orange hover-lift shadow-orange-sm focus:outline-none"
                 >
                     "Start Your Journey"
                 </a>

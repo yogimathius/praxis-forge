@@ -43,12 +43,20 @@ pub fn TaskItem(
                         when=move || is_editing.get()
                         fallback=move || {
                             view! {
-                                <h3 class="text-xl font-bold text-ash">{move || task.get().title}</h3>
-                                {move || task.get().description.as_ref().map(|desc| {
-                                    view! {
-                                        <p class="text-ash opacity-80 mt-2">{desc.clone()}</p>
-                                    }
-                                })}
+                                <h3 class="text-xl font-bold text-ash">
+                                    {move || task.get().title}
+                                </h3>
+                                {move || {
+                                    task
+                                        .get()
+                                        .description
+                                        .as_ref()
+                                        .map(|desc| {
+                                            view! {
+                                                <p class="text-ash opacity-80 mt-2">{desc.clone()}</p>
+                                            }
+                                        })
+                                }}
                             }
                         }
                     >
@@ -74,7 +82,12 @@ pub fn TaskItem(
                 </div>
                 <div class="flex items-center gap-4 flex-wrap md:flex-nowrap mt-2 md:mt-0">
                     <select
-                        class={move || format!("task-status-select status-{}", task.get().status.unwrap_or_default())}
+                        class=move || {
+                            format!(
+                                "task-status-select status-{}",
+                                task.get().status.unwrap_or_default(),
+                            )
+                        }
                         prop:value=move || task.get().status.unwrap_or_default()
                         on:change=move |ev| {
                             let mut updated_task = task.get();
@@ -103,10 +116,7 @@ pub fn TaskItem(
                                 }
                             }
                         >
-                            <button
-                                class="btn btn-spark btn-sm"
-                                on:click=handle_save
-                            >
+                            <button class="btn btn-spark btn-sm" on:click=handle_save>
                                 "Save"
                             </button>
                         </Show>
@@ -119,11 +129,17 @@ pub fn TaskItem(
                             "Delete"
                         </button>
                     </div>
-                    {move || goal_name.get().map(|name| view! {
-                        <span class="bg-spark-15 text-spark border border-spark-30 rounded-full px-3 py-1 text-sm font-medium">
-                            {name}
-                        </span>
-                    })}
+                    {move || {
+                        goal_name
+                            .get()
+                            .map(|name| {
+                                view! {
+                                    <span class="bg-spark-15 text-spark border border-spark-30 rounded-full px-3 py-1 text-sm font-medium">
+                                        {name}
+                                    </span>
+                                }
+                            })
+                    }}
                 </div>
             </div>
         </div>

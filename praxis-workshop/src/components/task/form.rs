@@ -79,7 +79,7 @@ pub fn TaskForm(
                         <input
                             id="task-title"
                             type="text"
-                            class="bg-white/10 border border-orange-30 rounded-lg p-4 w-full text-steel font-medium focus:border-orange focus:shadow-orange-sm"
+                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm"
                             placeholder="Add a new task..."
                             on:input=move |ev| set_task_text.set(event_target_value(&ev))
                             prop:value=move || task_text.get()
@@ -90,7 +90,7 @@ pub fn TaskForm(
                         <label for="task-description" class="text-ash text-sm mb-2 font-medium">Description</label>
                         <textarea
                             id="task-description"
-                            class="bg-white/10 border border-orange-30 rounded-lg p-4 w-full text-steel font-medium focus:border-orange focus:shadow-orange-sm min-h-[80px] resize-y"
+                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm min-h-[80px] resize-y"
                             placeholder="Add a description..."
                             on:input=move |ev| set_task_description.set(event_target_value(&ev))
                             prop:value=move || task_description.get()

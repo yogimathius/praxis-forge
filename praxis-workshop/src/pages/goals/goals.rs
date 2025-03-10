@@ -1,4 +1,3 @@
-use crate::components::goal::item::GoalItem;
 use crate::state::use_goals::GoalsState;
 use leptos::prelude::*;
 
@@ -34,56 +33,17 @@ pub fn GoalsListPage() -> impl IntoView {
             <div class="bg-glass rounded-xl border border-spark-30 p-8 animate-fade-in delay-500">
                 {
                     let goals = goals.clone();
-                    move || -> View<_> {
-                        let goals = goals.get().clone();
-                        let on_delete = delete.clone();
-                        let on_edit = update.clone();
+                    move || {
+                        let goals_data = goals.get().clone();
 
                         view! {
                             <div>
                                 <h3 class="text-2xl font-bold text-spark text-center mb-8 animate-ember-pulse">
                                     "Your Goals"
                                 </h3>
-                                {
-                                    let goals_for_check = goals.clone();
-                                    let goals_for_display = goals;
-
-                                    view! {
-                                        <Show
-                                            when=move || !goals_for_check.is_empty()
-                                            fallback=|| {
-                                                view! {
-                                                    <div class="border-2 border-dashed border-spark-30 rounded-xl p-8 text-center">
-                                                        <h3 class="text-xl font-bold text-spark mb-4">
-                                                            "No goals yet"
-                                                        </h3>
-                                                        <p class="text-ash opacity-80">
-                                                            "Add your first goal to begin your journey."
-                                                        </p>
-                                                    </div>
-                                                }
-                                            }
-                                        >
-                                            <div class="space-y-6">
-                                                {goals_for_display
-                                                    .iter()
-                                                    .map(|goal| {
-                                                        view! {
-                                                            <GoalItem
-                                                                goal=goal.clone()
-                                                                on_delete=on_delete
-                                                                on_edit=on_edit
-                                                            />
-                                                        }
-                                                    })
-                                                    .collect_view()}
-                                            </div>
-                                        </Show>
-                                    }
-                                }
+                                <GoalsList goals=goals_data on_delete=delete on_edit=update />
                             </div>
                         }
-                            .into_view()
                     }
                 }
             </div>

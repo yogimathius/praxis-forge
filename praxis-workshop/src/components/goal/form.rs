@@ -62,7 +62,7 @@ pub fn GoalForm(
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-col">
-                        <label for="goal-title" class="text-ash text-sm mb-2 font-medium">
+                        <label for="goal-title" class="text-ash text-sm font-medium">
                             Goal Title
                         </label>
                         <input
@@ -76,7 +76,7 @@ pub fn GoalForm(
                     </div>
 
                     <div class="flex flex-col">
-                        <label for="goal-description" class="text-ash text-sm mb-2 font-medium">
+                        <label for="goal-description" class="text-ash text-sm font-medium">
                             Description
                         </label>
                         <textarea

@@ -28,15 +28,15 @@ pub fn GoalItem(
     };
 
     view! {
-        <Card class="bg-glass border border-spark-30 p-6 hover-lift transition-all duration-300 mb-8 shadow-spark-sm">
-            <div class="flex flex-col gap-6">
+        <Card class="bg-glass border border-spark-30 p-12 hover-lift transition-all duration-300 shadow-spark-sm">
+            <div class="flex flex-col gap-2">
                 <div class="flex justify-between items-start flex-wrap md:flex-nowrap gap-4">
                     <div class="flex-1">
                         <Show
                             when=move || is_editing.get()
                             fallback=move || {
                                 view! {
-                                    <h3 class="text-2xl font-bold text-spark mb-3">
+                                    <h3 class="text-2xl font-bold text-spark">
                                         {move || goal.get().title}
                                     </h3>
                                     {move || {

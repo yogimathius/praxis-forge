@@ -47,8 +47,7 @@ pub fn TaskItem(
                                     {move || task.get().title}
                                 </h3>
                                 {move || {
-                                    task
-                                        .get()
+                                    task.get()
                                         .description
                                         .as_ref()
                                         .map(|desc| {
@@ -88,7 +87,6 @@ pub fn TaskItem(
                                 task.get().status.unwrap_or_default(),
                             )
                         }
-                        prop:value=move || task.get().status.unwrap_or_default()
                         on:change=move |ev| {
                             let mut updated_task = task.get();
                             let new_status = event_target_value(&ev);
@@ -98,9 +96,24 @@ pub fn TaskItem(
                             let _ = on_toggle.dispatch(updated_task);
                         }
                     >
-                        <option value="pending">"Pending"</option>
-                        <option value="in_progress">"In Progress"</option>
-                        <option value="completed">"Completed"</option>
+                        <option
+                            value="pending"
+                            selected=move || task.get().status.unwrap_or_default() == "pending"
+                        >
+                            "Pending"
+                        </option>
+                        <option
+                            value="in_progress"
+                            selected=move || task.get().status.unwrap_or_default() == "in_progress"
+                        >
+                            "In Progress"
+                        </option>
+                        <option
+                            value="completed"
+                            selected=move || task.get().status.unwrap_or_default() == "completed"
+                        >
+                            "Completed"
+                        </option>
                     </select>
                     <div class="flex gap-3">
                         <Show

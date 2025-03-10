@@ -110,7 +110,7 @@ pub fn TaskForm(
                         <div class="flex">
                             <select
                                 id="task-goal"
-                                class="bg-white/10 border border-orange-30 rounded-lg p-4 w-full text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
+                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
                                 on:change=move |ev| {
                                     let value = event_target_value(&ev);
                                     set_selected_goal.set(value.parse::<i32>().ok());
@@ -147,7 +147,7 @@ pub fn TaskForm(
                         <div class="flex">
                             <select
                                 id="task-status"
-                                class="bg-white/10 border border-orange-30 rounded-lg p-4 w-full text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
+                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
                                 on:input=move |ev| set_task_status.set(event_target_value(&ev))
                                 prop:value=move || task_status.get()
                             >

@@ -20,10 +20,10 @@ pub fn GoalsListPage() -> impl IntoView {
 
     view! {
         <div class="max-w-7xl mx-auto p-8 my-8">
-            <h2 class="text-4xl font-bold text-spark text-center mb-6 animate-ember-pulse">
+            <h2 class="text-4xl font-bold text-spark flex justify-center mb-6 animate-ember-pulse">
                 "The Anvil"
             </h2>
-            <p class="text-xl text-center text-ash mb-12 animate-slide-up">
+            <p class="text-xl flex justify-center text-ash mb-12 animate-slide-up">
                 "Mold your goals on the anvil of determination."
             </p>
 

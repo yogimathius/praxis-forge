@@ -1,7 +1,6 @@
 use leptos::prelude::*;
 
 use crate::components::task::item::TaskItem;
-use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
 
 #[component]

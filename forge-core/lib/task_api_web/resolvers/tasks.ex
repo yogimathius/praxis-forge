@@ -2,10 +2,16 @@ defmodule TaskApiWeb.Resolvers.Tasks do
   require Logger
   alias TaskApi.Repo
   alias TaskApi.Task
+  import Ecto.Query
 
   def list_tasks(_parent, _args, _resolution) do
-    Logger.info("Fetching all tasks")
-    {:ok, Repo.all(Task)}
+    Logger.info("Fetching all tasks with associated goals")
+
+    tasks = Task
+    |> Repo.all()
+    |> Repo.preload(:goal)
+
+    {:ok, tasks}
   end
 
   def create_task(_parent, args, _resolution) do
@@ -17,7 +23,8 @@ defmodule TaskApiWeb.Resolvers.Tasks do
     case result do
       {:ok, task} ->
         Logger.info("Successfully created task: #{inspect(task)}")
-        result
+        # Preload the goal after creation
+        {:ok, Repo.preload(task, :goal)}
       {:error, changeset} ->
         Logger.error("Failed to create task: #{inspect(changeset.errors)}")
         result
@@ -41,7 +48,8 @@ defmodule TaskApiWeb.Resolvers.Tasks do
             case Repo.update(changeset) do
                 {:ok, updated_task} ->
                     Logger.debug("→ Successfully updated task: #{inspect(updated_task, pretty: true)}")
-                    {:ok, updated_task}
+                    # Preload the goal after update
+                    {:ok, Repo.preload(updated_task, :goal)}
                 {:error, failed_changeset} ->
                     Logger.error("→ Update failed with errors: #{inspect(failed_changeset.errors, pretty: true)}")
                     {:error, "Failed to update task"}
@@ -57,6 +65,9 @@ defmodule TaskApiWeb.Resolvers.Tasks do
         {:error, "Task not found"}
 
       task ->
+        # Preload the goal before deletion to include it in the response
+        task = Repo.preload(task, :goal)
+
         case Repo.delete(task) do
           {:ok, deleted_task} ->
             Logger.info("Successfully deleted task with id: #{id}")

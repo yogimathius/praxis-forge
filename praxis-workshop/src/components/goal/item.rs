@@ -28,58 +28,38 @@ pub fn GoalItem(
     };
 
     view! {
-        <Card class="bg-glass border border-spark-30 p-6 hover-lift transition-all duration-300 shadow-spark-sm">
+        <Card class="bg-glass border border-spark-30 p-8 hover-lift transition-all duration-300 shadow-spark-sm">
             <div class="flex flex-col gap-6">
-                <div class="flex justify-between items-start gap-4 flex-wrap md:flex-nowrap">
+                <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">
                         <Show
                             when=move || is_editing.get()
                             fallback=move || {
                                 view! {
-                                    <div class="flex flex-col gap-2">
-                                        <h3 class="text-2xl font-bold text-spark">
-                                            {move || goal.get().title}
-                                        </h3>
-                                        {move || {
-                                            goal.get()
-                                                .description
-                                                .as_ref()
-                                                .map(|desc| {
-                                                    view! { <p class="text-ash opacity-80">{desc.clone()}</p> }
-                                                })
-                                        }}
-                                    </div>
+                                    <h3 class="text-2xl font-bold text-spark">
+                                        {move || goal.get().title}
+                                    </h3>
                                 }
                             }
                         >
-                            <div class="flex flex-col gap-3">
-                                <input
-                                    node_ref=title_input
-                                    type="text"
-                                    class="bg-white/10 border border-spark-30 rounded-lg p-4 w-full text-ash focus:border-spark focus:shadow-spark-sm"
-                                    value=edit_title.get()
-                                    on:change=move |ev| {
-                                        set_edit_title.set(Some(event_target_value(&ev)));
-                                    }
-                                />
-                                <textarea
-                                    node_ref=desc_input
-                                    class="bg-white/10 border border-spark-30 rounded-lg p-4 w-full text-ash focus:border-spark focus:shadow-spark-sm min-h-[80px]"
-                                    prop:value=edit_description.get()
-                                    on:change=move |ev| {
-                                        set_edit_description.set(event_target_value(&ev));
-                                    }
-                                ></textarea>
-                            </div>
+                            <input
+                                node_ref=title_input
+                                type="text"
+                                class="bg-glass border border-spark-30 rounded-lg p-4 w-full text-ash text-xl font-medium focus:border-spark focus:shadow-spark-sm"
+                                value=edit_title.get()
+                                on:change=move |ev| {
+                                    set_edit_title.set(Some(event_target_value(&ev)));
+                                }
+                            />
                         </Show>
                     </div>
-                    <div class="flex gap-3">
+                    <div class="flex gap-4">
                         <Show
                             when=move || is_editing.get()
                             fallback=move || {
                                 view! {
                                     <Button
-                                        class="btn btn-spark btn-sm"
+                                        class="btn btn-spark"
                                         on:click=move |_| set_is_editing.set(true)
                                     >
                                         "Edit"
@@ -87,12 +67,12 @@ pub fn GoalItem(
                                 }
                             }
                         >
-                            <Button class="btn btn-spark btn-sm" on:click=handle_save>
+                            <Button class="btn btn-spark" on:click=handle_save>
                                 "Save"
                             </Button>
                         </Show>
                         <Button
-                            class="btn btn-red btn-sm"
+                            class="btn btn-red"
                             on:click=move |_| {
                                 let _ = on_delete.dispatch(goal.get().id.unwrap());
                             }
@@ -102,7 +82,38 @@ pub fn GoalItem(
                     </div>
                 </div>
 
-                <div class="bg-glass-darker rounded-lg p-4 border border-orange-30">
+                <Show
+                    when=move || is_editing.get()
+                    fallback=move || {
+                        let description = goal
+                            .get()
+                            .description
+                            .clone()
+                            .unwrap_or_else(|| "No description provided".to_string());
+                        let description_class = if goal.get().description.is_some() {
+                            "text-ash text-lg"
+                        } else {
+                            "text-ash opacity-60 italic text-lg"
+                        };
+
+                        view! {
+                            <div class="bg-glass-dark bg-opacity-30 rounded-lg p-4 border border-spark-20">
+                                <p class=description_class>{description}</p>
+                            </div>
+                        }
+                    }
+                >
+                    <textarea
+                        node_ref=desc_input
+                        class="bg-glass border border-spark-30 rounded-lg p-4 w-full text-ash min-h-[100px] text-lg focus:border-spark focus:shadow-spark-sm"
+                        prop:value=edit_description.get()
+                        on:change=move |ev| {
+                            set_edit_description.set(event_target_value(&ev));
+                        }
+                    ></textarea>
+                </Show>
+
+                <div class="bg-glass-darker rounded-lg p-4 border border-spark-30">
                     {move || {
                         let current_goal = goal.get();
                         let goals_vec = vec![current_goal.clone()];

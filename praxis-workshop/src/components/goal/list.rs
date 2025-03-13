@@ -17,7 +17,9 @@ pub fn GoalsList(
             fallback=|| {
                 view! {
                     <div class="border-2 border-dashed border-spark-30 rounded-xl p-8 text-center">
-                        <h3 class="text-xl font-bold text-spark mb-4">"No goals yet"</h3>
+                        <h3 class="text-center text-xl font-bold text-spark mb-4">
+                            "No goals yet"
+                        </h3>
                         <p class="text-ash opacity-80">
                             "Add your first goal to begin your journey."
                         </p>

@@ -1,9 +1,16 @@
+use crate::components::home::PrincipleItem;
 use leptos::prelude::*;
 use thaw::{Grid, GridItem};
 
 #[component]
 pub fn Principles() -> impl IntoView {
     let (hover_index, set_hover_index) = signal(-1);
+
+    // Create an action to update the hover index
+    let update_hover_index = Action::new_unsync(move |index: &i32| {
+        set_hover_index.set(*index);
+        async {} // Return an empty async block to satisfy the Future requirement
+    });
 
     let principles = vec![
         ("Praxis", "Theory into Action"),
@@ -25,31 +32,23 @@ pub fn Principles() -> impl IntoView {
                 .into_iter()
                 .enumerate()
                 .map(|(i, (title, desc))| {
-                    let i = i;
-                    let hover_class = move || {
+                    let i_clone = i as i32;
+                    let hover_class = create_memo(move |_| {
                         if hover_index.get() == i as i32 {
-                            "bg-glass border-orange shadow-orange-md"
+                            "bg-glass border-orange shadow-orange-md".to_string()
                         } else {
-                            "bg-glass border-orange-30"
+                            "bg-glass border-orange-30".to_string()
                         }
-                    };
+                    });
 
                     view! {
-                        <GridItem column=Signal::derive(|| 1) offset=Signal::derive(|| 0)>
-                            <div
-                                class=move || {
-                                    format!(
-                                        "{} rounded-xl border p-8 hover-lift transition-all duration-300",
-                                        hover_class(),
-                                    )
-                                }
-                                on:mouseenter=move |_| set_hover_index.set(i as i32)
-                                on:mouseleave=move |_| set_hover_index.set(-1)
-                            >
-                                <h3 class="text-3xl font-bold text-orange mb-4">{title}</h3>
-                                <p class="text-ash text-lg">{desc}</p>
-                            </div>
-                        </GridItem>
+                        <PrincipleItem
+                            title=title.to_string()
+                            description=desc.to_string()
+                            index=i_clone
+                            hover_class=hover_class
+                            set_hover_index=update_hover_index
+                        />
                     }
                 })
                 .collect::<Vec<_>>()}

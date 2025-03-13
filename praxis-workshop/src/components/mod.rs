@@ -1,3 +1,4 @@
+pub mod common;
 pub mod goal;
 pub mod navigation;
 pub mod progress;

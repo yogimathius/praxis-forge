@@ -1,25 +1,9 @@
 use leptos::prelude::*;
 
-#[derive(Clone)]
-pub struct Task {
-    id: usize,
-    title: String,
-    completed: bool,
-}
-
-#[derive(Clone)]
-pub struct Goal {
-    id: usize,
-    title: String,
-    tasks_required: usize,
-    tasks_completed: usize,
-}
-
 #[component]
 pub fn ProgressBar(
     #[prop(optional)] goals: Option<Vec<crate::graphql::queries::goals::Goal>>,
 ) -> impl IntoView {
-    // Use provided goals or empty vec if None
     let goals = goals.unwrap_or_default();
 
     view! {

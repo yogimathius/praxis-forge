@@ -1,3 +1,4 @@
+use crate::components::common::Header;
 use leptos::prelude::*;
 use thaw::{Grid, GridItem};
 
@@ -15,14 +16,11 @@ pub fn Home() -> impl IntoView {
     view! {
         <div class="max-w-7xl mx-auto p-4 md:p-8">
             <div class="flex flex-col gap-8">
-                <div class="flex flex-col gap-4 items-center">
-                    <h2 class="text-4xl font-bold text-spark animate-ember-pulse">
-                        "Welcome to Praxis Forge"
-                    </h2>
-                    <p class="text-xl text-ash animate-slide-up">
-                        "Transform intentions into actions, actions into habits, habits into mastery."
-                    </p>
-                </div>
+                <Header
+                    title="Welcome to Praxis Forge".to_string()
+                    description="Transform intentions into actions, actions into habits, habits into mastery."
+                        .to_string()
+                />
 
                 <Grid
                     cols=Signal::derive(move || {

@@ -37,49 +37,51 @@ pub fn TaskItem(
 
     view! {
         <div class="bg-glass border border-orange-30 rounded-xl p-6 hover-lift transition-all duration-300 mb-6">
-            <div class="flex justify-between items-start gap-8 flex-wrap md:flex-nowrap">
+            <div class="flex justify-between items-start gap-6 flex-wrap md:flex-nowrap">
                 <div class="flex-1 flex flex-col gap-3">
                     <Show
                         when=move || is_editing.get()
                         fallback=move || {
                             view! {
-                                <h3 class="text-xl font-bold text-ash">
-                                    {move || task.get().title}
-                                </h3>
-                                {move || {
-                                    task.get()
-                                        .description
-                                        .as_ref()
-                                        .map(|desc| {
-                                            view! {
-                                                <p class="text-ash opacity-80 mt-2">{desc.clone()}</p>
-                                            }
-                                        })
-                                }}
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="text-xl font-bold text-ash">
+                                        {move || task.get().title}
+                                    </h3>
+                                    {move || {
+                                        task.get()
+                                            .description
+                                            .as_ref()
+                                            .map(|desc| {
+                                                view! { <p class="text-ash opacity-80">{desc.clone()}</p> }
+                                            })
+                                    }}
+                                </div>
                             }
                         }
                     >
-                        <input
-                            node_ref=title_input
-                            type="text"
-                            class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash mb-3 focus:border-orange focus:shadow-orange-sm"
-                            value=edit_title.get()
-                            on:change=move |ev| {
-                                set_edit_title.set(Some(event_target_value(&ev)));
-                            }
-                        />
-                        <input
-                            node_ref=desc_input
-                            type="text"
-                            class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash focus:border-orange focus:shadow-orange-sm"
-                            value=edit_description.get()
-                            on:change=move |ev| {
-                                set_edit_description.set(event_target_value(&ev));
-                            }
-                        />
+                        <div class="flex flex-col gap-3">
+                            <input
+                                node_ref=title_input
+                                type="text"
+                                class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash focus:border-orange focus:shadow-orange-sm"
+                                value=edit_title.get()
+                                on:change=move |ev| {
+                                    set_edit_title.set(Some(event_target_value(&ev)));
+                                }
+                            />
+                            <input
+                                node_ref=desc_input
+                                type="text"
+                                class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash focus:border-orange focus:shadow-orange-sm"
+                                value=edit_description.get()
+                                on:change=move |ev| {
+                                    set_edit_description.set(event_target_value(&ev));
+                                }
+                            />
+                        </div>
                     </Show>
                 </div>
-                <div class="flex items-center gap-4 flex-wrap md:flex-nowrap mt-2 md:mt-0">
+                <div class="flex items-center gap-4 flex-wrap md:flex-nowrap">
                     <select
                         class=move || {
                             format!(

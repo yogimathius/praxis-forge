@@ -154,6 +154,11 @@ pub fn get_tailwind_bundle() -> String {
     let _ = tw.trace("md:py-0 md:py-4 md:py-8 md:py-16 md:py-24", false);
     let _ = tw.trace("md:px-0 md:px-4 md:px-8 md:px-16 md:px-24", false);
 
+    // Add these to your get_tailwind_bundle function
+    let _ = tw.trace("space-y-2 space-y-4 space-y-6 space-y-8", false);
+    let _ = tw.trace("space-x-2 space-x-4 space-x-6 space-x-8", false);
+    let _ = tw.trace("gap-2 gap-4 gap-6 gap-8", false);
+
     match tw.bundle() {
         Ok(css) => css,
         Err(e) => {

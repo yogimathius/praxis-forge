@@ -74,8 +74,8 @@ pub fn TaskForm(
         <form class="bg-glass-dark rounded-xl p-8 shadow-orange-sm" on:submit=on_submit>
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
-                    <div class="flex flex-col">
-                        <label for="task-title" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2">
+                        <label for="task-title" class="text-ash text-sm font-medium">
                             Task Title
                         </label>
                         <input
@@ -88,8 +88,8 @@ pub fn TaskForm(
                         />
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="task-description" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2">
+                        <label for="task-description" class="text-ash text-sm font-medium">
                             Description
                         </label>
                         <textarea
@@ -103,8 +103,8 @@ pub fn TaskForm(
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-6">
-                    <div class="flex flex-col flex-1">
-                        <label for="task-goal" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2 flex-1">
+                        <label for="task-goal" class="text-ash text-sm font-medium">
                             Related Goal
                         </label>
                         <div class="flex">
@@ -140,8 +140,8 @@ pub fn TaskForm(
                         </div>
                     </div>
 
-                    <div class="flex flex-col md:w-1/3">
-                        <label for="task-status" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2 md:w-1/3">
+                        <label for="task-status" class="text-ash text-sm font-medium">
                             Status
                         </label>
                         <div class="flex">
@@ -162,7 +162,7 @@ pub fn TaskForm(
                     </div>
                 </div>
 
-                <div class="flex justify-start mt-2">
+                <div class="flex justify-start">
                     <button
                         type="submit"
                         class="btn btn-orange hover-lift shadow-orange-sm focus:outline-none"

@@ -1,6 +1,6 @@
 use crate::components::home::PrincipleItem;
 use leptos::prelude::*;
-use thaw::{Grid, GridItem};
+use thaw::Grid;
 
 #[component]
 pub fn Principles() -> impl IntoView {

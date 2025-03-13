@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use thaw::{Grid, GridItem};
+use thaw::GridItem;
 
 #[component]
 pub fn PrincipleItem(

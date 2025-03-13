@@ -1,13 +1,11 @@
 use leptos::prelude::*;
 use wasm_bindgen_test::console_log;
 
-use crate::graphql::queries::goals::Goal;
 use crate::graphql::queries::tasks::Task;
 
 #[component]
 pub fn TaskItem(
     task: Task,
-    goals: ReadSignal<Vec<Goal>>,
     #[prop(into)] on_toggle: Action<Task, Result<Task, String>>,
     #[prop(into)] on_delete: Action<cynic::Id, Result<(), String>>,
     #[prop(into)] on_edit: Action<Task, Result<Task, String>>,

@@ -47,15 +47,12 @@ pub fn TasksListPage() -> impl IntoView {
                             let on_toggle = update.clone();
                             let on_delete = delete.clone();
                             let on_edit = update.clone();
-                            let goals = goals.clone();
-
                             view! {
                                 <TasksList
                                     tasks=tasks
                                     on_toggle=on_toggle
                                     on_delete=on_delete
                                     on_edit=on_edit
-                                    goals=goals
                                 />
                             }
                                 .into_view()

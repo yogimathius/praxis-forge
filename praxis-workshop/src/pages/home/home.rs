@@ -5,7 +5,7 @@ use leptos::prelude::*;
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="max-w-7xl mx-auto p-8">
             <div class="flex flex-col gap-8">
                 <Header
                     title="Welcome to Praxis Forge".to_string()

@@ -1,6 +1,7 @@
 use crate::state::use_goals::GoalsState;
 use leptos::prelude::*;
 
+use crate::components::common::Header;
 use crate::components::goal::form::GoalForm;
 use crate::components::goal::list::GoalsList;
 use crate::state::use_goals::use_goals;
@@ -20,12 +21,10 @@ pub fn GoalsListPage() -> impl IntoView {
     view! {
         <div class="max-w-7xl mx-auto p-8">
             <div class="flex flex-col gap-8">
-                <div class="flex flex-col gap-4 items-center">
-                    <h2 class="text-4xl font-bold text-spark animate-ember-pulse">"The Anvil"</h2>
-                    <p class="text-xl text-ash animate-slide-up">
-                        "Mold your goals on the anvil of determination."
-                    </p>
-                </div>
+                <Header
+                    title="The Anvil".to_string()
+                    description="Mold your goals on the anvil of determination.".to_string()
+                />
 
                 <div class="bg-glass-dark rounded-xl border border-spark-30 p-8 animate-fade-in delay-300">
                     <GoalForm create=create.clone() refetch=refetch.clone() />

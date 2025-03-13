@@ -1,3 +1,4 @@
+use crate::components::common::Header;
 use crate::components::task::form::TaskForm;
 use crate::components::task::list::TasksList;
 use crate::state::use_goals::{use_goals, GoalsState};
@@ -28,14 +29,11 @@ pub fn TasksListPage() -> impl IntoView {
     view! {
         <div class="max-w-7xl mx-auto p-8">
             <div class="flex flex-col gap-8">
-                <div class="flex flex-col gap-4 items-center">
-                    <h2 class="text-4xl font-bold text-spark animate-ember-pulse">
-                        "Forge Operations"
-                    </h2>
-                    <p class="text-xl text-ash animate-slide-up">
-                        "Shape your tasks into achievements, one strike at a time."
-                    </p>
-                </div>
+                <Header
+                    title="Forge Operations".to_string()
+                    description="Shape your tasks into achievements, one strike at a time."
+                        .to_string()
+                />
 
                 <div class="bg-glass-dark rounded-xl border border-orange-30 p-8 animate-fade-in delay-300">
                     <TaskForm create=create.clone() refetch=refetch.clone() goals=goals />

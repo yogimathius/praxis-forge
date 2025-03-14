@@ -1,0 +1,85 @@
+pub mod components;
+pub mod graphql;
+pub mod pages;
+pub mod services;
+pub mod state;
+pub mod styles;
+
+pub use components::Navigation;
+pub use pages::goals::GoalsListPage;
+pub use pages::home::Home;
+pub use pages::tasks::tasks::TasksListPage;
+use services::graphql_service::GraphQLService;
+use services::service_context::ServiceContext;
+use styles::tailwind::get_tailwind_bundle;
+
+use leptos::prelude::*;
+use leptos_router::components::*;
+use leptos_router::path;
+use std::sync::Arc;
+use wasm_bindgen_test::console_log;
+use web_sys::window;
+
+#[component]
+pub fn App() -> impl IntoView {
+    let service = GraphQLService::new();
+    provide_context(ServiceContext(Arc::new(service)));
+
+    // Inject Tailwind styles
+    let window = window().unwrap();
+    let document = window.document().unwrap();
+
+    // Inject Tailwind styles
+    let tailwind_style_el = document.create_element("style").unwrap();
+    let tailwind_styles = get_tailwind_bundle();
+    tailwind_style_el.set_text_content(Some(&tailwind_styles));
+    document
+        .head()
+        .unwrap()
+        .append_child(&tailwind_style_el)
+        .unwrap();
+
+    // Inject custom utility styles
+    let custom_style_el = document.create_element("style").unwrap();
+    let custom_styles = include_str!("styles/custom-utilities.css");
+    custom_style_el.set_text_content(Some(custom_styles));
+    document
+        .head()
+        .unwrap()
+        .append_child(&custom_style_el)
+        .unwrap();
+
+    view! {
+        <Router>
+            <div style="display: none;" id="tailwind-debug">
+                {tailwind_styles}
+            </div>
+            <main>
+                <Navigation/>
+                <Routes fallback=move || view! { <p>"Not found."</p> }>
+                    <ParentRoute
+                        path=path!("")
+                        view=|| view! { <Outlet/> }
+                    >
+                        <Route
+                            path=path!("")
+                            view=Home
+                        />
+                        // <Route
+                        //     path=path!("progress")
+                        //     view=ProgressBarPage
+                        // />
+                        <Route
+                            path=path!("tasks")
+                            view=TasksListPage
+                        />
+                        <Route
+                            path=path!("goals")
+                            view=GoalsListPage
+                        />
+                    </ParentRoute>
+                </Routes>
+            </main>
+        </Router>
+    }
+}

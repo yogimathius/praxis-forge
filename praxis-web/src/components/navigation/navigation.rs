@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use leptos_router::{components::*, hooks::use_navigate};
+use leptos_router::hooks::use_navigate;
 use thaw::*;
 
 // Let's define our own Location enum since we need it
@@ -38,62 +38,63 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <div class="bg-glass px-8 md:px-0">
-            <Flex
-                justify=FlexJustify::Start
-                class="gap-8 p-4 mb-8 border border-orange rounded-xl max-w-7xl mx-auto"
-            >
-                <Button
-                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                    class=Signal::derive(move || {
-                        if location.get() == Location::Home {
-                            "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
-                                .to_string()
-                        } else {
-                            "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                                .to_string()
+        <div class="bg-slate-800/70 backdrop-blur-lg border-b border-[#ff6b35]/20 sticky top-0 z-10">
+            <Flex justify=FlexJustify::SpaceBetween class="p-4 max-w-7xl mx-auto">
+                <Flex justify=FlexJustify::Start class="gap-8">
+                    <Button
+                        appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                        class=Signal::derive(move || {
+                            if location.get() == Location::Home {
+                                "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                    .to_string()
+                            } else {
+                                "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                    .to_string()
+                            }
+                        })
+                        on_click=move |_| {
+                            let _ = handle_navigation.dispatch(Location::Home);
                         }
-                    })
-                    on_click=move |_| {
-                        let _ = handle_navigation.dispatch(Location::Home);
-                    }
-                >
-                    "Home"
-                </Button>
-                <Button
-                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                    class=Signal::derive(move || {
-                        if location.get() == Location::Tasks {
-                            "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
-                                .to_string()
-                        } else {
-                            "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                                .to_string()
+                    >
+                        "Home"
+                    </Button>
+                    <Button
+                        appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                        class=Signal::derive(move || {
+                            if location.get() == Location::Tasks {
+                                "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                    .to_string()
+                            } else {
+                                "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                    .to_string()
+                            }
+                        })
+                        on_click=move |_| {
+                            let _ = handle_navigation.dispatch(Location::Tasks);
                         }
-                    })
-                    on_click=move |_| {
-                        let _ = handle_navigation.dispatch(Location::Tasks);
-                    }
-                >
-                    "Tasks"
-                </Button>
-                <Button
-                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                    class=Signal::derive(move || {
-                        if location.get() == Location::Goals {
-                            "text-spark font-bold border-b-2 border-spark shadow-spark-md px-6 py-3 rounded-xl hover:text-white"
-                                .to_string()
-                        } else {
-                            "text-ash hover:text-spark hover:shadow-spark-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                                .to_string()
+                    >
+                        "Tasks"
+                    </Button>
+                    <Button
+                        appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                        class=Signal::derive(move || {
+                            if location.get() == Location::Goals {
+                                "text-spark font-bold border-b-2 border-spark shadow-spark-md px-6 py-3 rounded-xl hover:text-white"
+                                    .to_string()
+                            } else {
+                                "text-ash hover:text-spark hover:shadow-spark-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                    .to_string()
+                            }
+                        })
+                        on_click=move |_| {
+                            let _ = handle_navigation.dispatch(Location::Goals);
                         }
-                    })
-                    on_click=move |_| {
-                        let _ = handle_navigation.dispatch(Location::Goals);
-                    }
-                >
-                    "Goals"
-                </Button>
+                    >
+                        "Goals"
+                    </Button>
+                </Flex>
+
+                <div class="text-[#ff6b35] font-bold text-xl">Praxis Forge</div>
             </Flex>
         </div>
     }

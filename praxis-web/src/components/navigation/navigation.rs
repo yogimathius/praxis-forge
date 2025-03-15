@@ -38,7 +38,7 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <div class="bg-glass px-8">
+        <div class="bg-glass px-8 md:px-0">
             <Flex
                 justify=FlexJustify::Start
                 class="gap-8 p-4 mb-8 border border-orange rounded-xl max-w-7xl mx-auto"

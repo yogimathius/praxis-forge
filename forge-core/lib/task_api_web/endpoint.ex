@@ -4,9 +4,12 @@ defmodule TaskApiWeb.Endpoint do
 
   # Add this before any other plugs
   plug CORSPlug,
-    origin: ["http://localhost:1420"],
-    methods: ["GET", "POST", "OPTIONS"],
-    headers: ["Content-Type", "Accept", "Authorization"]
+    origin: ["http://localhost:1420", "http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:1420"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    headers: ["Content-Type", "Accept", "Authorization"],
+    expose: ["Content-Type", "Authorization"],
+    max_age: 86400,
+    credentials: true
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

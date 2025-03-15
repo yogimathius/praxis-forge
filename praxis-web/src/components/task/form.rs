@@ -132,21 +132,18 @@ pub fn TaskForm(
                         <label for="task-status" class="text-ash text-sm font-medium">
                             Status
                         </label>
-                        <div class="relative">
-                            <select
-                                id="task-status"
-                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10 appearance-none w-full"
-                                on:input=move |ev| set_task_status.set(event_target_value(&ev))
-                                prop:value=move || task_status.get()
-                            >
-                                <option value="pending">"Pending"</option>
-                                <option value="in_progress">"In Progress"</option>
-                                <option value="completed">"Completed"</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <div class="text-orange text-lg">"▼"</div>
-                            </div>
-                        </div>
+                        <Dropdown
+                            options=Memo::new(move |_| {
+                                vec![
+                                    ("pending".to_string(), "Pending".to_string()),
+                                    ("in_progress".to_string(), "In Progress".to_string()),
+                                    ("completed".to_string(), "Completed".to_string()),
+                                ]
+                            })
+                            selected=Memo::new(move |_| { task_status.get() })
+                            on_change=move |value| set_task_status.set(value)
+                            placeholder="Select a status".to_string()
+                        />
                     </div>
                 </div>
 

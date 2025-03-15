@@ -32,7 +32,7 @@ pub fn TaskItem(
     };
 
     view! {
-        <div class="bg-glass border border-orange-30 rounded-xl p-8 hover-lift transition-all duration-300 mb-6">
+        <div class="bg-glass border border-orange-30 shadow-orange-sm rounded-xl p-8 hover-lift transition-all duration-300 mb-6">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">

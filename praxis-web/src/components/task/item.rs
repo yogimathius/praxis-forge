@@ -103,12 +103,12 @@ pub fn TaskItem(
                 </Show>
 
                 <div class="flex justify-between items-center gap-6 flex-wrap md:flex-nowrap">
-                    <div class="w-48 relative">
+                    <div class="relative">
                         <select
                             class=move || {
                                 let status = task.get().status.unwrap_or_default();
                                 format!(
-                                    "task-status-select status-{} w-full rounded-lg p-4 text-lg font-medium border-2 shadow-orange-sm appearance-none",
+                                    "task-status-select status-{} rounded-lg p-4 text-lg font-medium border-2 shadow-orange-sm appearance-none",
                                     status,
                                 )
                             }
@@ -144,19 +144,8 @@ pub fn TaskItem(
                                 "Completed"
                             </option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-orange">
-                            <svg
-                                class="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <div class="text-orange text-lg">"▼"</div>
                         </div>
                     </div>
 

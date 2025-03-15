@@ -159,6 +159,9 @@ pub fn get_tailwind_bundle() -> String {
     let _ = tw.trace("space-x-2 space-x-4 space-x-6 space-x-8", false);
     let _ = tw.trace("gap-2 gap-4 gap-6 gap-8", false);
 
+    // appearance-none
+    let _ = tw.trace("appearance-none", false);
+
     match tw.bundle() {
         Ok(css) => css,
         Err(e) => {

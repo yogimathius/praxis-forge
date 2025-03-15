@@ -638,3 +638,7 @@ div.text-content {
 .text-center {
   text-align: center;
 }
+
+.appearance-none {
+  appearance: none;
+}

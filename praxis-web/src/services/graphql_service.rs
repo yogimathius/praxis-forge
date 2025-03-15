@@ -8,8 +8,9 @@ use crate::graphql::mutations::tasks::{
 };
 use crate::graphql::queries::goals::{Goal, GoalsQuery};
 use crate::graphql::queries::tasks::{Task, TasksQuery};
-use cynic::{MutationBuilder, Operation, QueryBuilder, QueryFragment};
+use cynic::{MutationBuilder, QueryBuilder};
 use reqwest::Client;
+use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE, ACCEPT};
 use wasm_bindgen_test::console_log;
 
 pub struct GraphQLService {
@@ -19,8 +20,18 @@ pub struct GraphQLService {
 
 impl GraphQLService {
     pub fn new() -> Self {
+        // Create a client with default headers
+        let mut headers = HeaderMap::new();
+        headers.insert(CONTENT_TYPE, HeaderValue::from_static("application/json"));
+        headers.insert(ACCEPT, HeaderValue::from_static("application/json"));
+
+        let client = Client::builder()
+            .default_headers(headers)
+            .build()
+            .unwrap_or_else(|_| Client::new());
+
         Self {
-            client: Client::new(),
+            client,
             endpoint: "http://localhost:4000/api/graphql".to_string(),
         }
     }
@@ -34,7 +45,10 @@ impl GraphQLService {
             .json(&query)
             .send()
             .await
-            .map_err(|e| e.to_string())?
+            .map_err(|e| {
+                console_log!("Error sending request: {:?}", e);
+                e.to_string()
+            })?
             .json::<cynic::GraphQlResponse<TasksQuery>>()
             .await
             .map_err(|e| e.to_string())?;

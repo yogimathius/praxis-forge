@@ -108,7 +108,7 @@ pub fn TaskItem(
                             class=move || {
                                 let status = task.get().status.unwrap_or_default();
                                 format!(
-                                    "task-status-select status-{} rounded-lg p-4 text-lg font-medium border-2 shadow-orange-sm appearance-none",
+                                    "task-status-select status-{} rounded-lg px-2 text-lg font-medium border-2 shadow-orange-sm appearance-none",
                                     status,
                                 )
                             }

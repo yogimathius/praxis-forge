@@ -28,7 +28,7 @@ pub fn GoalItem(
     };
 
     view! {
-        <Card class="bg-glass border border-spark-30 p-8 hover-lift transition-all duration-300 shadow-spark-sm">
+        <Card class="bg-glass border border-spark-30 p-8 hover-lift transition-all duration-300 shadow-spark-sm w-full">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">

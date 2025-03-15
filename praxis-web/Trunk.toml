@@ -1,6 +1,26 @@
 [build]
 target = "./index.html"
+# Add this for release builds when testing performance
+# release = true
 
 [serve]
 port = 1420
 open = true
+
+# Fix the wasm-opt hook
+[[hooks]]
+stage = "post_build"
+command = "bash"
+command_arguments = [
+  "-c",
+  "if [ -f \"${TRUNK_STAGING_DIR}/$(basename ${TRUNK_SOURCE_DIR})_bg.wasm\" ]; then wasm-opt -Oz --enable-mutable-globals --enable-bulk-memory -o \"${TRUNK_STAGING_DIR}/$(basename ${TRUNK_SOURCE_DIR})_bg.wasm\" \"${TRUNK_STAGING_DIR}/$(basename ${TRUNK_SOURCE_DIR})_bg.wasm\"; fi"
+]
+
+# Fix the gzip hook similarly
+[[hooks]]
+stage = "post_build"
+command = "bash"
+command_arguments = [
+  "-c",
+  "if [ -f \"${TRUNK_STAGING_DIR}/$(basename ${TRUNK_SOURCE_DIR})_bg.wasm\" ]; then gzip -k -f \"${TRUNK_STAGING_DIR}/$(basename ${TRUNK_SOURCE_DIR})_bg.wasm\"; fi"
+]

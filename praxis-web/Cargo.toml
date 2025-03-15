@@ -20,10 +20,16 @@ futures = "0.3.31"
 wasm-bindgen-test = "0.3.50"
 cynic = { version = "3.10.0", features = ["http-reqwest"] }
 async-trait = "0.1.86"
-reqwest = { version = "0.12.12", features = ["json"] }
+reqwest = { version = "0.12.12", features = ["json"], default-features = false }
 thaw = "0.4.3"
-tailwind-css = "0.13.0"
-web-sys = { version = "0.3.77", features = ["Document", "Element", "HtmlElement", "Window", "HtmlHeadElement"] }
+web-sys = { version = "0.3.77", features = [
+  "Document",
+  "Element",
+  "HtmlElement",
+  "Window",
+  "HtmlHeadElement"
+  # Only include features you actually use
+]}
 
 [build-dependencies]
 cynic-codegen = "3.10.0"
@@ -34,3 +40,11 @@ web-sys = { version = "0.3.77", features = ["HtmlElement"] }
 [lib]
 name = "praxis_shop_ui"
 path = "src/lib.rs"
+
+# Add these profile settings
+[profile.release]
+opt-level = 'z'  # Optimize for size
+lto = true       # Enable Link Time Optimization
+codegen-units = 1  # Maximum size optimization
+strip = true     # Strip symbols
+panic = 'abort'  # Smaller code size for panic handling

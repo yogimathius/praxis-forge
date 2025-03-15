@@ -12,7 +12,7 @@
 
   - _Explores combining OOP and FP in reactive systems_
 
-- ["Deprecating the Observer Pattern"](https://dl.acm.org/doi/10.1145/1869459.1869463) - OOPSLA 2010
+- ["Deprecating the Observer Pattern"](https://www.researchgate.net/publication/43651956_Deprecating_the_Observer_Pattern) - OOPSLA 2010
 
   - _Influential paper on why reactive programming should replace the observer pattern_
 
@@ -25,20 +25,16 @@
 
   - _Foundational paper introducing WebAssembly's design and implementation_
 
-- ["WebAssembly: A Safe and Fast Approach to Client-Side Web Programming"](https://dl.acm.org/doi/10.1145/3368856.3368865) - ACM SIGPLAN 2019
-
-  - _Analysis of WebAssembly's safety and performance characteristics_
-
-- ["Not So Fast: Analyzing the Performance of WebAssembly vs. Native Code"](https://dl.acm.org/doi/10.5555/3358807.3358811) - USENIX ATC 2019
+- ["Not So Fast: Analyzing the Performance of WebAssembly vs. Native Code"](https://www.usenix.org/conference/atc19/presentation/jangda) - USENIX ATC 2019
 
   - _Detailed performance comparison between WebAssembly and native code_
 
-- ["Mechanising and Verifying the WebAssembly Specification"](https://dl.acm.org/doi/10.1145/3158137) - CPP 2018
+- ["Mechanising and Verifying the WebAssembly Specification"](https://dl.acm.org/doi/10.1145/3167082) - CPP 2018
   - _Formal verification of WebAssembly's core specification_
 
 ## Rust Language & Systems Programming
 
-- ["Rust: A Language for Safe Systems Programming"](https://dl.acm.org/doi/10.1145/3158154) - ACM SIGBED Review, 2017
+- ["Rust: A Language for Safe Systems Programming"](https://dl.acm.org/**doi**/10.1145/3158154) - ACM SIGBED Review, 2017
 
   - _Overview of Rust's safety features for systems programming_
 

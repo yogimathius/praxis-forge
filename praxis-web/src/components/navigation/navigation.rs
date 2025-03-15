@@ -38,61 +38,63 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <Flex
-            justify=FlexJustify::Center
-            class="gap-8 p-4 mb-8 bg-glass border border-orange rounded-xl"
-        >
-            <Button
-                appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                class=Signal::derive(move || {
-                    if location.get() == Location::Home {
-                        "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
-                            .to_string()
-                    } else {
-                        "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                            .to_string()
-                    }
-                })
-                on_click=move |_| {
-                    let _ = handle_navigation.dispatch(Location::Home);
-                }
+        <div class="bg-glass px-8">
+            <Flex
+                justify=FlexJustify::Start
+                class="gap-8 p-4 mb-8 border border-orange rounded-xl max-w-7xl mx-auto"
             >
-                "Home"
-            </Button>
-            <Button
-                appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                class=Signal::derive(move || {
-                    if location.get() == Location::Tasks {
-                        "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
-                            .to_string()
-                    } else {
-                        "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                            .to_string()
+                <Button
+                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                    class=Signal::derive(move || {
+                        if location.get() == Location::Home {
+                            "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                .to_string()
+                        } else {
+                            "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                .to_string()
+                        }
+                    })
+                    on_click=move |_| {
+                        let _ = handle_navigation.dispatch(Location::Home);
                     }
-                })
-                on_click=move |_| {
-                    let _ = handle_navigation.dispatch(Location::Tasks);
-                }
-            >
-                "Tasks"
-            </Button>
-            <Button
-                appearance=Signal::derive(move || ButtonAppearance::Subtle)
-                class=Signal::derive(move || {
-                    if location.get() == Location::Goals {
-                        "text-spark font-bold border-b-2 border-spark shadow-spark-md px-6 py-3 rounded-xl hover:text-white"
-                            .to_string()
-                    } else {
-                        "text-ash hover:text-spark hover:shadow-spark-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                            .to_string()
+                >
+                    "Home"
+                </Button>
+                <Button
+                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                    class=Signal::derive(move || {
+                        if location.get() == Location::Tasks {
+                            "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                .to_string()
+                        } else {
+                            "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                .to_string()
+                        }
+                    })
+                    on_click=move |_| {
+                        let _ = handle_navigation.dispatch(Location::Tasks);
                     }
-                })
-                on_click=move |_| {
-                    let _ = handle_navigation.dispatch(Location::Goals);
-                }
-            >
-                "Goals"
-            </Button>
-        </Flex>
+                >
+                    "Tasks"
+                </Button>
+                <Button
+                    appearance=Signal::derive(move || ButtonAppearance::Subtle)
+                    class=Signal::derive(move || {
+                        if location.get() == Location::Goals {
+                            "text-spark font-bold border-b-2 border-spark shadow-spark-md px-6 py-3 rounded-xl hover:text-white"
+                                .to_string()
+                        } else {
+                            "text-ash hover:text-spark hover:shadow-spark-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                .to_string()
+                        }
+                    })
+                    on_click=move |_| {
+                        let _ = handle_navigation.dispatch(Location::Goals);
+                    }
+                >
+                    "Goals"
+                </Button>
+            </Flex>
+        </div>
     }
 }

@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use leptos::{ev, prelude::*, task::spawn_local};
 
+use crate::components::common::Dropdown;
 use crate::graphql::queries::{goals::Goal, tasks::Task};
 
 #[component]
@@ -107,47 +108,34 @@ pub fn TaskForm(
                         <label for="task-goal" class="text-ash text-sm font-medium">
                             Related Goal
                         </label>
-                        <div class="flex">
-                            <select
-                                id="task-goal"
-                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
-                                on:change=move |ev| {
-                                    let value = event_target_value(&ev);
-                                    set_selected_goal.set(value.parse::<i32>().ok());
-                                }
-                            >
-                                <option value="">"Select a goal (optional)"</option>
-                                {move || {
-                                    goals
-                                        .get()
-                                        .into_iter()
-                                        .map(|goal| {
-                                            view! {
-                                                <option value=goal
-                                                    .id
-                                                    .map(|id| id.inner().to_string())
-                                                    .unwrap_or_default()>
-                                                    {goal.title.unwrap_or_default()}
-                                                </option>
-                                            }
-                                        })
-                                        .collect_view()
-                                }}
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <div class="text-orange text-lg">"▼"</div>
-                            </div>
-                        </div>
+                        <Dropdown
+                            options=Memo::new(move |_| {
+                                goals
+                                    .get()
+                                    .into_iter()
+                                    .filter_map(|goal| {
+                                        let id = goal.id.as_ref()?.inner().to_string();
+                                        let title = goal.title.clone().unwrap_or_default();
+                                        Some((id, title))
+                                    })
+                                    .collect::<Vec<_>>()
+                            })
+                            selected=Memo::new(move |_| {
+                                selected_goal.get().map(|id| id.to_string()).unwrap_or_default()
+                            })
+                            on_change=move |value| set_selected_goal.set(value.parse::<i32>().ok())
+                            placeholder="Select a goal".to_string()
+                        />
                     </div>
 
                     <div class="flex flex-col gap-2 md:w-1/3">
                         <label for="task-status" class="text-ash text-sm font-medium">
                             Status
                         </label>
-                        <div class="flex">
+                        <div class="relative">
                             <select
                                 id="task-status"
-                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10"
+                                class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10 appearance-none w-full"
                                 on:input=move |ev| set_task_status.set(event_target_value(&ev))
                                 prop:value=move || task_status.get()
                             >

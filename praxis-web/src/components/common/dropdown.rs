@@ -8,7 +8,7 @@ pub fn Dropdown(
     placeholder: String,
 ) -> impl IntoView {
     view! {
-        <div class="relative">
+        <div class="relative flex gap-2">
             <select
                 class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm pr-10 appearance-none w-full"
                 on:change=move |ev| on_change(event_target_value(&ev))
@@ -20,7 +20,14 @@ pub fn Dropdown(
                         .get()
                         .into_iter()
                         .map(|(value, label)| {
-                            view! { <option value=value>{label}</option> }
+                            view! {
+                                <option
+                                    value=value
+                                    class="py-2 px-4 hover:bg-orange-100 text-gray-800"
+                                >
+                                    {label}
+                                </option>
+                            }
                         })
                         .collect_view()
                 }}

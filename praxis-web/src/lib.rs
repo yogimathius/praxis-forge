@@ -28,6 +28,16 @@ pub fn App() -> impl IntoView {
     let window = window().unwrap();
     let document = window.document().unwrap();
 
+    // Inject custom utility style
+    let custom_style_el = document.create_element("style").unwrap();
+    let custom_styles = CUSTOM_UTILITIES;
+    custom_style_el.set_text_content(Some(custom_styles));
+    document
+        .head()
+        .unwrap()
+        .append_child(&custom_style_el)
+        .unwrap();
+
     // Inject Tailwind styles
     let tailwind_style_el = document.create_element("style").unwrap();
     let tailwind_styles = TAILWIND_BUNDLE;
@@ -38,22 +48,12 @@ pub fn App() -> impl IntoView {
         .append_child(&tailwind_style_el)
         .unwrap();
 
-    // Inject custom utility styles
-    let custom_style_el = document.create_element("style").unwrap();
-    let custom_styles = CUSTOM_UTILITIES;
-    custom_style_el.set_text_content(Some(custom_styles));
-    document
-        .head()
-        .unwrap()
-        .append_child(&custom_style_el)
-        .unwrap();
-
     view! {
         <Router>
             <div style="display: none;" id="tailwind-debug">
                 {tailwind_styles}
             </div>
-            <main>
+            <main class="forge-animated-background min-h-screen">
                 <Navigation />
                 <Routes fallback=move || view! { <p>"Not found."</p> }>
                     <ParentRoute path=path!("") view=|| view! { <Outlet /> }>

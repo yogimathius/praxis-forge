@@ -53,7 +53,8 @@ pub fn App() -> impl IntoView {
             <div style="display: none;" id="tailwind-debug">
                 {tailwind_styles}
             </div>
-            <main class="forge-animated-background min-h-screen">
+            <div class="forge-animated-background"></div>
+            <main class="min-h-screen relative">
                 <Navigation />
                 <Routes fallback=move || view! { <p>"Not found."</p> }>
                     <ParentRoute path=path!("") view=|| view! { <Outlet /> }>

@@ -49,3 +49,5 @@
    - Implementation strategies using HTML-first approaches
 
 These papers represent cutting-edge research in frontend development, focusing on the latest advancements in reactivity models, WebAssembly, and architectural patterns since January 2024.
+
+https://www.researchgate.net/publication/233755674_A_Survey_on_Reactive_Programming

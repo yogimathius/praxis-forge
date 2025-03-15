@@ -1,3 +1,4 @@
+use crate::components::common::Header;
 use crate::components::task::form::TaskForm;
 use crate::components::task::list::TasksList;
 use crate::state::use_goals::{use_goals, GoalsState};
@@ -26,40 +27,38 @@ pub fn TasksListPage() -> impl IntoView {
     } = use_goals();
 
     view! {
-        <div class="max-w-7xl mx-auto p-8 my-8">
-            <h2 class="text-4xl font-bold text-spark flex justify-center mb-8 animate-ember-pulse">
-                "Forge Operations"
-            </h2>
-            <p class="text-xl flex justify-center text-ash mb-12 animate-slide-up">
-                "Shape your tasks into achievements, one strike at a time."
-            </p>
+        <div class="max-w-7xl mx-auto p-8">
+            <div class="flex flex-col gap-8">
+                <Header
+                    title="Forge Operations".to_string()
+                    description="Shape your tasks into achievements, one strike at a time."
+                        .to_string()
+                />
 
-            <div class="bg-glass-dark rounded-xl border border-orange-30 p-8 mb-12 animate-fade-in delay-300">
-                <TaskForm create=create.clone() refetch=refetch.clone() goals=goals />
-            </div>
+                <div class="bg-glass-dark rounded-xl border border-orange-30 p-8 animate-fade-in delay-300">
+                    <TaskForm create=create.clone() refetch=refetch.clone() goals=goals />
+                </div>
 
-            <div class="bg-glass rounded-xl border border-orange-30 p-8 animate-fade-in delay-500">
-                {
-                    let tasks = tasks.clone();
-                    move || -> View<_> {
-                        let tasks = tasks.get().clone();
-                        let on_toggle = update.clone();
-                        let on_delete = delete.clone();
-                        let on_edit = update.clone();
-                        let goals = goals.clone();
-
-                        view! {
-                            <TasksList
-                                tasks=tasks
-                                on_toggle=on_toggle
-                                on_delete=on_delete
-                                on_edit=on_edit
-                                goals=goals
-                            />
+                <div class="bg-glass rounded-xl border border-orange-30 p-8 animate-fade-in delay-500">
+                    {
+                        let tasks = tasks.clone();
+                        move || -> View<_> {
+                            let tasks = tasks.get().clone();
+                            let on_toggle = update.clone();
+                            let on_delete = delete.clone();
+                            let on_edit = update.clone();
+                            view! {
+                                <TasksList
+                                    tasks=tasks
+                                    on_toggle=on_toggle
+                                    on_delete=on_delete
+                                    on_edit=on_edit
+                                />
+                            }
+                                .into_view()
                         }
-                            .into_view()
                     }
-                }
+                </div>
             </div>
         </div>
     }

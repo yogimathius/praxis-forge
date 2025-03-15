@@ -17,7 +17,6 @@ use leptos::prelude::*;
 use leptos_router::components::*;
 use leptos_router::path;
 use std::sync::Arc;
-use wasm_bindgen_test::console_log;
 use web_sys::window;
 
 #[component]
@@ -55,28 +54,12 @@ pub fn App() -> impl IntoView {
                 {tailwind_styles}
             </div>
             <main>
-                <Navigation/>
+                <Navigation />
                 <Routes fallback=move || view! { <p>"Not found."</p> }>
-                    <ParentRoute
-                        path=path!("")
-                        view=|| view! { <Outlet/> }
-                    >
-                        <Route
-                            path=path!("")
-                            view=Home
-                        />
-                        // <Route
-                        //     path=path!("progress")
-                        //     view=ProgressBarPage
-                        // />
-                        <Route
-                            path=path!("tasks")
-                            view=TasksListPage
-                        />
-                        <Route
-                            path=path!("goals")
-                            view=GoalsListPage
-                        />
+                    <ParentRoute path=path!("") view=|| view! { <Outlet /> }>
+                        <Route path=path!("") view=Home />
+                        <Route path=path!("tasks") view=TasksListPage />
+                        <Route path=path!("goals") view=GoalsListPage />
                     </ParentRoute>
                 </Routes>
             </main>

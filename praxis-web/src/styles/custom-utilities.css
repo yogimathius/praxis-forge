@@ -303,6 +303,10 @@
   gap: 2rem;
 }
 
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
 .space-y-4 > * + * {
   margin-top: 1rem;
 }
@@ -313,6 +317,28 @@
 
 .space-y-8 > * + * {
   margin-top: 2rem;
+}
+
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.space-x-4 > * + * {
+  margin-left: 1rem;
+}
+
+/* Container spacing classes */
+.content-container {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.section-spacing {
+  margin-bottom: 3rem;
+}
+
+.item-spacing {
+  margin-bottom: 1.5rem;
 }
 
 /* Add these width utilities */
@@ -410,7 +436,7 @@
 /* Base Button Class */
 .btn {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.25rem 1.5rem;
   border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
@@ -522,4 +548,93 @@
 
 .hover\:text-red:hover {
   color: var(--forge-red);
+}
+
+/* Add this to your custom utilities if not already present */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-spark {
+  --tw-gradient-from: #ff7b00;
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(255, 123, 0, 0));
+}
+
+.to-orange {
+  --tw-gradient-to: #ff5500;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 107, 53, 0.7),
+    rgba(255, 215, 0, 0.7)
+  );
+  border-radius: 15px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Text spacing standardization */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+label,
+div.text-content {
+  margin-bottom: 1rem; /* Adjust this value to your preference */
+}
+
+/* Reset margins for specific contexts where you don't want the spacing */
+.no-margin-bottom,
+.flex items-center > *,
+.btn > *,
+.card-header > *,
+.form-group > label,
+.inline-elements > * {
+  margin-bottom: 0 !important;
+}
+
+/* Add a utility class for text containers */
+.text-content > * {
+  margin-bottom: 1rem;
+}
+
+/* For flex layouts where you want gap instead of margins */
+.flex-col.spaced {
+  gap: 1rem;
+}
+
+.text-center {
+  text-align: center;
 }

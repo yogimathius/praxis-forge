@@ -1,25 +1,9 @@
 use leptos::prelude::*;
 
-#[derive(Clone)]
-pub struct Task {
-    id: usize,
-    title: String,
-    completed: bool,
-}
-
-#[derive(Clone)]
-pub struct Goal {
-    id: usize,
-    title: String,
-    tasks_required: usize,
-    tasks_completed: usize,
-}
-
 #[component]
 pub fn ProgressBar(
     #[prop(optional)] goals: Option<Vec<crate::graphql::queries::goals::Goal>>,
 ) -> impl IntoView {
-    // Use provided goals or empty vec if None
     let goals = goals.unwrap_or_default();
 
     view! {
@@ -36,22 +20,21 @@ pub fn ProgressBar(
                     };
 
                     view! {
-                        <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 mb-4">
                             <div class="flex justify-between items-center">
                                 <span class="text-ash font-medium">Progress</span>
-                                <span class="text-ash text-sm">
+                                <span class="text-ash text-sm bg-glass px-2 py-1 rounded-md border border-spark-30">
                                     {tasks_completed} "/" {tasks_required} " tasks"
                                 </span>
                             </div>
 
-                            <div class="bg-glass h-8 rounded-full overflow-hidden border border-spark-30">
+                            // Progress bar using the provided CSS classes
+                            <div class="progress-bar">
                                 <div
-                                    class="bg-gradient-steel h-full rounded-full transition-all duration-500"
+                                    class="progress-fill"
                                     style=format!("width: {}%;", progress_percentage)
                                 ></div>
-                                <div class="relative -top-8 text-center text-ash font-medium">
-                                    {progress_percentage}"% Complete"
-                                </div>
+                                <div class="progress-text">{progress_percentage}"% Complete"</div>
                             </div>
                         </div>
                     }

@@ -61,8 +61,8 @@ pub fn GoalForm(
         <form class="bg-glass-dark rounded-xl p-8 shadow-spark-sm" on:submit=on_submit>
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
-                    <div class="flex flex-col">
-                        <label for="goal-title" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2">
+                        <label for="goal-title" class="text-ash text-sm font-medium">
                             Goal Title
                         </label>
                         <input
@@ -75,8 +75,8 @@ pub fn GoalForm(
                         />
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="goal-description" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2">
+                        <label for="goal-description" class="text-ash text-sm font-medium">
                             Description
                         </label>
                         <textarea
@@ -89,7 +89,7 @@ pub fn GoalForm(
                     </div>
                 </div>
 
-                <div class="flex justify-start mt-2">
+                <div class="flex justify-start">
                     <button
                         type="submit"
                         class="btn btn-spark hover-lift shadow-spark-sm focus:outline-none"

@@ -74,33 +74,37 @@ pub fn TaskForm(
         <form class="bg-glass-dark rounded-xl p-8 shadow-orange-sm" on:submit=on_submit>
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
-                    <label for="task-title" class="text-ash text-sm mb-2 font-medium">
-                        Task Title
-                    </label>
-                    <input
-                        id="task-title"
-                        type="text"
-                        class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm"
-                        placeholder="Add a new task..."
-                        on:input=move |ev| set_task_text.set(event_target_value(&ev))
-                        prop:value=move || task_text.get()
-                    />
+                    <div class="flex flex-col gap-2">
+                        <label for="task-title" class="text-ash text-sm font-medium">
+                            Task Title
+                        </label>
+                        <input
+                            id="task-title"
+                            type="text"
+                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm"
+                            placeholder="Add a new task..."
+                            on:input=move |ev| set_task_text.set(event_target_value(&ev))
+                            prop:value=move || task_text.get()
+                        />
+                    </div>
 
-                    <label for="task-description" class="text-ash text-sm mb-2 font-medium">
-                        Description
-                    </label>
-                    <textarea
-                        id="task-description"
-                        class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm min-h-[80px] resize-y"
-                        placeholder="Add a description..."
-                        on:input=move |ev| set_task_description.set(event_target_value(&ev))
-                        prop:value=move || task_description.get()
-                    ></textarea>
+                    <div class="flex flex-col gap-2">
+                        <label for="task-description" class="text-ash text-sm font-medium">
+                            Description
+                        </label>
+                        <textarea
+                            id="task-description"
+                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm min-h-[80px] resize-y"
+                            placeholder="Add a description..."
+                            on:input=move |ev| set_task_description.set(event_target_value(&ev))
+                            prop:value=move || task_description.get()
+                        ></textarea>
+                    </div>
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-6">
-                    <div class="flex flex-col flex-1">
-                        <label for="task-goal" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2 flex-1">
+                        <label for="task-goal" class="text-ash text-sm font-medium">
                             Related Goal
                         </label>
                         <div class="flex">
@@ -136,8 +140,8 @@ pub fn TaskForm(
                         </div>
                     </div>
 
-                    <div class="flex flex-col md:w-1/3">
-                        <label for="task-status" class="text-ash text-sm mb-2 font-medium">
+                    <div class="flex flex-col gap-2 md:w-1/3">
+                        <label for="task-status" class="text-ash text-sm font-medium">
                             Status
                         </label>
                         <div class="flex">
@@ -158,7 +162,7 @@ pub fn TaskForm(
                     </div>
                 </div>
 
-                <div class="flex justify-start mt-2">
+                <div class="flex justify-start">
                     <button
                         type="submit"
                         class="btn btn-orange hover-lift shadow-orange-sm focus:outline-none"

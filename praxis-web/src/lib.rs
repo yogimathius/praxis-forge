@@ -11,7 +11,7 @@ pub use pages::home::Home;
 pub use pages::tasks::tasks::TasksListPage;
 use services::graphql_service::GraphQLService;
 use services::service_context::ServiceContext;
-use styles::tailwind::get_tailwind_bundle;
+use styles::{CUSTOM_UTILITIES, TAILWIND_BUNDLE};
 
 use leptos::prelude::*;
 use leptos_router::components::*;
@@ -30,7 +30,7 @@ pub fn App() -> impl IntoView {
 
     // Inject Tailwind styles
     let tailwind_style_el = document.create_element("style").unwrap();
-    let tailwind_styles = get_tailwind_bundle();
+    let tailwind_styles = TAILWIND_BUNDLE;
     tailwind_style_el.set_text_content(Some(&tailwind_styles));
     document
         .head()
@@ -40,7 +40,7 @@ pub fn App() -> impl IntoView {
 
     // Inject custom utility styles
     let custom_style_el = document.create_element("style").unwrap();
-    let custom_styles = include_str!("styles/custom-utilities.css");
+    let custom_styles = CUSTOM_UTILITIES;
     custom_style_el.set_text_content(Some(custom_styles));
     document
         .head()

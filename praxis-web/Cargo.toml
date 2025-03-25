@@ -22,12 +22,16 @@ cynic = { version = "3.10.0", features = ["http-reqwest"] }
 async-trait = "0.1.86"
 reqwest = { version = "0.12.12", features = ["json"], default-features = false }
 thaw = "0.4.3"
-web-sys = { version = "0.3.77", features = [
+web-sys = { version = "0.3", features = [
+  "Window",
   "Document",
   "Element",
+  "HtmlDocument",
   "HtmlElement",
-  "Window",
-  "HtmlHeadElement"
+  "NodeList",
+  "DomRect",
+  "Performance",
+  "PerformanceTiming"
   # Only include features you actually use
 ]}
 

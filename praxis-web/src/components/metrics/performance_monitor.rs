@@ -1,16 +1,12 @@
 use js_sys::WebAssembly;
 use leptos::prelude::*;
+use leptos::*;
 use std::collections::VecDeque;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-use crate::components::metrics::charts::{FpsChart, MemoryChart};
-use crate::components::metrics::stats::StatsDisplay;
-
-// External JS functions
 #[wasm_bindgen]
 extern "C" {
-    // Define memory as a getter from performance.memory
     #[wasm_bindgen(js_namespace = performance, getter)]
     fn memory() -> JsValue;
 
@@ -163,21 +159,75 @@ pub fn provide_performance_metrics() {
 #[component]
 pub fn PerformanceMonitor() -> impl IntoView {
     let metrics = use_context::<PerformanceMetrics>();
-    let (show_details, set_show_details) = signal(false);
+    let (show_details, set_show_details) = create_signal(false);
 
-    let metrics_clone = metrics.clone();
-    // Average values
-    let avg_fps = Memo::new(move |_| {
-        if let Some(metrics) = metrics_clone.as_ref() {
-            let fps = metrics.fps.get();
-            if fps.is_empty() {
-                0.0
-            } else {
-                fps.iter().sum::<f64>() / fps.len() as f64
-            }
-        } else {
-            0.0
-        }
+    // Store metrics in a StoredValue to avoid ownership problems
+    let stored_metrics = store_value(metrics);
+
+    // Create memos for derived values to avoid closures that move values
+    let metrics_exists = create_memo(move |_| stored_metrics.with_value(|m| m.is_some()));
+
+    let avg_fps = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .map(|m| {
+                    let fps = m.fps.get();
+                    if fps.is_empty() {
+                        0.0
+                    } else {
+                        fps.iter().sum::<f64>() / fps.len() as f64
+                    }
+                })
+                .unwrap_or(0.0)
+        })
+    });
+
+    let has_js_heap = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .map(|m| m.memory_metrics.get().js_heap_size.is_some())
+                .unwrap_or(false)
+        })
+    });
+
+    let js_heap_text = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .and_then(|m| m.memory_metrics.get().js_heap_size)
+                .map(|v| format!("{:.1} MB", v))
+                .unwrap_or_else(|| "N/A".to_string())
+        })
+    });
+
+    let has_wasm_memory = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .map(|m| m.memory_metrics.get().wasm_memory.is_some())
+                .unwrap_or(false)
+        })
+    });
+
+    let wasm_memory_text = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .and_then(|m| m.memory_metrics.get().wasm_memory)
+                .map(|v| format!("{:.1} MB", v))
+                .unwrap_or_else(|| "N/A".to_string())
+        })
+    });
+
+    let component_count = create_memo(move |_| {
+        stored_metrics.with_value(|metrics| {
+            metrics
+                .as_ref()
+                .map(|m| m.component_count.get())
+                .unwrap_or(0)
+        })
     });
 
     let button_text = move || {
@@ -188,24 +238,53 @@ pub fn PerformanceMonitor() -> impl IntoView {
         }
     };
 
-    let container_class = "fixed bottom-4 left-4 bg-glass-dark rounded-xl border border-orange-30 p-4 shadow-orange-md z-20";
+    let container_class = "fixed bottom-4 left-4 bg-slate-800/70 backdrop-blur rounded-xl border border-[#ff6b35]/20 p-4 shadow-lg z-20";
     let header_class = "flex justify-between items-center mb-4";
-    let title_class = "text-2xl font-bold text-orange";
-    let button_class = "btn btn-orange-sm";
+    let title_class = "text-lg font-bold text-[#ff6b35]";
+    let button_class =
+        "px-2 py-1 bg-[#ff6b35]/20 hover:bg-[#ff6b35]/30 text-[#ff6b35] rounded text-sm";
 
     view! {
         <Show
-            when=move || metrics.is_some()
+            when=move || metrics_exists.get()
             fallback=move || {
                 view! {
                     <div class=container_class>
-                        <div class="text-ash">"Performance monitoring disabled"</div>
+                        <div class="text-slate-400">"Performance monitoring disabled"</div>
                     </div>
                 }
             }
         >
             <div class=container_class>
-                <div class="text-ash">{"Performance Monitor"}</div>
+                <div class=header_class>
+                    <div class=title_class>"Performance Monitor"</div>
+                    <button
+                        class=button_class
+                        on:click=move |_| set_show_details.update(|v| *v = !*v)
+                    >
+                        {button_text}
+                    </button>
+                </div>
+
+                <Show when=move || show_details.get()>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="text-slate-400">"FPS:"</div>
+                        <div class="text-slate-200">{move || format!("{:.1}", avg_fps.get())}</div>
+
+                        <Show when=move || has_js_heap.get()>
+                            <div class="text-slate-400">"JS Heap:"</div>
+                            <div class="text-slate-200">{move || js_heap_text.get()}</div>
+                        </Show>
+
+                        <Show when=move || has_wasm_memory.get()>
+                            <div class="text-slate-400">"WASM Memory:"</div>
+                            <div class="text-slate-200">{move || wasm_memory_text.get()}</div>
+                        </Show>
+
+                        <div class="text-slate-400">"Components:"</div>
+                        <div class="text-slate-200">{move || component_count.get()}</div>
+                    </div>
+                </Show>
             </div>
         </Show>
     }

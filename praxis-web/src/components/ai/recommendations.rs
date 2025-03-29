@@ -1,13 +1,22 @@
 use leptos::*;
+use leptos::prelude::*;
+
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
-#[component]
-pub fn TaskRecommendations(cx: Scope, task: Task) -> impl IntoView {
-    let (recommendation, set_recommendation) = create_signal(cx, String::new());
-    let (loading, set_loading) = create_signal(cx, false);
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct Task {
+    pub title: String,
+    pub description: String,
+    pub status: String,
+}
 
-    let get_recommendation = create_action(cx, move |_| {
+#[component]
+pub fn TaskRecommendations(task: Task) -> impl IntoView {
+    let (recommendation, set_recommendation) = create_signal(String::new());
+    let (loading, set_loading) = create_signal(false);
+
+    let recommendations = Action::new(move |_: &()| {
         set_loading.set(true);
 
         let task_data = format!(
@@ -16,7 +25,6 @@ pub fn TaskRecommendations(cx: Scope, task: Task) -> impl IntoView {
         );
 
         async move {
-            // Get API key from local storage
             let api_key = web_sys::window()
                 .unwrap()
                 .local_storage()
@@ -29,10 +37,9 @@ pub fn TaskRecommendations(cx: Scope, task: Task) -> impl IntoView {
             if api_key.is_empty() {
                 set_recommendation.set("Please set your API key in settings".to_string());
                 set_loading.set(false);
-                return;
+                return String::new();
             }
 
-            // Create request
             let client = Client::new();
             let response = client
                 .post("https://api.openai.com/v1/chat/completions")
@@ -56,27 +63,50 @@ pub fn TaskRecommendations(cx: Scope, task: Task) -> impl IntoView {
                 .send()
                 .await;
 
-            match response {
+            let result = match response {
                 Ok(res) => {
                     if res.status().is_success() {
                         let json: serde_json::Value = res.json().await.unwrap_or_default();
-                        let content = json["choices"][0]["message"]["content"]
+                        json["choices"][0]["message"]["content"]
                             .as_str()
                             .unwrap_or("No recommendation available")
-                            .to_string();
-                        set_recommendation.set(content);
+                            .to_string()
                     } else {
-                        set_recommendation.set(format!("Error: {}", res.status()));
+                        format!("Error: {}", res.status())
                     }
                 }
                 Err(e) => {
-                    set_recommendation.set(format!("Error: {}", e));
+                    format!("Error: {}", e)
                 }
-            }
+            };
 
+            set_recommendation.set(result.clone());
             set_loading.set(false);
+            result
         }
     });
 
-    // View code here...
+    view! {
+        <div class="p-4 bg-slate-800/40 backdrop-blur rounded-xl border border-[#ff6b35]/20 mt-4">
+            <h3 class="text-[#ff6b35] font-bold mb-3">"AI Task Recommendations"</h3>
+
+            <Show
+                when=move || !loading.get()
+                fallback=move || {
+                    view! { <div class="text-slate-400">"Loading recommendations..."</div> }
+                }
+            >
+                <div class="text-slate-200 mb-3">{move || recommendation.get()}</div>
+            </Show>
+
+            <button
+                class="px-3 py-1 bg-[#ff6b35]/20 hover:bg-[#ff6b35]/30 text-[#ff6b35] rounded-md transition-colors"
+                on:click=move |_| {
+                    recommendations.dispatch(());
+                }
+            >
+                "Get Recommendations"
+            </button>
+        </div>
+    }
 }

@@ -28,10 +28,16 @@ web-sys = { version = "0.3", features = [
   "Element",
   "HtmlDocument",
   "HtmlElement",
+  "HtmlInputElement",
   "NodeList",
   "DomRect",
   "Performance",
-  "PerformanceTiming"
+  "PerformanceTiming",
+  "KeyboardEvent",
+  "Storage",
+  "DomTokenList",
+  "CssStyleDeclaration",
+  "MouseEvent"
   # Only include features you actually use
 ]}
 

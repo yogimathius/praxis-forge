@@ -19,10 +19,16 @@ use leptos_router::path;
 use std::sync::Arc;
 use web_sys::window;
 
+// Import our new components
+use components::{provide_theme, CommandPalette, SmartSuggestions, ThemeToggle};
+
 #[component]
 pub fn App() -> impl IntoView {
     let service = GraphQLService::new();
     provide_context(ServiceContext(Arc::new(service)));
+
+    // Provide theme context
+    provide_theme();
 
     // Inject Tailwind styles
     let window = window().unwrap();
@@ -53,9 +59,19 @@ pub fn App() -> impl IntoView {
             <div style="display: none;" id="tailwind-debug">
                 {tailwind_styles}
             </div>
+
+            // Add our Command Palette at the top level
+            <CommandPalette />
+
             <div class="forge-animated-background"></div>
             <main class="min-h-screen relative">
                 <Navigation />
+
+                // Add theme toggle in the top right corner
+                <div class="fixed top-4 right-4 z-10">
+                    <ThemeToggle />
+                </div>
+
                 <Routes fallback=move || view! { <p>"Not found."</p> }>
                     <ParentRoute path=path!("") view=|| view! { <Outlet /> }>
                         <Route path=path!("") view=Home />

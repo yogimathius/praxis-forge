@@ -1,5 +1,6 @@
 use crate::components::common::Header;
 use crate::components::Principles;
+use crate::components::SmartSuggestions;
 use leptos::prelude::*;
 
 #[component]
@@ -22,6 +23,10 @@ pub fn Home() -> impl IntoView {
                     >
                         "Start Your Journey"
                     </a>
+                </div>
+
+                <div class="mt-8">
+                    <SmartSuggestions />
                 </div>
             </div>
         </div>

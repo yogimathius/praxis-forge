@@ -1,15 +1,14 @@
 :root {
-  --forge-orange: #ff6b35; /* Hot metal/flame color */
-  --forge-red: #cc3311; /* Ember glow */
-  --forge-steel: #2d3142; /* Dark steel */
-  --forge-iron: #4f5d75; /* Cooled metal */
-  --forge-spark: #ffd700; /* Spark highlights */
-  --forge-ash: #e6e8e6; /* Cool ash/background */
+  --forge-titanium: #00b2ca; /* Primary action color - Modern titanium blue */
+  --forge-accent: #00cbd1; /* Secondary action - Electric teal */
+  --forge-steel: #1d2d44; /* Dark background - Deep navy */
+  --forge-iron: #465362; /* Mid-tones - Sophisticated gray-blue */
+  --forge-spark: #7dcfb6; /* Highlights - Soft sage-teal */
+  --forge-neutral: #f0f4ef; /* Light text/backgrounds - Clean white */
 }
-
 /* ===== Background Utilities ===== */
 .bg-glass {
-  background: rgba(45, 49, 66, 0.4);
+  background: rgba(29, 45, 68, 0.4); /* Updated with new steel color */
   backdrop-filter: blur(10px);
 }
 
@@ -22,16 +21,16 @@
   background: linear-gradient(135deg, var(--forge-steel), var(--forge-iron));
 }
 
-.bg-orange-10 {
-  background-color: rgba(255, 107, 53, 0.1);
+.bg-titanium-10 {
+  background-color: rgba(0, 178, 202, 0.1); /* #00B2CA with 0.1 opacity */
 }
 
-.bg-orange-15 {
-  background-color: rgba(255, 107, 53, 0.15);
+.bg-titanium-15 {
+  background-color: rgba(0, 178, 202, 0.15);
 }
 
-.bg-orange-20 {
-  background-color: rgba(255, 107, 53, 0.2);
+.bg-titanium-20 {
+  background-color: rgba(0, 178, 202, 0.2);
 }
 
 .bg-spark-10 {
@@ -52,19 +51,19 @@
 
 /* ===== Border Utilities ===== */
 .border-orange {
-  border-color: var(--forge-orange);
+  border-color: var(--forge-titanium);
 }
 
 .border-spark {
   border-color: var(--forge-spark);
 }
 
-.border-orange-20 {
-  border-color: rgba(255, 107, 53, 0.2);
+.border-titanium-20 {
+  border-color: rgba(0, 178, 202, 0.2);
 }
 
-.border-orange-30 {
-  border-color: rgba(255, 107, 53, 0.3);
+.border-titanium-30 {
+  border-color: rgba(0, 178, 202, 0.3);
 }
 
 .border-spark-30 {
@@ -77,7 +76,7 @@
 
 /* ===== Text Utilities ===== */
 .text-orange {
-  color: var(--forge-orange);
+  color: var(--forge-titanium);
 }
 
 .text-spark {
@@ -93,7 +92,7 @@
 }
 
 .text-shadow-orange {
-  text-shadow: 0 0 10px var(--forge-orange);
+  text-shadow: 0 0 10px var(--forge-titanium);
 }
 
 .text-shadow-spark {
@@ -101,23 +100,23 @@
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, var(--forge-orange), var(--forge-spark));
+  background: linear-gradient(90deg, var(--forge-titanium), var(--forge-spark));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 /* ===== Shadow Utilities ===== */
-.shadow-orange-sm {
-  box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+.shadow-titanium-sm {
+  box-shadow: 0 0 10px rgba(0, 178, 202, 0.2);
 }
 
-.shadow-orange-md {
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+.shadow-titanium-md {
+  box-shadow: 0 4px 12px rgba(0, 178, 202, 0.3);
 }
 
-.shadow-orange-lg {
-  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+.shadow-titanium-lg {
+  box-shadow: 0 8px 24px rgba(0, 178, 202, 0.4);
 }
 
 .shadow-spark-sm {
@@ -146,7 +145,7 @@
 }
 
 .hover-glow-orange:hover {
-  box-shadow: 0 0 15px var(--forge-orange);
+  box-shadow: 0 0 15px var(--forge-titanium);
 }
 
 .hover-glow-spark:hover {
@@ -205,25 +204,25 @@
 
 @keyframes emberPulse {
   0% {
-    text-shadow: 0 0 10px var(--forge-orange);
+    text-shadow: 0 0 10px var(--forge-titanium);
   }
   50% {
-    text-shadow: 0 0 25px var(--forge-orange), 0 0 50px var(--forge-red);
+    text-shadow: 0 0 25px var(--forge-titanium), 0 0 50px var(--forge-accent);
   }
   100% {
-    text-shadow: 0 0 10px var(--forge-orange);
+    text-shadow: 0 0 10px var(--forge-titanium);
   }
 }
 
 /* ===== Status Colors ===== */
 .status-pending {
-  background-color: rgba(255, 107, 53, 0.2);
-  border-color: var(--forge-orange);
-  color: var(--forge-orange);
+  background-color: rgba(0, 178, 202, 0.2);
+  border-color: var(--forge-titanium);
+  color: var(--forge-titanium);
 }
 
 .status-in-progress {
-  background-color: rgba(255, 215, 0, 0.2);
+  background-color: rgba(125, 207, 182, 0.2);
   border-color: var(--forge-spark);
   color: var(--forge-spark);
 }
@@ -450,15 +449,15 @@
 
 /* Button Variants */
 .btn-orange {
-  background-color: var(--forge-orange);
+  background-color: var(--forge-titanium);
   color: var(--forge-steel);
 }
 
 .btn-orange:hover:not(:disabled) {
   background-color: transparent;
-  border-color: var(--forge-orange);
-  color: var(--forge-orange);
-  box-shadow: 0 0 15px var(--forge-orange);
+  border-color: var(--forge-titanium);
+  color: var(--forge-titanium);
+  box-shadow: 0 0 15px var(--forge-titanium);
 }
 
 .btn-spark {
@@ -474,15 +473,15 @@
 }
 
 .btn-red {
-  background-color: var(--forge-red);
-  color: var(--forge-ash);
+  background-color: var(--forge-accent);
+  color: var(--forge-neutral);
 }
 
 .btn-red:hover:not(:disabled) {
   background-color: transparent;
-  border-color: var(--forge-red);
-  color: var(--forge-red);
-  box-shadow: 0 0 15px var(--forge-red);
+  border-color: var(--forge-accent);
+  color: var(--forge-accent);
+  box-shadow: 0 0 15px var(--forge-accent);
 }
 
 /* Button Sizes */
@@ -531,7 +530,7 @@
 }
 
 .hover\:text-orange:hover {
-  color: var(--forge-orange);
+  color: var(--forge-titanium);
 }
 
 .hover\:text-spark:hover {
@@ -539,7 +538,7 @@
 }
 
 .hover\:text-ash:hover {
-  color: var(--forge-ash);
+  color: var(--forge-neutral);
 }
 
 .hover\:text-steel:hover {
@@ -547,7 +546,7 @@
 }
 
 .hover\:text-red:hover {
-  color: var(--forge-red);
+  color: var(--forge-accent);
 }
 
 /* Add this to your custom utilities if not already present */
@@ -580,8 +579,8 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    rgba(255, 107, 53, 0.7),
-    rgba(255, 215, 0, 0.7)
+    rgba(0, 178, 202, 0.7),
+    /* forge-titanium */ rgba(125, 207, 182, 0.7) /* forge-spark */
   );
   border-radius: 15px;
   transition: width 0.5s ease;
@@ -686,7 +685,7 @@ div.text-content {
   --bg-secondary: #1e293b;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
-  --accent-color: #ff6b35;
+  --accent-color: #00b2ca;
 }
 
 .light {
@@ -694,7 +693,7 @@ div.text-content {
   --bg-secondary: #f1f5f9;
   --text-primary: #0f172a;
   --text-secondary: #475569;
-  --accent-color: #ff6b35;
+  --accent-color: #00b2ca;
 }
 
 /* Button styles */
@@ -708,19 +707,13 @@ div.text-content {
   transition: all 0.3s ease;
 }
 
-.btn-orange {
-  background-color: rgba(255, 107, 53, 0.9);
-  color: white;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-}
-
 .btn-orange:hover {
   background-color: rgba(255, 107, 53, 1);
   box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
 }
 
-.btn-orange-sm {
-  background-color: rgba(255, 107, 53, 0.8);
+.btn-titanium-sm {
+  background-color: rgba(0, 178, 202, 0.8);
   color: white;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -728,7 +721,7 @@ div.text-content {
 }
 
 /* Glass effects */
-.bg-glass {
+.textglass {
   background-color: rgba(30, 41, 59, 0.4);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 107, 53, 0.1);
@@ -741,14 +734,40 @@ div.text-content {
 }
 
 /* Shadow effects */
-.shadow-orange-sm {
-  box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+.shadow-titanium-sm {
+  box-shadow: 0 0 10px rgba(0, 178, 202, 0.2);
 }
 
-.shadow-orange-md {
-  box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+.shadow-titanium-md {
+  box-shadow: 0 0 15px rgba(0, 178, 202, 0.3);
 }
 
 .shadow-spark-md {
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Background effects */
+.forge-background::before {
+  background: radial-gradient(
+    circle at 30% 40%,
+    rgba(0, 178, 202, 0.4) 0%,
+    rgba(0, 178, 202, 0) 50%
+  );
+}
+
+.forge-background::after {
+  background: radial-gradient(
+    circle at 70% 60%,
+    rgba(125, 207, 182, 0.2) 0%,
+    rgba(125, 207, 182, 0) 60%
+  );
+}
+
+/* Update hover effects */
+.hover\:shadow-titanium-sm:hover {
+  box-shadow: 0 0 10px rgba(0, 178, 202, 0.2);
+}
+
+.hover\:bg-titanium-10:hover {
+  background-color: rgba(0, 178, 202, 0.1);
 }

@@ -38,17 +38,17 @@ pub fn Navigation() -> impl IntoView {
     });
 
     view! {
-        <div class="bg-slate-800/70 backdrop-blur-lg border-b border-[#ff6b35]/20 sticky top-0 z-10">
+        <div class="bg-slate-800/70 backdrop-blur-lg border-b border-[#00b2ca]/20 sticky top-0 z-10">
             <Flex justify=FlexJustify::SpaceBetween class="p-4 max-w-7xl mx-auto">
                 <Flex justify=FlexJustify::Start class="gap-8">
                     <Button
                         appearance=Signal::derive(move || ButtonAppearance::Subtle)
                         class=Signal::derive(move || {
                             if location.get() == Location::Home {
-                                "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                "text-orange font-bold border-b-2 border-orange shadow-titanium-md px-6 py-3 rounded-xl hover:text-white"
                                     .to_string()
                             } else {
-                                "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                "text-ash hover:text-orange hover:shadow-titanium-sm transition-all duration-300 px-6 py-3 rounded-xl"
                                     .to_string()
                             }
                         })
@@ -62,10 +62,10 @@ pub fn Navigation() -> impl IntoView {
                         appearance=Signal::derive(move || ButtonAppearance::Subtle)
                         class=Signal::derive(move || {
                             if location.get() == Location::Tasks {
-                                "text-orange font-bold border-b-2 border-orange shadow-orange-md px-6 py-3 rounded-xl hover:text-white"
+                                "text-orange font-bold border-b-2 border-orange shadow-titanium-md px-6 py-3 rounded-xl hover:text-white"
                                     .to_string()
                             } else {
-                                "text-ash hover:text-orange hover:shadow-orange-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                                "text-ash hover:text-orange hover:shadow-titanium-sm transition-all duration-300 px-6 py-3 rounded-xl"
                                     .to_string()
                             }
                         })
@@ -94,7 +94,7 @@ pub fn Navigation() -> impl IntoView {
                     </Button>
                 </Flex>
 
-                <div class="text-[#ff6b35] font-bold text-xl">Praxis Forge</div>
+                <div class="text-[#00b2ca] font-bold text-xl">Praxis Forge</div>
             </Flex>
         </div>
     }

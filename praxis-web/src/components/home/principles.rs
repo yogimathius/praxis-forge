@@ -35,9 +35,9 @@ pub fn Principles() -> impl IntoView {
                     let i_clone = i as i32;
                     let hover_class = create_memo(move |_| {
                         if hover_index.get() == i as i32 {
-                            "bg-glass border-orange shadow-orange-md".to_string()
+                            "bg-glass border-orange shadow-titanium-md".to_string()
                         } else {
-                            "bg-glass border-orange-30".to_string()
+                            "bg-glass border-titanium-30".to_string()
                         }
                     });
 

@@ -72,7 +72,7 @@ pub fn TaskForm(
     };
 
     view! {
-        <form class="bg-glass-dark rounded-xl p-8 shadow-orange-sm" on:submit=on_submit>
+        <form class="bg-glass-dark rounded-xl p-8 shadow-titanium-sm" on:submit=on_submit>
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-col gap-2">
@@ -82,7 +82,7 @@ pub fn TaskForm(
                         <input
                             id="task-title"
                             type="text"
-                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm"
+                            class="bg-white/10 border border-titanium-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-titanium-sm"
                             placeholder="Add a new task..."
                             on:input=move |ev| set_task_text.set(event_target_value(&ev))
                             prop:value=move || task_text.get()
@@ -95,7 +95,7 @@ pub fn TaskForm(
                         </label>
                         <textarea
                             id="task-description"
-                            class="bg-white/10 border border-orange-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-orange-sm min-h-[80px] resize-y"
+                            class="bg-white/10 border border-titanium-30 rounded-lg p-4 text-steel font-medium focus:border-orange focus:shadow-titanium-sm min-h-[80px] resize-y"
                             placeholder="Add a description..."
                             on:input=move |ev| set_task_description.set(event_target_value(&ev))
                             prop:value=move || task_description.get()
@@ -150,7 +150,7 @@ pub fn TaskForm(
                 <div class="flex justify-start">
                     <button
                         type="submit"
-                        class="btn btn-orange hover-lift shadow-orange-sm focus:outline-none"
+                        class="btn btn-orange hover-lift shadow-titanium-sm focus:outline-none"
                         disabled=move || is_submitting.get()
                     >
                         {move || if is_submitting.get() { "Adding..." } else { "Add Task" }}

@@ -20,7 +20,7 @@ use std::sync::Arc;
 use web_sys::window;
 
 // Import our new components
-use components::{provide_theme, CommandPalette, SmartSuggestions, ThemeToggle};
+use components::{provide_theme, CommandPalette, ThemeToggle};
 
 #[component]
 pub fn App() -> impl IntoView {

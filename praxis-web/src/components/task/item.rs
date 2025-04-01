@@ -32,7 +32,7 @@ pub fn TaskItem(
     };
 
     view! {
-        <div class="bg-glass border border-orange-30 rounded-xl p-8 hover-lift transition-all duration-300 mb-6">
+        <div class="bg-glass border border-titanium-30 rounded-xl p-8 hover-lift transition-all duration-300 mb-6">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">
@@ -49,7 +49,7 @@ pub fn TaskItem(
                             <input
                                 node_ref=title_input
                                 type="text"
-                                class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash text-xl font-medium focus:border-orange focus:shadow-orange-sm"
+                                class="bg-glass border border-titanium-30 rounded-lg p-4 w-full text-ash text-xl font-medium focus:border-orange focus:shadow-titanium-sm"
                                 value=edit_title.get()
                                 on:change=move |ev| {
                                     set_edit_title.set(Some(event_target_value(&ev)));
@@ -86,7 +86,7 @@ pub fn TaskItem(
                         };
 
                         view! {
-                            <div class="bg-glass-dark bg-opacity-30 rounded-lg p-4 border border-orange-20">
+                            <div class="bg-glass-dark bg-opacity-30 rounded-lg p-4 border border-titanium-20">
                                 <p class=description_class>{description}</p>
                             </div>
                         }
@@ -94,7 +94,7 @@ pub fn TaskItem(
                 >
                     <textarea
                         node_ref=desc_input
-                        class="bg-glass border border-orange-30 rounded-lg p-4 w-full text-ash min-h-[100px] text-lg focus:border-orange focus:shadow-orange-sm"
+                        class="bg-glass border border-titanium-30 rounded-lg p-4 w-full text-ash min-h-[100px] text-lg focus:border-orange focus:shadow-titanium-sm"
                         prop:value=edit_description.get()
                         on:change=move |ev| {
                             set_edit_description.set(event_target_value(&ev));
@@ -108,7 +108,7 @@ pub fn TaskItem(
                             class=move || {
                                 let status = task.get().status.unwrap_or_default();
                                 format!(
-                                    "task-status-select status-{} rounded-lg px-2 text-lg font-medium border-2 shadow-orange-sm appearance-none",
+                                    "task-status-select status-{} rounded-lg px-2 text-lg font-medium border-2 shadow-titanium-sm appearance-none",
                                     status,
                                 )
                             }

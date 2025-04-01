@@ -1,6 +1,5 @@
 use crate::components::common::Header;
 use crate::components::Principles;
-use crate::components::SmartSuggestions;
 use leptos::prelude::*;
 
 #[component]
@@ -19,14 +18,10 @@ pub fn Home() -> impl IntoView {
                 <div class="flex justify-center">
                     <a
                         href="/tasks"
-                        class="btn btn-orange hover-lift shadow-orange-sm focus:outline-none"
+                        class="btn btn-orange hover-lift shadow-titanium-sm focus:outline-none"
                     >
                         "Start Your Journey"
                     </a>
-                </div>
-
-                <div class="mt-8">
-                    <SmartSuggestions />
                 </div>
             </div>
         </div>

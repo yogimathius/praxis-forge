@@ -21,7 +21,7 @@ pub fn TasksList(
                 when=move || !tasks_clone.is_empty()
                 fallback=|| {
                     view! {
-                        <div class="border-2 border-dashed border-orange-30 rounded-xl p-8 text-center">
+                        <div class="border-2 border-dashed border-titanium-30 rounded-xl p-8 text-center">
                             <h3 class="text-xl font-bold text-spark mb-2">"No tasks yet"</h3>
                             <p class="text-ash opacity-80">
                                 "Add your first task to get started on your journey."

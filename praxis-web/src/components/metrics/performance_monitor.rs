@@ -165,9 +165,9 @@ pub fn PerformanceMonitor() -> impl IntoView {
     let stored_metrics = store_value(metrics);
 
     // Create memos for derived values to avoid closures that move values
-    let metrics_exists = create_memo(move |_| stored_metrics.with_value(|m| m.is_some()));
+    let metrics_exists = Memo::new(move |_| stored_metrics.with_value(|m| m.is_some()));
 
-    let avg_fps = create_memo(move |_| {
+    let avg_fps = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -183,7 +183,7 @@ pub fn PerformanceMonitor() -> impl IntoView {
         })
     });
 
-    let has_js_heap = create_memo(move |_| {
+    let has_js_heap = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -192,7 +192,7 @@ pub fn PerformanceMonitor() -> impl IntoView {
         })
     });
 
-    let js_heap_text = create_memo(move |_| {
+    let js_heap_text = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -202,7 +202,7 @@ pub fn PerformanceMonitor() -> impl IntoView {
         })
     });
 
-    let has_wasm_memory = create_memo(move |_| {
+    let has_wasm_memory = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -211,7 +211,7 @@ pub fn PerformanceMonitor() -> impl IntoView {
         })
     });
 
-    let wasm_memory_text = create_memo(move |_| {
+    let wasm_memory_text = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -221,7 +221,7 @@ pub fn PerformanceMonitor() -> impl IntoView {
         })
     });
 
-    let component_count = create_memo(move |_| {
+    let component_count = Memo::new(move |_| {
         stored_metrics.with_value(|metrics| {
             metrics
                 .as_ref()
@@ -238,11 +238,11 @@ pub fn PerformanceMonitor() -> impl IntoView {
         }
     };
 
-    let container_class = "fixed bottom-4 left-4 bg-slate-800/70 backdrop-blur rounded-xl border border-[#ff6b35]/20 p-4 shadow-lg z-20";
+    let container_class = "fixed bottom-4 left-4 bg-slate-800/70 backdrop-blur rounded-xl border border-[#00b2ca]/20 p-4 shadow-lg z-20";
     let header_class = "flex justify-between items-center mb-4";
-    let title_class = "text-lg font-bold text-[#ff6b35]";
+    let title_class = "text-lg font-bold text-[#00b2ca]";
     let button_class =
-        "px-2 py-1 bg-[#ff6b35]/20 hover:bg-[#ff6b35]/30 text-[#ff6b35] rounded text-sm";
+        "px-2 py-1 bg-[#00b2ca]/20 hover:bg-[#00b2ca]/30 text-[#00b2ca] rounded text-sm";
 
     view! {
         <Show

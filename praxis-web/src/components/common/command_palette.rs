@@ -13,7 +13,7 @@ fn CommandItem(
     set_selected: WriteSignal<usize>,
     set_visibility: WriteSignal<bool>,
 ) -> impl IntoView {
-    let bg_class = if is_selected { "bg-[#ff6b35]/15" } else { "" };
+    let bg_class = if is_selected { "bg-[#00b2ca]/15" } else { "" };
     let navigate = use_navigate();
 
     view! {
@@ -27,7 +27,7 @@ fn CommandItem(
                 set_selected.set(idx);
             }
         >
-            <div class="mr-3 text-[#ff6b35]">"⟶"</div>
+            <div class="mr-3 text-[#00b2ca]">"⟶"</div>
             <div class="text-slate-200">{name}</div>
         </div>
     }
@@ -142,12 +142,12 @@ pub fn CommandPalette() -> impl IntoView {
             on:click=move |_| set_show.set(false)
         >
             <div
-                class="w-1/2 max-w-xl bg-slate-800/70 backdrop-blur-lg rounded-xl shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#ff6b35]/20 overflow-hidden"
+                class="w-1/2 max-w-xl bg-slate-800/70 backdrop-blur-lg rounded-xl shadow-[0_0_15px_rgba(255,107,53,0.2)] border border-[#00b2ca]/20 overflow-hidden"
                 on:click=move |e| e.stop_propagation()
             >
                 <div class="p-4 border-b border-slate-700/50">
                     <div class="flex items-center">
-                        <div class="text-[#ff6b35] mr-2">"⌘"</div>
+                        <div class="text-[#00b2ca] mr-2">"⌘"</div>
                         <input
                             type="text"
                             placeholder="Type a command or search..."
@@ -198,9 +198,9 @@ pub fn CommandPalette() -> impl IntoView {
                 </div>
 
                 <div class="p-2 border-t border-slate-700/50 text-xs text-slate-400 flex justify-between">
-                    <div>"Press <span class='text-[#ff6b35]'>↑↓</span> to navigate"</div>
-                    <div>"Press <span class='text-[#ff6b35]'>Enter</span> to select"</div>
-                    <div>"Press <span class='text-[#ff6b35]'>Esc</span> to close"</div>
+                    <div>"Press <span class='text-[#00b2ca]'>↑↓</span> to navigate"</div>
+                    <div>"Press <span class='text-[#00b2ca]'>Enter</span> to select"</div>
+                    <div>"Press <span class='text-[#00b2ca]'>Esc</span> to close"</div>
                 </div>
             </div>
         </div>

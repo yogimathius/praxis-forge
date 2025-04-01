@@ -1,4 +1,3 @@
-pub mod ai;
 pub mod animation;
 pub mod common;
 pub mod debug;
@@ -19,7 +18,5 @@ pub use progress::ProgressBar;
 pub use task::form::TaskForm;
 pub use task::list::TasksList;
 
-// New components
-pub use ai::smart_suggestions::SmartSuggestions;
 pub use common::command_palette::CommandPalette;
 pub use common::theme_toggle::{provide_theme, ThemeToggle};

@@ -46,6 +46,8 @@ cynic-codegen = "3.10.0"
 
 [dev-dependencies]
 web-sys = { version = "0.3.77", features = ["HtmlElement"] }
+wasm-bindgen-test = "0.3"
+console_error_panic_hook = "0.1"
 
 [lib]
 name = "praxis_shop_ui"
@@ -58,3 +60,10 @@ lto = true       # Enable Link Time Optimization
 codegen-units = 1  # Maximum size optimization
 strip = true     # Strip symbols
 panic = 'abort'  # Smaller code size for panic handling
+
+[package.metadata.leptos]
+site-root = "target/site"
+site-pkg-dir = "pkg"
+style-file = "style/main.css"
+assets-dir = "assets"
+watch = true  # Enable hot reloading

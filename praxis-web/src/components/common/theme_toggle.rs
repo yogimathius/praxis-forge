@@ -84,7 +84,7 @@ pub fn ThemeToggle() -> impl IntoView {
 
     let toggle_bg = move || {
         if theme_context.theme.get() == Theme::Dark {
-            "bg-[#ff6b35]"
+            "bg-[#00b2ca]"
         } else {
             "bg-yellow-400"
         }
@@ -92,7 +92,7 @@ pub fn ThemeToggle() -> impl IntoView {
 
     view! {
         <button
-            class="relative p-2 rounded-full bg-slate-800/50 border border-[#ff6b35]/20 transition-all hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]"
+            class="relative p-2 rounded-full bg-slate-800/50 border border-[#00b2ca]/20 transition-all hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]"
             on:click=toggle_theme
         >
             <div class="w-12 h-6 rounded-full bg-slate-700/50 relative">

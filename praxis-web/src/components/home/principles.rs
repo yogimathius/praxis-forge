@@ -1,6 +1,5 @@
 use crate::components::home::PrincipleItem;
 use leptos::prelude::*;
-use thaw::Grid;
 
 #[component]
 pub fn Principles() -> impl IntoView {
@@ -18,16 +17,20 @@ pub fn Principles() -> impl IntoView {
         ("Intention", "Purposeful Progress"),
         ("Mastery", "Continuous Growth"),
     ];
+
+    let grid_cols = Signal::derive(move || {
+        let width = window().inner_width().unwrap().as_f64().unwrap_or(0.0);
+        if width > 768.0 {
+            "grid-cols-2"
+        } else {
+            "grid-cols-1"
+        }
+    });
+
     view! {
-        <Grid
-            cols=Signal::derive(move || {
-                let width = window().inner_width().unwrap().as_f64().unwrap_or(0.0);
-                if width > 768.0 { 2 } else { 1 }
-            })
-            x_gap=Signal::derive(|| 6)
-            y_gap=Signal::derive(|| 6)
-            class="w-full"
-        >
+        <div class=move || {
+            format!("grid gap-6 w-full {}", grid_cols.get())
+        }>
             {principles
                 .into_iter()
                 .enumerate()
@@ -52,6 +55,6 @@ pub fn Principles() -> impl IntoView {
                     }
                 })
                 .collect::<Vec<_>>()}
-        </Grid>
+        </div>
     }
 }

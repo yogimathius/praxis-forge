@@ -1,8 +1,6 @@
-use leptos::prelude::*;
-use thaw::{Button, Card};
-
 use crate::components::progress::ProgressBar;
 use crate::graphql::queries::goals::Goal;
+use leptos::prelude::*;
 
 #[component]
 pub fn GoalItem(
@@ -28,7 +26,7 @@ pub fn GoalItem(
     };
 
     view! {
-        <Card class="bg-glass border border-spark-30 p-8 hover-lift transition-all duration-300 shadow-spark-sm w-full">
+        <div class="bg-glass border border-spark-30 p-8 hover-lift transition-all duration-300 shadow-spark-sm w-full rounded-lg">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">
@@ -58,27 +56,27 @@ pub fn GoalItem(
                             when=move || is_editing.get()
                             fallback=move || {
                                 view! {
-                                    <Button
+                                    <button
                                         class="btn btn-spark"
                                         on:click=move |_| set_is_editing.set(true)
                                     >
                                         "Edit"
-                                    </Button>
+                                    </button>
                                 }
                             }
                         >
-                            <Button class="btn btn-spark" on:click=handle_save>
+                            <button class="btn btn-spark" on:click=handle_save>
                                 "Save"
-                            </Button>
+                            </button>
                         </Show>
-                        <Button
+                        <button
                             class="btn btn-red"
                             on:click=move |_| {
                                 let _ = on_delete.dispatch(goal.get().id.unwrap());
                             }
                         >
                             "Delete"
-                        </Button>
+                        </button>
                     </div>
                 </div>
 
@@ -121,6 +119,6 @@ pub fn GoalItem(
                     }}
                 </div>
             </div>
-        </Card>
+        </div>
     }
 }

@@ -1415,42 +1415,6 @@
   white-space: nowrap;
 }
 
-.forge-background {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.forge-background::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-    circle at 30% 40%,
-    rgba(0, 178, 202, 0.4) 0%,
-    rgba(0, 178, 202, 0) 50%
-  );
-  pointer-events: none;
-}
-
-.forge-background::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-    circle at 70% 60%,
-    rgba(255, 215, 0, 0.2) 0%,
-    rgba(255, 215, 0, 0) 60%
-  );
-  pointer-events: none;
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1493,29 +1457,4 @@
     opacity: 1;
     transform: scale(1.05);
   }
-}
-
-.forge-mesh-background {
-  background: radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0%, transparent 70%),
-    radial-gradient(at 100% 0%, rgba(0, 178, 202, 0.15) 0%, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(125, 207, 182, 0.1) 0%, transparent 70%),
-    radial-gradient(at 0% 100%, rgba(51, 65, 85, 1) 0%, transparent 50%),
-    #0f172a;
-}
-
-.forge-texture-background {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  position: relative;
-}
-
-.forge-texture-background::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  pointer-events: none;
 }

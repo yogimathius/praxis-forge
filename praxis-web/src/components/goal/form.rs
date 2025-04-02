@@ -58,7 +58,12 @@ pub fn GoalForm(
     };
 
     view! {
-        <form class="bg-glass-dark rounded-xl p-8 shadow-spark-sm" on:submit=on_submit>
+        <form
+            class="rounded-xl p-8 shadow-spark-sm
+            dark:bg-glass-dark dark:border-spark-30
+            light:bg-white/80 light:border-spark-20"
+            on:submit=on_submit
+        >
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-col gap-2">

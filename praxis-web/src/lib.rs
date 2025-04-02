@@ -19,8 +19,7 @@ use leptos_router::path;
 use std::sync::Arc;
 use web_sys::window;
 
-// Import our new components
-use components::{provide_theme, CommandPalette, ThemeToggle};
+use components::{provide_theme, ThemeToggle};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -56,18 +55,11 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Router>
-            <div style="display: none;" id="tailwind-debug">
-                {tailwind_styles}
-            </div>
 
-            // Add our Command Palette at the top level
-            <CommandPalette />
-
-            <div class="forge-animated-background"></div>
             <main class="min-h-screen relative">
+                <div class="forge-animated-background absolute inset-0 -z-10"></div>
                 <Navigation />
 
-                // Add theme toggle in the top right corner
                 <div class="fixed top-4 right-4 z-10">
                     <ThemeToggle />
                 </div>

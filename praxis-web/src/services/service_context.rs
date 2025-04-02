@@ -1,4 +1,4 @@
-use leptos::{prelude::use_context, *};
+use leptos::prelude::use_context;
 use std::sync::Arc;
 
 use crate::services::graphql_service::GraphQLService;

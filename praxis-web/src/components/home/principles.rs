@@ -33,7 +33,7 @@ pub fn Principles() -> impl IntoView {
                 .enumerate()
                 .map(|(i, (title, desc))| {
                     let i_clone = i as i32;
-                    let hover_class = create_memo(move |_| {
+                    let hover_class = Memo::new(move |_| {
                         if hover_index.get() == i as i32 {
                             "bg-glass border-orange shadow-titanium-md".to_string()
                         } else {

@@ -25,7 +25,7 @@ pub fn PrincipleItem(
                     let _ = set_hover_index.dispatch(-1);
                 }
             >
-                <h3 class="text-3xl font-bold text-orange mb-4">{title}</h3>
+                <h3 class="text-3xl font-bold text-titanium mb-4">{title}</h3>
                 <p class="text-ash text-lg">{description}</p>
             </div>
         </GridItem>

@@ -32,7 +32,9 @@ pub fn TaskItem(
     };
 
     view! {
-        <div class="bg-glass border border-titanium-30 rounded-xl p-8 hover-lift transition-all duration-300 mb-6">
+        <div class="bg-glass border border-titanium-30 rounded-xl p-8 hover-lift transition-all duration-300 mb-6
+        dark:bg-glass-dark dark:border-titanium-30 dark:text-ash 
+        light:bg-white/80 light:border-titanium-20 light:text-steel">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-center gap-6">
                     <div class="flex-1">
@@ -40,7 +42,7 @@ pub fn TaskItem(
                             when=move || is_editing.get()
                             fallback=move || {
                                 view! {
-                                    <h3 class="text-2xl font-bold text-ash">
+                                    <h3 class="text-2xl font-bold dark:text-ash light:text-steel">
                                         {move || task.get().title}
                                     </h3>
                                 }
@@ -49,7 +51,9 @@ pub fn TaskItem(
                             <input
                                 node_ref=title_input
                                 type="text"
-                                class="bg-glass border border-titanium-30 rounded-lg p-4 w-full text-ash text-xl font-medium focus:border-orange focus:shadow-titanium-sm"
+                                class="bg-glass border border-titanium-30 rounded-lg p-4 w-full text-xl font-medium focus:border-orange focus:shadow-titanium-sm
+                                dark:bg-glass-dark dark:text-ash
+                                light:bg-white/90 light:text-steel"
                                 value=edit_title.get()
                                 on:change=move |ev| {
                                     set_edit_title.set(Some(event_target_value(&ev)));
@@ -80,13 +84,15 @@ pub fn TaskItem(
                             .clone()
                             .unwrap_or_else(|| "No description provided".to_string());
                         let description_class = if task.get().description.is_some() {
-                            "text-ash text-lg"
+                            "text-lg dark:text-ash light:text-steel"
                         } else {
-                            "text-ash opacity-60 italic text-lg"
+                            "text-lg opacity-60 italic dark:text-ash light:text-steel"
                         };
 
                         view! {
-                            <div class="bg-glass-dark bg-opacity-30 rounded-lg p-4 border border-titanium-20">
+                            <div class="bg-glass-dark bg-opacity-30 rounded-lg p-4 border border-titanium-20
+                            dark:bg-glass-darker
+                            light:bg-white/50">
                                 <p class=description_class>{description}</p>
                             </div>
                         }
@@ -94,7 +100,9 @@ pub fn TaskItem(
                 >
                     <textarea
                         node_ref=desc_input
-                        class="bg-glass border border-titanium-30 rounded-lg p-4 w-full text-ash min-h-[100px] text-lg focus:border-orange focus:shadow-titanium-sm"
+                        class="bg-glass border border-titanium-30 rounded-lg p-4 w-full min-h-[100px] text-lg focus:border-orange focus:shadow-titanium-sm
+                        dark:bg-glass-dark dark:text-ash
+                        light:bg-white/90 light:text-steel"
                         prop:value=edit_description.get()
                         on:change=move |ev| {
                             set_edit_description.set(event_target_value(&ev));
@@ -144,7 +152,7 @@ pub fn TaskItem(
                                 "Completed"
                             </option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-orange">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-titanium">
                             <svg
                                 class="h-5 w-5"
                                 xmlns="http://www.w3.org/2000/svg"

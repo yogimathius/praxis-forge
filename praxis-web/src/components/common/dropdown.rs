@@ -33,7 +33,7 @@ pub fn Dropdown(
                 }}
             </select>
             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <div class="text-orange text-lg">"▼"</div>
+                <div class="text-titanium text-lg">"▼"</div>
             </div>
         </div>
     }

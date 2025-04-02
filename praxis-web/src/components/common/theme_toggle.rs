@@ -25,6 +25,22 @@ pub fn provide_theme() {
         }
     });
 
+    // Add transition classes when theme changes
+    Effect::new(move |_| {
+        if let Some(document) = window().document() {
+            if let Some(html) = document.document_element() {
+                match theme.get() {
+                    Theme::Dark => {
+                        html.set_class_name("dark transition-colors duration-300");
+                    }
+                    Theme::Light => {
+                        html.set_class_name("light transition-colors duration-300");
+                    }
+                }
+            }
+        }
+    });
+
     // Apply theme changes to the DOM
     Effect::new(move |_| {
         if let Some(window) = web_sys::window() {

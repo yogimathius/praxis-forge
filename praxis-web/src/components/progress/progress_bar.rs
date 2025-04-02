@@ -22,8 +22,12 @@ pub fn ProgressBar(
                     view! {
                         <div class="flex flex-col gap-3 mb-4">
                             <div class="flex justify-between items-center">
-                                <span class="text-ash font-medium">Progress</span>
-                                <span class="text-ash text-sm bg-glass px-2 py-1 rounded-md border border-spark-30">
+                                <span class="font-medium dark:text-ash light:text-steel">
+                                    Progress
+                                </span>
+                                <span class="text-sm px-2 py-1 rounded-md border
+                                dark:bg-glass dark:text-ash dark:border-spark-30
+                                light:bg-white/80 light:text-steel light:border-spark-20">
                                     {tasks_completed} "/" {tasks_required} " tasks"
                                 </span>
                             </div>

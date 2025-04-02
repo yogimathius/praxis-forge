@@ -35,11 +35,15 @@ pub fn TasksListPage() -> impl IntoView {
                         .to_string()
                 />
 
-                <div class="bg-glass-dark rounded-xl border border-titanium-30 p-8 animate-fade-in delay-300">
+                <div class="rounded-xl p-8 animate-fade-in delay-300
+                dark:bg-glass-dark dark:border-titanium-30
+                light:bg-white/80 light:border-titanium-20">
                     <TaskForm create=create.clone() refetch=refetch.clone() goals=goals />
                 </div>
 
-                <div class="bg-glass rounded-xl border border-titanium-30 p-8 animate-fade-in delay-500">
+                <div class="rounded-xl p-8 animate-fade-in delay-500
+                dark:bg-glass dark:border-titanium-30
+                light:bg-white/90 light:border-titanium-20">
                     {
                         let tasks = tasks.clone();
                         move || -> View<_> {
